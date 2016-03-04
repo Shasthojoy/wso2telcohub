@@ -1,0 +1,19 @@
+{
+    "theme" : {
+        "base" : "default",
+        "subtheme" : "dark"
+    },
+    "context" : "/publisher",
+    "request_url":"READ_FROM_REQUEST",
+    "ssoConfiguration" : {
+        "enabled" : "true",
+        "issuer" : "API_PUBLISHER",
+        "identityProviderURL" : "https://localhost:9444/samlsso",
+        "keyStorePassword" : "wso2carbon",
+        "identityAlias" : "wso2carbon",
+        "responseSigningEnabled":"true",
+        "keyStoreName" :"repository/resources/security/wso2carbon.jks"
+    }
+
+
+}

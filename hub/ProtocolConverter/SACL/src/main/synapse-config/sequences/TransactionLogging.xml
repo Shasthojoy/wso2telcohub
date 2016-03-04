@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="TransactionLogging" onError="TransactionLoggingErrorHandler">
+    <log level="custom">
+        <property name="Message Flow" value="Request Received at Transaction logging Sequence"/>
+    </log>
+    <property xmlns:ns="http://org.apache.synapse/xsd" name="end_time" expression="get-property('SYSTEM_TIME')" scope="default" type="STRING"/>
+    <header xmlns:ns="http://org.apache.synapse/xsd" name="Authorization" scope="transport" expression="wso2:vault-lookup('exchanage_hub_credentials')"/>
+    <header name="Accept" scope="transport" value="application/json"/>
+    <header name="Content-Type" scope="transport" value="application/json"/>
+    <property name="messageType" value="application/json" scope="default" type="STRING"/>
+    <property xmlns:ns="http://org.apache.synapse/xsd" name="uri.var.transactionBatchId" expression="get-property('transport','transactionBatchId')" scope="default" type="STRING"/>
+    <property xmlns:ns="http://org.apache.synapse/xsd" name="tx_id" expression="get-property('transport','tx_id')" scope="default" type="STRING"/>
+    <property xmlns:ns="http://org.apache.synapse/xsd" name="tx_status" expression="get-property('transport','tx_status')" scope="default" type="STRING"/>
+    <property xmlns:ns="http://org.apache.synapse/xsd" name="uri.var.organizationid" expression="normalize-space(get-property('organization'))" scope="default" type="STRING"/>
+    <property xmlns:ns="http://org.apache.synapse/xsd" name="uri.var.exchange_so_host" expression="normalize-space(get-property('exchange_so_host'))" scope="default" type="STRING"/>
+    <property xmlns:ns="http://org.apache.synapse/xsd" name="REQUEST_HOST_HEADER" expression="get-property('exchange_so_host')" scope="axis2" type="STRING"/>
+    <payloadFactory media-type="json">
+        <format>	{		"Transactions": {					"Transaction": [{	                			"api": { 				"id": "$1" 	       			},		        "application_state": "$2",			"client_id": "$3",			"subscriber_operator":{				"mcc": "$4",				"mnc": "$5" 				},			"timestamp":{				"end": "$6",				"start": "$7"				},			"tx_id": "$8", 			"tx_status": "$9" 			}],		"count": "$10"	}	} </format>
+        <args>
+            <arg evaluator="json" expression="get-property('api')"/>
+            <arg evaluator="json" expression="get-property('application_state')"/>
+            <arg evaluator="json" expression="get-property('uri.var.clientid')"/>
+            <arg evaluator="json" expression="get-property('mcc')"/>
+            <arg evaluator="json" expression="get-property('mnc')"/>
+            <arg evaluator="json" expression="get-property('end_time')"/>
+            <arg evaluator="json" expression="get-property('start_time')"/>
+            <arg evaluator="json" expression="get-property('tx_id')"/>
+            <arg evaluator="json" expression="get-property('tx_status')"/>
+            <arg value="1"/>
+        </args>
+    </payloadFactory>
+    <call>
+        <endpoint key="TransactionLoggingExchangeEnpoint"/>
+    </call>
+</sequence>

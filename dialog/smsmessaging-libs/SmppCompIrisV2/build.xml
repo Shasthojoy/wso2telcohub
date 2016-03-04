@@ -1,0 +1,17 @@
+<project name="SMPPComponant" default="jar">
+    <property name="lib.dir" value="lib"/>
+    <path id="classpath">
+    	<fileset dir="${lib.dir}" includes="**/*.jar"/>
+    </path>           
+    <target name="compile">    	        
+        <javac srcdir="src" destdir="bin" classpathref="classpath"/>
+    </target>
+    <target name="jar" depends="compile">
+    	<input message="Reason for build:" addproperty="build.reason" />
+    	<buildnumber file="redistributable/build.number"/>
+    	<property name="version.num" value="0.1"/>    	    	
+    	<property name="jar.name" value="smppiris_${version.num}-build${build.number}.jar"/>    	
+    	<echo message="${jar.name} - ${build.reason}${line.separator}" append="true" file="redistributable/change.log"/>    	
+        <jar destfile="redistributable/${jar.name}" basedir="bin"/>
+    </target>    
+</project>

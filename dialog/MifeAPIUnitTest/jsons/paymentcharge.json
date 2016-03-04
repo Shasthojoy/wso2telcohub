@@ -1,0 +1,19 @@
+{"amountTransaction": {
+    "clientCorrelator": "54321",
+    "endUserId": "tel:+94773741258",
+    "paymentAmount": {
+        "chargingInformation": {
+            "amount": "2",
+            "currency": "LKR",
+            "description": ["Alien Invaders Game"]
+        },
+        "chargingMetaData" : {
+            "onBehalfOf" : "Example Games Inc",
+            "purchaseCategoryCode" : "Game",
+            "channel" : "WAP",
+            "taxAmount" : "0"
+        }
+    },
+    "referenceCode": "REF-12345",
+    "transactionOperationStatus": "Charged"
+}}

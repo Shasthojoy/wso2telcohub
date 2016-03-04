@@ -1,0 +1,35 @@
+{
+    "theme" : {
+        "base" : "default",
+        "subtheme" : "dark"
+    },
+    "context" : "/manage",
+    "tasksPerPage": 10,
+    "allowedRole":"admin",
+    "allowedRoles":"admin,subscriber,dialog-admin-role,celcom-admin-role",
+    "adminRole":"admin",
+    "workflows":{
+    "applicationWorkFlowServerURL": "https://process.ops.gsma.com:443/services/",
+    "subscriptionWorkFlowServerURL": "https://process.ops.gsma.com:443/services/",
+    "signupWorkFlowServerURL": "https://process.ops.gsma.com:443/services/"
+
+    },
+    "operators":{
+     "DIALOG": "dialog-admin-role",
+     "ROBI": "robi-admin-role",
+     "CELCOM": "celcom-admin-role"
+    },
+    "ssoConfiguration" : {
+        "enabled" : "false",
+        "issuer" : "API_MANAGE",
+        "identityProviderURL" : "https://identity.ops.gsma.com:443/samlsso",
+        "keyStorePassword" : "wso2carbon",
+        "identityAlias" : "wso2carbon",
+        "responseSigningEnabled":"true",
+        "keyStoreName" :"repository/resources/security/wso2carbon.jks"
+    },
+    "externalServicesUrl":"https://ops.gsma.com/",
+    "IS_URL" : "https://identity.ops.gsma.com/"
+
+
+}

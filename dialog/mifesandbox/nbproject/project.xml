@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://www.netbeans.org/ns/project/1">
+    <type>org.netbeans.modules.ant.freeform</type>
+    <configuration>
+        <general-data xmlns="http://www.netbeans.org/ns/freeform-project/1">
+            <!-- Do not use Project Properties customizer when editing this file manually. -->
+            <name>mifesandbox</name>
+            <properties/>
+            <folders>
+                <source-folder>
+                    <label>WebContent</label>
+                    <type>doc_root</type>
+                    <location>WebContent</location>
+                </source-folder>
+                <source-folder>
+                    <label>conf</label>
+                    <type>web_inf</type>
+                    <location>conf</location>
+                </source-folder>
+                <source-folder>
+                    <label>src</label>
+                    <type>java</type>
+                    <location>src</location>
+                </source-folder>
+            </folders>
+            <ide-actions>
+                <action name="build">
+                    <target>compile</target>
+                </action>
+                <action name="javadoc">
+                    <target>javadoc</target>
+                </action>
+                <action name="run">
+                    <target>server</target>
+                </action>
+            </ide-actions>
+            <view>
+                <items>
+                    <source-folder style="tree">
+                        <label>Web Pages</label>
+                        <location>WebContent</location>
+                    </source-folder>
+                    <source-folder style="tree">
+                        <label>WEB-INF Content</label>
+                        <location>conf</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>src</label>
+                        <location>src</location>
+                    </source-folder>
+                    <source-file>
+                        <location>build.xml</location>
+                    </source-file>
+                </items>
+                <context-menu>
+                    <ide-action name="build"/>
+                    <ide-action name="javadoc"/>
+                    <ide-action name="run"/>
+                </context-menu>
+            </view>
+            <subprojects/>
+        </general-data>
+        <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/3">
+            <compilation-unit>
+                <package-root>src</package-root>
+                <classpath mode="compile">WebContent/WEB-INF/lib/antlr-2.7.7.jar;WebContent/WEB-INF/lib/axiom_1.2.11.wso2v4.jar;WebContent/WEB-INF/lib/axis2-client-1.6.1.wso2v5.jar;WebContent/WEB-INF/lib/axis2_1.6.1.wso2v10.jar;WebContent/WEB-INF/lib/c3p0-0.9.2.1.jar;WebContent/WEB-INF/lib/commons-codec-1.9.jar;WebContent/WEB-INF/lib/commons-collections-3.1.jar;WebContent/WEB-INF/lib/commons-lang3-3.3.1.jar;WebContent/WEB-INF/lib/dom4j-1.6.1.jar;WebContent/WEB-INF/lib/gson-2.2.4.jar;WebContent/WEB-INF/lib/hibernate-c3p0-4.3.6.Final.jar;WebContent/WEB-INF/lib/hibernate-commons-annotations-4.0.5.Final.jar;WebContent/WEB-INF/lib/hibernate-core-4.3.6.Final.jar;WebContent/WEB-INF/lib/hibernate-jpa-2.1-api-1.0.0.Final.jar;WebContent/WEB-INF/lib/jackson-core-asl-1.7.0.jar;WebContent/WEB-INF/lib/jackson-mapper-asl-1.7.0.jar;WebContent/WEB-INF/lib/jandex-1.1.0.Final.jar;WebContent/WEB-INF/lib/javassist-3.18.1-GA.jar;WebContent/WEB-INF/lib/jboss-logging-3.1.3.GA.jar;WebContent/WEB-INF/lib/jboss-logging-annotations-1.2.0.Beta1.jar;WebContent/WEB-INF/lib/jboss-transaction-api_1.2_spec-1.0.0.Final.jar;WebContent/WEB-INF/lib/json-20140107.jar;WebContent/WEB-INF/lib/log4j-1.2.16.jar;WebContent/WEB-INF/lib/log4j-1.2.17.jar;WebContent/WEB-INF/lib/mail.jar;WebContent/WEB-INF/lib/mchange-commons-java-0.2.3.4.jar;WebContent/WEB-INF/lib/mifesandbox.jar;WebContent/WEB-INF/lib/mysql-connector-java-5.1.6.jar;WebContent/WEB-INF/lib/org.wso2.carbon.authenticator.stub_4.2.0.jar;WebContent/WEB-INF/lib/org.wso2.carbon.service.mgt.stub-4.2.0.jar;WebContent/WEB-INF/lib/servlet-api.jar;WebContent/WEB-INF/lib/slf4j-api-1.7.7.jar;WebContent/WEB-INF/lib/slf4j-nop-1.7.7.jar</classpath>
+                <source-level>1.6</source-level>
+            </compilation-unit>
+        </java-data>
+        <web-data xmlns="http://www.netbeans.org/ns/freeform-project-web/2">
+            <web-module>
+                <doc-root>WebContent</doc-root>
+                <context-path/>
+                <j2ee-spec-level>1.5</j2ee-spec-level>
+                <web-inf>conf</web-inf>
+            </web-module>
+        </web-data>
+    </configuration>
+</project>

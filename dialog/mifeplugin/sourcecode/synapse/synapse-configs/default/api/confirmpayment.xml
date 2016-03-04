@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse"
+     name="confirmpayment"
+     context="/confirmpayment">
+   <resource methods="POST">
+      <inSequence>
+         <property name="msisdn"
+                   expression="json-eval($.outboundUSSDMessageRequest.address)"/>
+         <property name="message"
+                   expression="json-eval($.outboundUSSDMessageRequest.outboundUSSDMessage)"/>
+         <enrich>
+            <source xmlns:ns="http://org.apache.synapse/xsd"
+                    clone="true"
+                    xpath="//outboundUSSDMessageRequest"/>
+            <target type="property" property="orginalPayload"/>
+         </enrich>
+         <payloadFactory media-type="xml">
+            <format>
+               <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+                                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                                  xmlns:tns="urn:interactivewsdl"
+                                  xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+                                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                  SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+                  <SOAP-ENV:Body>
+                     <tns:sendUSSD>
+                        <input xsi:type="tns:reqUSSD">
+                           <msisdn xsi:type="xsd:string">$1</msisdn>
+                           <message xsi:type="xsd:string">$2</message>
+                        </input>
+                     </tns:sendUSSD>
+                  </SOAP-ENV:Body>
+               </SOAP-ENV:Envelope>
+            </format>
+            <args>
+               <arg evaluator="xml" expression="get-property('msisdn')"/>
+               <arg evaluator="xml" expression="get-property('message')"/>
+            </args>
+         </payloadFactory>
+         <header name="Action" value="urn:sendSMSDR"/>
+         <property name="Authorization"
+                   value="Basic bWlmZTpkaWFsMTIzIQ=="
+                   scope="transport"/>
+         <send>
+            <endpoint key="xlBackendEP"/>
+         </send>
+      </inSequence>
+      <outSequence>
+         <property name="messageType" value="application/json" scope="axis2"/>
+         <property name="message" value="xxx" scope="default" type="STRING"/>
+         <property name="message1" value="xxxy" scope="default" type="STRING"/>
+         <enrich>
+            <source type="property" clone="true" property="orginalPayload"/>
+            <target type="body"/>
+         </enrich>
+         <send/>
+      </outSequence>
+   </resource>
+</api>

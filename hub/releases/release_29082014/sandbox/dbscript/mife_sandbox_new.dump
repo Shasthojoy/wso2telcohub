@@ -1,0 +1,458 @@
+-- MySQL dump 10.13  Distrib 5.6.19, for Linux (x86_64)
+--
+-- Host: localhost    Database: mife_sandbox_new
+-- ------------------------------------------------------
+-- Server version	5.6.19
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `charge_amount_request`
+--
+
+DROP TABLE IF EXISTS `charge_amount_request`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `charge_amount_request` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `effect_date` date DEFAULT NULL,
+  `amount` double DEFAULT NULL,
+  `channel` varchar(255) DEFAULT NULL,
+  `client_correlator` varchar(255) DEFAULT NULL,
+  `currency` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `end_user_id` varchar(255) DEFAULT NULL,
+  `notify_url` varchar(255) DEFAULT NULL,
+  `on_behalf_of` varchar(255) DEFAULT NULL,
+  `purchase_cat_code` varchar(255) DEFAULT NULL,
+  `reference_code` varchar(255) DEFAULT NULL,
+  `tax_amount` double DEFAULT NULL,
+  `tran_oper_status` varchar(255) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKB48C1E939E083448` (`user_id`),
+  CONSTRAINT `FKB48C1E939E083448` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `charge_amount_request`
+--
+
+LOCK TABLES `charge_amount_request` WRITE;
+/*!40000 ALTER TABLE `charge_amount_request` DISABLE KEYS */;
+INSERT INTO `charge_amount_request` VALUES (15,'2014-06-04',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(16,'2014-06-04',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(17,'2014-06-04',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(18,'2014-06-04',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(19,'2014-06-04',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(20,'2014-06-04',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(21,'2014-06-04',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(22,'2014-06-04',10,'SMS','54321','USD','Alien Invaders Game','tel:+94776969896',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(23,'2014-06-04',2,'WAP','54321','LKR','[\"Alien Invaders Game\"]','tel:+94773852147',NULL,'Example Games Inc','Game','REF-12345',0,'Charged',1),(24,'2014-06-04',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(25,'2014-06-04',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(26,'2014-06-04',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(27,'2014-06-04',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(28,'2014-06-04',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(29,'2014-06-04',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(30,'2014-06-04',2,'WAP','54321','LKR','[\"Alien Invaders Game\"]','tel:+94773852147',NULL,'Example Games Inc','Game','REF-12345',0,'Charged',1),(31,'2014-06-04',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(32,'2014-06-04',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(33,'2014-06-04',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(34,'2014-06-04',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(35,'2014-06-04',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(36,'2014-06-04',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(37,'2014-06-04',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(38,'2014-06-04',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(39,'2014-06-04',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(40,'2014-06-04',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(41,'2014-06-04',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(42,'2014-06-04',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(43,'2014-06-04',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(44,'2014-06-04',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(45,'2014-06-04',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(46,'2014-06-05',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(47,'2014-06-05',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(48,'2014-06-05',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(49,'2014-06-05',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(50,'2014-06-05',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-123458',0.15,'Charged',1),(51,'2014-06-05',12,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-123458',0.15,'Charged',1),(52,'2014-06-05',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(53,'2014-06-05',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(54,'2014-06-05',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(55,'2014-06-05',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(56,'2014-06-05',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(57,'2014-06-05',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(58,'2014-06-05',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(59,'2014-06-06',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(60,'2014-06-09',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(61,'2014-06-09',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(62,'2014-06-09',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(63,'2014-06-09',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(64,'2014-06-10',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(65,'2014-06-10',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(66,'2014-06-10',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(67,'2014-06-17',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(68,'2014-06-19',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(69,'2014-06-19',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(70,'2014-06-23',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(71,'2014-06-24',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(72,'2014-06-24',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(73,'2014-06-26',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(74,'2014-07-01',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(75,'2014-07-01',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(76,'2014-07-03',2,'WAP','54321','LKR','[\"Alien Invaders Game\"]','tel:+94773335976',NULL,'Example Games Inc','Game','REF-12345',0,'Charged',1),(77,'2014-07-03',2,'WAP','54321','LKR','[\"Alien Invaders Game two\"]','tel:+94773335976',NULL,'Example Games Inc','Game','REF-12345',0,'Charged',1),(78,'2014-07-03',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(79,'2014-07-03',2,'WAP','54321','LKR','[\"Alien Invaders Game two\"]','tel:+94773335976',NULL,'Example Games Inc','Game','REF-12345',0,'Charged',1),(80,'2014-07-03',2,'WAP','54321','LKR','[\"Alien Invaders Game two\"]','tel:+94773335976',NULL,'Example Games Inc','Game','REF-12345',0,'Charged',1),(81,'2014-07-15',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(82,'2014-07-15',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(83,'2014-08-01',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(84,'2014-08-01',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(85,'2014-08-01',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(86,'2014-08-05',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(87,'2014-08-05',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(88,'2014-08-07',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(89,'2014-08-07',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(90,'2014-08-07',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(91,'2014-08-11',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(92,'2014-08-26',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(93,'2014-08-26',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(94,'2014-08-26',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(95,'2014-08-26',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(96,'2014-08-26',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(97,'2014-08-26',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(98,'2014-08-26',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1),(99,'2014-09-22',10,'SMS','54321','USD','Alien Invaders Game','tel:+94773852147',NULL,NULL,'Game','REF-12345',0.15,'Charged',1);
+/*!40000 ALTER TABLE `charge_amount_request` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `locationparam`
+--
+
+DROP TABLE IF EXISTS `locationparam`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `locationparam` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `altitude` varchar(255) DEFAULT NULL,
+  `latitude` varchar(255) DEFAULT NULL,
+  `longitude` varchar(255) DEFAULT NULL,
+  `loc_ret_status` varchar(255) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `locationparam_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `locationparam`
+--
+
+LOCK TABLES `locationparam` WRITE;
+/*!40000 ALTER TABLE `locationparam` DISABLE KEYS */;
+INSERT INTO `locationparam` VALUES (1,'1001.054','-80.86302','7.14785','Retrieved',1),(10,'','','','Retrieved',22);
+/*!40000 ALTER TABLE `locationparam` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `locationtransactionlog`
+--
+
+DROP TABLE IF EXISTS `locationtransactionlog`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `locationtransactionlog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `address` varchar(255) DEFAULT NULL,
+  `requested_accuracy` double DEFAULT NULL,
+  `tran_oper_status` varchar(255) DEFAULT NULL,
+  `effect_date` date DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `locationtransactionlog_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `locationtransactionlog`
+--
+
+LOCK TABLES `locationtransactionlog` WRITE;
+/*!40000 ALTER TABLE `locationtransactionlog` DISABLE KEYS */;
+INSERT INTO `locationtransactionlog` VALUES (86,'tel:+94773852147',1000,'Retrieved','2014-08-07',1),(87,'tel:+94773852147',1000,'Retrieved','2014-08-26',1),(88,'tel:+94773852147',1000,'Retrieved','2014-09-22',1);
+/*!40000 ALTER TABLE `locationtransactionlog` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `numbers`
+--
+
+DROP TABLE IF EXISTS `numbers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `numbers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `number` varchar(255) DEFAULT NULL,
+  `num_balance` double DEFAULT NULL,
+  `num_description` varchar(255) DEFAULT NULL,
+  `num_status` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK88C28E4A9E083448` (`user_id`),
+  CONSTRAINT `FK88C28E4A9E083448` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `numbers`
+--
+
+LOCK TABLES `numbers` WRITE;
+/*!40000 ALTER TABLE `numbers` DISABLE KEYS */;
+INSERT INTO `numbers` VALUES (2,'94776969896       ',90,'Testing  ',1,1),(3,'942342342 ',1000,'test 23',1,1),(5,'947733359769',1000,'Test number',1,1),(6,'94773852147   ',418,'crome test   ',1,1),(7,'+947773335976',1000,'',1,1),(8,'94776969895',1000,'',1,1),(9,'94773335976',992,'',1,1),(10,'94776969898',1000,'',1,1),(11,'94776969897',1000,'',1,1);
+/*!40000 ALTER TABLE `numbers` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `payment_gen`
+--
+
+DROP TABLE IF EXISTS `payment_gen`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `payment_gen` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `delivery_status` varchar(255) DEFAULT NULL,
+  `max_pay_amount` varchar(255) DEFAULT NULL,
+  `max_tx_perday` varchar(255) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKA4347D979E083448` (`user_id`),
+  CONSTRAINT `FKA4347D979E083448` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `payment_gen`
+--
+
+LOCK TABLES `payment_gen` WRITE;
+/*!40000 ALTER TABLE `payment_gen` DISABLE KEYS */;
+/*!40000 ALTER TABLE `payment_gen` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `paymentparam`
+--
+
+DROP TABLE IF EXISTS `paymentparam`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `paymentparam` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `created` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `lastupdated` varchar(255) DEFAULT NULL,
+  `lastupdated_date` datetime DEFAULT NULL,
+  `maxamt` int(11) DEFAULT NULL,
+  `maxtrn` int(11) DEFAULT NULL,
+  `paystatus` varchar(255) DEFAULT NULL,
+  `userid` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `paymentparam`
+--
+
+LOCK TABLES `paymentparam` WRITE;
+/*!40000 ALTER TABLE `paymentparam` DISABLE KEYS */;
+INSERT INTO `paymentparam` VALUES (6,NULL,NULL,NULL,NULL,100,100,'Processing',1),(7,NULL,NULL,NULL,NULL,10,10,'Charged',13);
+/*!40000 ALTER TABLE `paymentparam` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `send_sms_to_application`
+--
+
+DROP TABLE IF EXISTS `send_sms_to_application`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `send_sms_to_application` (
+  `sms_id` int(11) NOT NULL AUTO_INCREMENT,
+  `effect_date` date DEFAULT NULL,
+  `destination_address` varchar(255) DEFAULT NULL,
+  `message` varchar(255) DEFAULT NULL,
+  `sender_address` varchar(255) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`sms_id`),
+  KEY `FKEBE4BF499E083448` (`user_id`),
+  CONSTRAINT `FKEBE4BF499E083448` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `send_sms_to_application`
+--
+
+LOCK TABLES `send_sms_to_application` WRITE;
+/*!40000 ALTER TABLE `send_sms_to_application` DISABLE KEYS */;
+INSERT INTO `send_sms_to_application` VALUES (1,'2014-06-02','26451','Hello World','94776969896',1),(2,'2014-06-02','26451','Hello World','94776969896',1),(3,'2014-06-02','26451','Hello World','94776969896',1),(4,'2014-06-02','26451','Hello World','94776969896',1),(5,'2014-06-02','26451','Hello World','94776969896',1),(6,'2014-06-02','26451','Hello World','94776969896',1),(7,'2014-06-02','26451','Hello World','94776969896',1),(8,'2014-06-02','26451','Hello World','94776969896',1),(9,'2014-06-02','26451','Hello World','94776969896',1),(10,'2014-06-02','26451','Hello World','94776969896',1),(11,'2014-06-02','26451','Hello World','94776969896',1),(12,'2014-06-02','26451','Hello World','94776969896',1),(13,'2014-06-02','26451','Hello World','94776969896',1),(14,'2014-06-02','26451','Hello World','94776969896',1),(15,'2014-06-02','26451','Hello World','94776969896',1),(16,'2014-06-02','26451','Hello World','94776969896',1),(17,'2014-06-02','26451','Hello World','94776969896',1),(18,'2014-06-02','26451','Hello World','94776969896',1),(19,'2014-06-02','26451','Hello World','94776969896',1),(20,'2014-06-02','26451','Hello World','94776969896',1),(21,'2014-06-02','26451','Hello World','94776969896',1),(22,'2014-06-03','26451','Hello World','94776969896',1),(23,'2014-06-03','26451','Hello World','94776969896',1),(24,'2014-06-04','26451','Hello World','94776969896',1),(25,'2014-06-04','26451','Hello World','94776969896',1),(26,'2014-06-04','26451','Hello World','94776969896',1),(27,'2014-06-04','26451','Hello World','94776969896',1),(28,'2014-06-04','26451','Hello World2','94776969896',1),(29,'2014-06-04','94773852147','Hello World2','94776969896',1),(30,'2014-06-04','26451','Hello World','94776969896',1),(31,'2014-06-04','26451','Hello World','94776969896',1),(32,'2014-06-04','26451','Vote test','94776969896',1),(33,'2014-06-04','26451','Hello World','947733359769',1),(34,'2014-06-04','94773852147','Hello World','94776969896',1),(35,'2014-06-04','26451','Hello World','94776969896',1),(36,'2014-06-04','26451','Hello World','94776969896',1),(37,'2014-06-05','26451','Hello World','94776969896',1),(38,'2014-06-05','26451','Hello World','94776969896',1),(39,'2014-06-05','26451','Hello World','94776969896',1),(40,'2014-06-05','26451','Hello World','94776969896',1),(41,'2014-06-05','26451','Hello World','94776969896',1),(42,'2014-06-05','26451','Hello World','94776969896',1),(43,'2014-06-06','26451','Hello World','94776969896',1),(44,'2014-06-09','26451','Hello World','94776969896',1),(45,'2014-06-10','26451','Hello World','94776969896',1),(46,'2014-06-17','26451','Hello World','94776969896',1),(47,'2014-06-17','26451','Hello World','94776969896',1),(48,'2014-06-18','26451','Hello World','94776969896',1),(49,'2014-06-19','26451','Hello World','94776969896',1),(50,'2014-06-23','26451','Hello World','94776969896',1),(51,'2014-06-23','26451','Hello World','94776969896',1),(52,'2014-06-23','26451','Hello World','94776969896',1),(53,'2014-07-01','26451','Hello World','94776969896',1),(54,'2014-07-01','26451','Hello World','94776969896',1),(55,'2014-07-15','26451','Hello World','94776969896',1),(56,'2014-07-15','26451','Hello World','94776969896',1),(57,'2014-07-15','26451','Hello World','94776969896',1),(58,'2014-08-01','26451','Hello World','94776969896',1),(59,'2014-08-05','26451','Hello World','94776969896',1),(60,'2014-08-05','26451','Hello World','94776969896',1),(61,'2014-08-05','26451','Hello World','94776969896',1),(62,'2014-08-05','26451','Hello World','94776969896',1),(63,'2014-08-05','26451','Hello World','94776969896',1),(64,'2014-08-05','26451','Hello World','94776969896',1),(65,'2014-08-05','26451','Hello World','94776969896',1),(66,'2014-08-05','26451','Hello World','94776969896',1),(67,'2014-08-05','26451','Hello World','94776969896',1),(68,'2014-08-05','26451','Hello World','94776969896',1),(69,'2014-08-05','26451','Hello World','94776969896',1),(70,'2014-08-05','26451','Hello World','94776969896',1),(71,'2014-08-05','26451','Hello World','94776969896',1),(72,'2014-08-05','26451','Hello World','94776969896',1),(73,'2014-08-05','26451','Hello World','94776969896',1),(74,'2014-08-05','26451','Hello World','94776969896',1),(75,'2014-08-05','26451','Hello World','94776969896',1),(76,'2014-08-05','26451','Hello World','94776969896',1),(77,'2014-08-07','26451','Hello World','94776969896',1),(78,'2014-08-07','26451','Hello World','94776969896',1),(79,'2014-08-08','26451','Hello World','94776969896',1),(80,'2014-08-08','26451','Hello World','94776969896',1),(81,'2014-08-08','26451','Hello World','94776969896',1),(82,'2014-08-08','null','Hello World','null',1),(83,'2014-08-08','26451','Hello World','94776969896',1),(84,'2014-08-08','26451','Hello World','94776969896',1),(85,'2014-08-08','26451','Hello World','94776969896',1),(86,'2014-08-08','26451','Hello World','94776969896',1),(87,'2014-08-08','26451','Hello World','94776969896',1),(88,'2014-08-08','26451','Hello World','94776969896',1),(89,'2014-08-08','26451','Hello World','94776969896',1),(90,'2014-08-08','26451','Hello World','94776969896',1),(91,'2014-08-08','26451','Hello World','94776969896',1),(92,'2014-08-25','26451','Hello World','94776969896',1),(93,'2014-08-26','26451','Hello World','94776969896',1),(94,'2014-08-26','26451','Hello World','94776969896',1);
+/*!40000 ALTER TABLE `send_sms_to_application` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sender_address`
+--
+
+DROP TABLE IF EXISTS `sender_address`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sender_address` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `description` varchar(255) DEFAULT NULL,
+  `shortcode` varchar(255) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKB79857EA9E083448` (`user_id`),
+  CONSTRAINT `FKB79857EA9E083448` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sender_address`
+--
+
+LOCK TABLES `sender_address` WRITE;
+/*!40000 ALTER TABLE `sender_address` DISABLE KEYS */;
+INSERT INTO `sender_address` VALUES (1,'Test number   ','26451   ',1),(2,'test','94773852147',1),(3,'jgjhjk','3456 ',1),(4,'test roshan','94773335976',1);
+/*!40000 ALTER TABLE `sender_address` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sms`
+--
+
+DROP TABLE IF EXISTS `sms`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sms` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `deliveryStatus` varchar(255) DEFAULT NULL,
+  `maxNotifications` varchar(255) DEFAULT NULL,
+  `notificationDelay` varchar(255) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK1BD599E083448` (`user_id`),
+  CONSTRAINT `FK1BD599E083448` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sms`
+--
+
+LOCK TABLES `sms` WRITE;
+/*!40000 ALTER TABLE `sms` DISABLE KEYS */;
+INSERT INTO `sms` VALUES (1,'DeliveredToTerminal','10','10',1),(6,'DeliveredToTerminal','10','10',1),(7,'DeliveredToTerminal','10','10',1),(8,'DeliveredToTerminal','10','10',1),(9,'DeliveredToTerminal','10','10',1);
+/*!40000 ALTER TABLE `sms` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sms_subscription`
+--
+
+DROP TABLE IF EXISTS `sms_subscription`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sms_subscription` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sub_number` varchar(255) DEFAULT NULL,
+  `sub_status` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKA48A3E439E083448` (`user_id`),
+  CONSTRAINT `FKA48A3E439E083448` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sms_subscription`
+--
+
+LOCK TABLES `sms_subscription` WRITE;
+/*!40000 ALTER TABLE `sms_subscription` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sms_subscription` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `smsparam`
+--
+
+DROP TABLE IF EXISTS `smsparam`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `smsparam` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `deliveryStatus` varchar(45) DEFAULT NULL,
+  `maxNotifications` varchar(11) DEFAULT NULL,
+  `notificationDelay` varchar(11) DEFAULT NULL,
+  `userid` int(11) DEFAULT NULL,
+  `created` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `lastupdated` varchar(255) DEFAULT NULL,
+  `lastupdated_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `smsparam`
+--
+
+LOCK TABLES `smsparam` WRITE;
+/*!40000 ALTER TABLE `smsparam` DISABLE KEYS */;
+INSERT INTO `smsparam` VALUES (7,'MessageWaiting','100','10',1,NULL,NULL,NULL,NULL);
+/*!40000 ALTER TABLE `smsparam` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `smstransactionlog`
+--
+
+DROP TABLE IF EXISTS `smstransactionlog`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `smstransactionlog` (
+  `sms_id` int(11) NOT NULL AUTO_INCREMENT,
+  `effect_date` date DEFAULT NULL,
+  `addresses` varchar(255) DEFAULT NULL,
+  `callback_data` varchar(255) DEFAULT NULL,
+  `client_correlator` varchar(255) DEFAULT NULL,
+  `message` varchar(255) DEFAULT NULL,
+  `notify_url` varchar(255) DEFAULT NULL,
+  `sender_address` varchar(255) DEFAULT NULL,
+  `sender_name` varchar(255) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `batchsize` int(11) DEFAULT NULL,
+  `criteria` varchar(255) DEFAULT NULL,
+  `notificationFormat` varchar(255) DEFAULT NULL,
+  `trnstatus` varchar(255) DEFAULT NULL,
+  `txntype` int(11) DEFAULT NULL,
+  PRIMARY KEY (`sms_id`),
+  KEY `FK2A1D0F729E083448` (`user_id`),
+  CONSTRAINT `FK2A1D0F729E083448` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=244 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `smstransactionlog`
+--
+
+LOCK TABLES `smstransactionlog` WRITE;
+/*!40000 ALTER TABLE `smstransactionlog` DISABLE KEYS */;
+INSERT INTO `smstransactionlog` VALUES (1,'2014-05-30','[tel:+94770000976, tel:+94770000977]','some-data-useful-to-the-requester','123456','Hello World','http://application.example.com/notifications/DeliveryInfoNotification','tel:+94773214589','ACME Inc.',1,NULL,NULL,NULL,NULL,NULL),(2,'2014-05-30','[tel:+94770000976, tel:+94770000977]','some-data-useful-to-the-requester','123456','Hello World','http://application.example.com/notifications/DeliveryInfoNotification','tel:+94773214589','ACME Inc.',1,NULL,NULL,NULL,NULL,NULL),(3,'2014-05-30','[tel:+94770000976, tel:+94770000977]','some-data-useful-to-the-requester','123456','Hello World','http://application.example.com/notifications/DeliveryInfoNotification','tel:+94773214589','ACME Inc.',1,NULL,NULL,NULL,NULL,NULL),(4,'2014-05-30','[tel:+94773852147]','some-data-useful-to-the-requester','123456','Hello World','http://application.example.com/notifications/DeliveryInfoNotification','tel:+94773852147','ACME Inc.',1,NULL,NULL,NULL,NULL,NULL),(5,'2014-05-30','[tel:+94773852147]','some-data-useful-to-the-requester','123456','Hello World','http://application.example.com/notifications/DeliveryInfoNotification','tel:+94773852147','ACME Inc.',1,NULL,NULL,NULL,NULL,NULL),(6,'2014-06-02',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(7,'2014-06-02',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(8,'2014-06-02',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(9,'2014-06-02',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(10,'2014-06-02',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(11,'2014-06-02',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(12,'2014-06-02',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Hello','JSON','success',3),(13,'2014-06-03',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(14,'2014-06-03',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(15,'2014-06-03',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(16,'2014-06-04',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(17,'2014-06-04',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(18,'2014-06-04',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(19,'2014-06-04',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(20,'2014-06-04',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(21,'2014-06-04',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(22,'2014-06-04',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(23,'2014-06-04',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(24,'2014-06-04',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(25,'2014-06-04',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote06u1','JSON','success',3),(26,'2014-06-04','[tel:+94773852147]','some-data-useful-to-the-requester','123456','Hello World','http://application.example.com/notifications/DeliveryInfoNotification','tel:+94773852147','ACME Inc.',1,0,NULL,NULL,'success',1),(27,'2014-06-04','[tel:+94773852147]','some-data-useful-to-the-requester','123456','Hello World 2','http://application.example.com/notifications/DeliveryInfoNotification','tel:+94773852147','ACME Inc.',1,0,NULL,NULL,'success',1),(28,'2014-06-04',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,10,NULL,NULL,'success',2),(29,'2014-06-04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,0,NULL,NULL,'success',4),(30,'2014-06-04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,0,NULL,NULL,'success',4),(31,'2014-06-04',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(32,'2014-06-04',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(33,'2014-06-04',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(34,'2014-06-04',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(35,'2014-06-04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,0,NULL,NULL,'success',4),(36,'2014-06-04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,0,NULL,NULL,'success',4),(37,'2014-06-04',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(38,'2014-06-04',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote2','JSON','success',3),(39,'2014-06-04',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote5','JSON','success',3),(40,'2014-06-04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,0,NULL,NULL,'success',4),(41,'2014-06-04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,0,NULL,NULL,'success',4),(42,'2014-06-04','[tel:+94773852147]','some-data-useful-to-the-requester','123456','Hello World 2','http://application.example.com/notifications/DeliveryInfoNotification','tel:+94773852147','ACME Inc.',1,0,NULL,NULL,'success',1),(43,'2014-06-04',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(44,'2014-06-04',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote21','JSON','success',3),(45,'2014-06-04',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote21','JSON','success',3),(46,'2014-06-04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,0,NULL,NULL,'success',4),(47,'2014-06-04',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote22','JSON','success',3),(48,'2014-06-04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,0,NULL,NULL,'success',4),(49,'2014-06-04',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(50,'2014-06-04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,0,NULL,NULL,'success',4),(51,'2014-06-04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,0,NULL,NULL,'success',4),(52,'2014-06-04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,0,NULL,NULL,'success',4),(53,'2014-06-04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,0,NULL,NULL,'success',4),(54,'2014-06-04',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(55,'2014-06-04',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(56,'2014-06-04',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(57,'2014-06-04',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(58,'2014-06-04',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(59,'2014-06-04',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(60,'2014-06-04',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(61,'2014-06-04',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(62,'2014-06-04',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(63,'2014-06-04',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(64,'2014-06-04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,0,NULL,NULL,'success',4),(65,'2014-06-04',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(66,'2014-06-04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,0,NULL,NULL,'success',4),(67,'2014-06-04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,0,NULL,NULL,'success',4),(68,'2014-06-04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,0,NULL,NULL,'success',4),(69,'2014-06-04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,0,NULL,NULL,'success',4),(70,'2014-06-04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,0,NULL,NULL,'success',4),(71,'2014-06-04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,0,NULL,NULL,'success',4),(72,'2014-06-04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,0,NULL,NULL,'success',4),(73,'2014-06-04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,0,NULL,NULL,'success',4),(74,'2014-06-04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,0,NULL,NULL,'success',4),(75,'2014-06-04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,0,NULL,NULL,'success',4),(76,'2014-06-04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,0,NULL,NULL,'success',4),(77,'2014-06-04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,0,NULL,NULL,'success',4),(78,'2014-06-04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,0,NULL,NULL,'success',4),(79,'2014-06-04',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(80,'2014-06-04',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(81,'2014-06-04',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(82,'2014-06-04',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(83,'2014-06-04',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(84,'2014-06-04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,0,NULL,NULL,'success',4),(85,'2014-06-04',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(86,'2014-06-04',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(87,'2014-06-04',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(88,'2014-06-04',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(89,'2014-06-04',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(90,'2014-06-04',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(91,'2014-06-04',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(92,'2014-06-04',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(93,'2014-06-04',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,4,NULL,NULL,'success',2),(94,'2014-06-04',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,20,NULL,NULL,'success',2),(95,'2014-06-04',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(96,'2014-06-04',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(97,'2014-06-04',NULL,NULL,NULL,NULL,NULL,'94773852147',NULL,1,2,NULL,NULL,'success',2),(98,'2014-06-04',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(99,'2014-06-04',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(100,'2014-06-04',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(101,'2014-06-04',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(102,'2014-06-05',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(103,'2014-06-05',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(104,'2014-06-05',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(105,'2014-06-05',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(106,'2014-06-05',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(107,'2014-06-05',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(108,'2014-06-05',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(109,'2014-06-05',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(110,'2014-06-05',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(111,'2014-06-05',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(112,'2014-06-05',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(113,'2014-06-05',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(114,'2014-06-05',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(115,'2014-06-05',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(116,'2014-06-05',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(117,'2014-06-05',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(118,'2014-06-05',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(119,'2014-06-05',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(120,'2014-06-05',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(121,'2014-06-05',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(122,'2014-06-05',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(123,'2014-06-05',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(124,'2014-06-05',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(125,'2014-06-05',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(126,'2014-06-05',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(127,'2014-06-05',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(128,'2014-06-05',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(129,'2014-06-05',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(130,'2014-06-05',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(131,'2014-06-05',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(132,'2014-06-05',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(133,'2014-06-05',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(134,'2014-06-05',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(135,'2014-06-05',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(136,'2014-06-05',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(137,'2014-06-05',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(138,'2014-06-05',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(139,'2014-06-05',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(140,'2014-06-06',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(141,'2014-06-09',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(142,'2014-06-09',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(143,'2014-06-10',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(144,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'44',NULL,1,0,NULL,NULL,'success',4),(145,'2014-06-10',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(146,'2014-06-10',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(147,'2014-06-10',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(148,'2014-06-10',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(149,'2014-06-10',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(150,'2014-06-10',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(151,'2014-06-10',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(152,'2014-06-10',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(153,'2014-06-10',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(154,'2014-06-10',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(155,'2014-06-10',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(156,'2014-06-10',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(157,'2014-06-10',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(158,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'96',NULL,1,0,NULL,NULL,'success',4),(159,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'95',NULL,1,0,NULL,NULL,'success',4),(160,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'94',NULL,1,0,NULL,NULL,'success',4),(161,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'93',NULL,1,0,NULL,NULL,'success',4),(162,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'92',NULL,1,0,NULL,NULL,'success',4),(163,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'91',NULL,1,0,NULL,NULL,'success',4),(164,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'90',NULL,1,0,NULL,NULL,'success',4),(165,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'89',NULL,1,0,NULL,NULL,'success',4),(166,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'88',NULL,1,0,NULL,NULL,'success',4),(167,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'87',NULL,1,0,NULL,NULL,'success',4),(168,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'86',NULL,1,0,NULL,NULL,'success',4),(169,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'85',NULL,1,0,NULL,NULL,'success',4),(170,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'84',NULL,1,0,NULL,NULL,'success',4),(171,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'83',NULL,1,0,NULL,NULL,'success',4),(172,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'82',NULL,1,0,NULL,NULL,'success',4),(173,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'81',NULL,1,0,NULL,NULL,'success',4),(174,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'80',NULL,1,0,NULL,NULL,'success',4),(175,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'79',NULL,1,0,NULL,NULL,'success',4),(176,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'78',NULL,1,0,NULL,NULL,'success',4),(177,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'77',NULL,1,0,NULL,NULL,'success',4),(178,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'76',NULL,1,0,NULL,NULL,'success',4),(179,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'75',NULL,1,0,NULL,NULL,'success',4),(180,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'74',NULL,1,0,NULL,NULL,'success',4),(181,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'73',NULL,1,0,NULL,NULL,'success',4),(182,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'72',NULL,1,0,NULL,NULL,'success',4),(183,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'71',NULL,1,0,NULL,NULL,'success',4),(184,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'70',NULL,1,0,NULL,NULL,'success',4),(185,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'69',NULL,1,0,NULL,NULL,'success',4),(186,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'68',NULL,1,0,NULL,NULL,'success',4),(187,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'67',NULL,1,0,NULL,NULL,'success',4),(188,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'66',NULL,1,0,NULL,NULL,'success',4),(189,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'65',NULL,1,0,NULL,NULL,'success',4),(190,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'64',NULL,1,0,NULL,NULL,'success',4),(191,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'63',NULL,1,0,NULL,NULL,'success',4),(192,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'62',NULL,1,0,NULL,NULL,'success',4),(193,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'61',NULL,1,0,NULL,NULL,'success',4),(194,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'60',NULL,1,0,NULL,NULL,'success',4),(195,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'59',NULL,1,0,NULL,NULL,'success',4),(196,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'58',NULL,1,0,NULL,NULL,'success',4),(197,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'57',NULL,1,0,NULL,NULL,'success',4),(198,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'56',NULL,1,0,NULL,NULL,'success',4),(199,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'55',NULL,1,0,NULL,NULL,'success',4),(200,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'54',NULL,1,0,NULL,NULL,'success',4),(201,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'53',NULL,1,0,NULL,NULL,'success',4),(202,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'52',NULL,1,0,NULL,NULL,'success',4),(203,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'51',NULL,1,0,NULL,NULL,'success',4),(204,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'50',NULL,1,0,NULL,NULL,'success',4),(205,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'49',NULL,1,0,NULL,NULL,'success',4),(206,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'48',NULL,1,0,NULL,NULL,'success',4),(207,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'47',NULL,1,0,NULL,NULL,'success',4),(208,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'46',NULL,1,0,NULL,NULL,'success',4),(209,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'43',NULL,1,0,NULL,NULL,'success',4),(210,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'42',NULL,1,0,NULL,NULL,'success',4),(211,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'41',NULL,1,0,NULL,NULL,'success',4),(212,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'35',NULL,1,0,NULL,NULL,'success',4),(213,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'34',NULL,1,0,NULL,NULL,'success',4),(214,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'33',NULL,1,0,NULL,NULL,'success',4),(215,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'32',NULL,1,0,NULL,NULL,'success',4),(216,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'31',NULL,1,0,NULL,NULL,'success',4),(217,'2014-06-10',NULL,NULL,NULL,NULL,NULL,'26',NULL,1,0,NULL,NULL,'success',4),(218,'2014-06-10',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote','JSON','success',3),(219,'2014-06-10',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote2','JSON','success',3),(220,'2014-06-10',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote3','JSON','success',3),(221,'2014-06-10',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'','JSON','success',3),(222,'2014-06-11',NULL,'doSomething()',NULL,NULL,'http://www.yoururl.here/notifications/DeliveryInfoNotification',NULL,NULL,1,0,'Vote4','JSON','success',3),(223,'2014-06-17',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(224,'2014-06-18',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(225,'2014-06-23',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(226,'2014-06-23',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(227,'2014-06-23',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(228,'2014-06-23',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(229,'2014-06-23',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,3,NULL,NULL,'success',2),(230,'2014-06-24',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(231,'2014-06-24',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(232,'2014-06-24',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(233,'2014-06-24',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(234,'2014-06-24',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(235,'2014-06-26',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(236,'2014-07-01',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(237,'2014-08-07',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(238,'2014-08-07',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(239,'2014-08-11',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(240,'2014-08-11',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(241,'2014-08-25',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(242,'2014-08-26',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2),(243,'2014-08-26',NULL,NULL,NULL,NULL,NULL,'26451',NULL,1,2,NULL,NULL,'success',2);
+/*!40000 ALTER TABLE `smstransactionlog` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `subscribe_sms_request`
+--
+
+DROP TABLE IF EXISTS `subscribe_sms_request`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `subscribe_sms_request` (
+  `subscribe_id` int(11) NOT NULL AUTO_INCREMENT,
+  `effect_date` date DEFAULT NULL,
+  `callback_data` varchar(255) DEFAULT NULL,
+  `client_correlator` varchar(255) DEFAULT NULL,
+  `criteria` varchar(255) DEFAULT NULL,
+  `destination_address` varchar(255) DEFAULT NULL,
+  `notification_format` varchar(255) DEFAULT NULL,
+  `notify_url` varchar(255) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`subscribe_id`),
+  KEY `FKC8368A349E083448` (`user_id`),
+  CONSTRAINT `FKC8368A349E083448` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `subscribe_sms_request`
+--
+
+LOCK TABLES `subscribe_sms_request` WRITE;
+/*!40000 ALTER TABLE `subscribe_sms_request` DISABLE KEYS */;
+INSERT INTO `subscribe_sms_request` VALUES (97,'2014-06-10','doSomething()','12345','Vote','26451','JSON','http://www.yoururl.here/notifications/DeliveryInfoNotification',1),(98,'2014-06-10','doSomething()','12345','Vote2','26451','JSON','http://www.yoururl.here/notifications/DeliveryInfoNotification',1),(99,'2014-06-10','doSomething()','12345','Vote3','26451','JSON','http://www.yoururl.here/notifications/DeliveryInfoNotification',1),(100,'2014-06-10','doSomething()','12345','','26451','JSON','http://www.yoururl.here/notifications/DeliveryInfoNotification',1),(101,'2014-06-11','doSomething()','12345','Vote4','26451','JSON','http://www.yoururl.here/notifications/DeliveryInfoNotification',1);
+/*!40000 ALTER TABLE `subscribe_sms_request` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(255) DEFAULT NULL,
+  `user_status` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uc_user` (`user_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,'admin',0),(2,'sandbox',1),(13,'testurs',1),(16,'testuser',1),(22,'tiron',1),(26,'test_2',1);
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2014-09-22  7:10:55

@@ -1,0 +1,44 @@
+a{
+    cursor:pointer;
+    color: #0088cc;
+}
+ul li {
+	display: block;
+	color: #777;
+}
+.title-section h2{
+    border-color:#e46c0a;
+}
+textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus, .uneditable-input:focus {
+	border-color: rgba(228, 108, 10, 0.8);
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(228, 108, 10, 0.6);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(228, 108, 10, 0.6);
+}
+.btn-primary {
+  background-image: linear-gradient(to bottom, #e46c0a, #864B1A);
+}
+.nav-list > .active > a, .nav-list > .active > a:hover, .nav-list > .active > a:focus {
+	background-color: #e46c0a;
+}
+body,textarea,pre,.navbar-search .search-query{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+label, input, button, select, textarea{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+h1,h2,h3,h4,h5{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+#footer {
+    height: 150px;
+}
+.new-sub-menu-wizard li a.wizard-active:after {
+	border-left: 22px solid #E98838;
+}
+.new-sub-menu-wizard li a.wizard-active {
+	background: none repeat scroll 0 0 #E98838;
+}
+.new-sub-menu-wizard li a.wizard-active:before {
+	border-bottom: 22px solid #E98838;
+	border-top: 22px solid #E98838;
+}

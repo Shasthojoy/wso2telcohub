@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse"
+     name="receiveSMS"
+     context="/receivesms">
+   <resource methods="POST">
+      <inSequence>
+         <property name="senderAddress" expression="//sender"/>
+         <property name="recipient" expression="//recipient"/>
+         <property name="messageID" expression="//msg_id"/>
+         <property name="message" expression="//message"/>
+         <property name="encoding" expression="//encoding"/>
+         <log level="custom">
+            <property name="myvar" expression="//xformValues//Sender/text()"/>
+         </log>
+         <dbreport>
+            <connection>
+               <pool>
+                  <password>axiatadbpassword</password>
+                  <user>axiatadbuser</user>
+                  <url>jdbc:mysql://10.174.15.26:3306/smsdata</url>
+                  <driver>com.mysql.jdbc.Driver</driver>
+               </pool>
+            </connection>
+            <statement>
+               <sql>insert into smsmessage (message_id,sender,recipient,message,encoding) values (?,?,?,?,?);</sql>
+               <parameter expression="get-property('messageID')" type="VARCHAR"/>
+               <parameter expression="get-property('senderAddress')" type="VARCHAR"/>
+               <parameter expression="get-property('recipient')" type="VARCHAR"/>
+               <parameter expression="get-property('message')" type="VARCHAR"/>
+               <parameter expression="get-property('encoding')" type="INTEGER"/>
+            </statement>
+         </dbreport>
+         <class name="com.axiata.plugin.ReceiveSMSDBRead.ReceiveSMSDBReader"/>
+         <property name="registered" expression="get-property('appid')"/>
+         <property name="time" expression="get-property('SYSTEM_DATE', 'hh:mm:ss')"/>
+         <property name="date" expression="get-property('SYSTEM_DATE', 'yyyy-MM-dd')"/>
+         <property name="datetime"
+                   expression="fn:concat(fn:concat(get-property('date'),'T'),get-property('time'))"/>
+         <payloadFactory media-type="xml">
+            <format>
+               <inboundSMSMessageList>
+                  <inboundSMSMessage>
+                     <dateTime>$1</dateTime>
+                     <destinationAddress>$2</destinationAddress>
+                     <messageId>$3</messageId>
+                     <message>$4</message>
+                     <resourceURL>$5</resourceURL>
+                     <senderAddress>$6</senderAddress>
+                  </inboundSMSMessage>
+                  <numberOfMessagesInThisBatch>$7</numberOfMessagesInThisBatch>
+                  <resourceURL>$8</resourceURL>
+                  <totalNumberOfPendingMessages>$9</totalNumberOfPendingMessages>
+               </inboundSMSMessageList>
+            </format>
+            <args>
+               <arg evaluator="xml" expression="get-property('datetime')"/>
+               <arg evaluator="xml" expression="get-property('recipient')"/>
+               <arg evaluator="xml" expression="get-property('messageID')"/>
+               <arg evaluator="xml" expression="get-property('message')"/>
+               <arg evaluator="xml" expression="get-property('datetime')"/>
+               <arg evaluator="xml" expression="get-property('senderAddress')"/>
+               <arg value="1"/>
+               <arg value="http://testrul"/>
+               <arg value="1"/>
+            </args>
+         </payloadFactory>
+         <log level="custom">
+            <property name="notifyURL" expression="get-property('notifyURL')"/>
+         </log>
+         <header name="To" expression="get-property('notifyURL')"/>
+         <send>
+            <endpoint>
+               <default/>
+            </endpoint>
+         </send>
+      </inSequence>
+   </resource>
+</api>

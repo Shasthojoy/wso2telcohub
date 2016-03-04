@@ -1,0 +1,15 @@
+<AxiataConfigs>
+	<!--
+	This parameter specifies whether the deployment should act as a HUB or a PLUGIN.
+	[Values : HUB/PLUGIN]
+	-->
+	<DeploymentType>PLUGIN</DeploymentType>
+	<!--
+	If the deployment is configured to be a PLUGIN, then configure the below parameter
+   	to specify the PLUGIN operator.
+	-->
+        <PluginInfo>
+              <PluginOperator>DIALOG</PluginOperator>
+        </PluginInfo>
+
+</AxiataConfigs>

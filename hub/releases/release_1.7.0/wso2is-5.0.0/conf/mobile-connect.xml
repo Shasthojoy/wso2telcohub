@@ -1,0 +1,81 @@
+<MobileConnectConfig>
+    <DataSourceName>jdbc/CONNECT_DB</DataSourceName>
+    <EncryptAppend>TheServingOperatorthencanrecognizetheyhavereceivedanencryptedMSISDNanddecryptthestringusingitsprivatekeywichisnotknowntotheOneAPI</EncryptAppend>
+    <GSMAExchangeConfig>
+        <SOHost>integration-axiatagroup.apiexchange.org</SOHost>
+        <Organization>axiatagroup</Organization>
+        <AuthToken>{ExchangeHubCredentials}</AuthToken>
+    </GSMAExchangeConfig>
+
+	
+   <!-- <SMS>
+        <Endpoint>http://smshost/send</Endpoint>
+        <AuthToken>{SmsAuthToken}</AuthToken>
+        <MessageContent>Click on following URL to provide consent to application -</MessageContent>
+    </SMS>-->
+
+    <!--USSD>
+        <Endpoint>http://ussdhost/request</Endpoint>
+        <AuthToken>{UssdAuthToken}</AuthToken>
+        <MessageContent>Login to SP with Mobile Connect?</MessageContent>
+        <ShortCode>1721</ShortCode>
+        <Keyword>123</Keyword>
+        <Pinauth>true</Pinauth>
+	<DashBoard>connect</DashBoard>
+    </USSD-->
+<dialog>
+<SMS>
+        <Endpoint>http://ideabiz.lk/apicall/smsmessaging/v1/outbound/26451/requests</Endpoint>
+        <AuthToken>eac657d0b78d8b290bb31c9843fd1</AuthToken>
+       <!--Endpoint>http://localhost:8281/smsmessaging/v1/outbound/26451/requests</Endpoint>
+       <AuthToken>F12bLDQsxznnWwYvdgm0JQhB9eEa</AuthToken-->
+       <MessageContent>Click URL below to provide consent to -</MessageContent>
+    </SMS>
+<USSD>
+        <Endpoint>http://ideabiz.lk/apicall/ussd/v1/outbound</Endpoint>
+        <AuthToken>d0f865b4453be954b03b8b67556a395</AuthToken>
+        <MessageContent>Login to SP with Mobile Connect?</MessageContent>
+        <ShortCode>1721</ShortCode>
+        <Keyword>123</Keyword>
+        <Pinauth>false</Pinauth>
+    <DashBoard>Mobile connect</DashBoard>
+    <USSDContextEndpoint>http://172.22.163.55:9764/SessionUpdater/tnspoints/endpoint/ussd/receive</USSDContextEndpoint>
+    <USSDPinContextEndpoint>http://172.22.163.55:9764/SessionUpdater/tnspoints/endpoint/ussd/pin</USSDPinContextEndpoint>
+    </USSD>
+</dialog>
+    <!-- Hostname/IP and port of the SMS Listener web-app. This should be set to publicly accessible hostname/IP of
+    Identity Server. By default the port would be 9763+[offset] -->
+    <!--<ListenerWebappHost>http://{is.host.name}:9764</ListenerWebappHost>-->
+
+    <HEADERENRICH>
+        <Endpoint>http://ussdhost/request</Endpoint>
+        <Enrichflg>true</Enrichflg>        
+        <MobileIPRanges>
+            <IPRange>127.0.0.0:127.0.0.255</IPRange>
+            <IPRange>192.168.0.0:192.168.0.255</IPRange>
+        </MobileIPRanges>        
+    </HEADERENRICH>
+    
+    <MePIN>
+        <Endpoint>https://api.mepin.com/transactions/create</Endpoint>
+        <ClientID>815ed87f78f81f4e108650f0cbb98f46</ClientID>
+        <AuthToken>N2JiM2EyMzJiNTYyNDU3OTk3MDAyZjNlNmQ0ZDA1NzE3NTY5ZWM2OWY5MzhmMzRjYTc1YTVhNzNkYzI4ZTg5YzpkZDQwM2UxNmZmNWExNjgwNWQ4MTZiMzYyMzA5ZWY2YzY2Yzc5NGE5YTQ2YThmNWJlNGYxY2RjYTQwZjIyZWQ2NzY5ZDlmNzBhZWJhYWQ0ZjFlNWVhOTk4ZTRlYzUxMTc1ZTViMjU1MDhjYjZmM2MyZDcxYTE5ZDI0MThkNWZiNw==</AuthToken>
+        <!--Method required from the end-user to confirm the transaction - tap,swipe,pin,fp-->
+        <ConfirmationPolicy>pin</ConfirmationPolicy>
+        <!--Short message to display on push notification-->
+        <ShortMessageText>Confirm Authentication</ShortMessageText>
+        <!--Header message to be displayed by MePIN Device App-->
+        <HeaderText>Authentication to</HeaderText>
+        <!--Message to display in MePIN Device App-->
+        <MessageText>Confirm Authentication to</MessageText>
+    </MePIN>
+
+ <MSS>
+        <Endpoint>http://54.72.52.113:9767/MSS/mss</Endpoint>
+        <SuccessStatus>200</SuccessStatus>
+        <MssText>MSS_TEXT</MssText>
+        <MssPinText>MSS_PIN_TEXT</MssPinText>
+
+    </MSS>
+    
+</MobileConnectConfig>

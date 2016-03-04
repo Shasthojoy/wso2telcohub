@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse"
+     name="sendSMSDR"
+     context="/smsdr">
+   <resource methods="GET" uri-template="/{sendadd}/requests/{msgid}/deliveryInfos">
+      <inSequence>
+         <property name="messageID" expression="get-property('uri.var.msgid')"/>
+         <property name="senderAddress"
+                   expression="fn:substring-after(get-property('uri.var.sendadd'), 'tel:+')"/>
+         <class name="com.axiata.plugin.SMSDBRead.DBRead"/>
+         <property name="messageData" expression="$body" type="OM"/>
+         <iterate id="receiverAddIteratorID" expression="//sender" sequential="true">
+            <target sequence="smsdrsequence"/>
+         </iterate>
+      </inSequence>
+      <outSequence>
+         <log level="full"/>
+         <property name="returnsprop" scope="default">
+            <returns xmlns=""/>
+         </property>
+         <property name="messageid" expression="//msg_id"/>
+         <property name="recipientnum"
+                   expression="get-property('messageData')/sender[@messageId=get-property('messageid')]/@recipient"/>
+         <property name="recipient" scope="default">
+            <recipient xmlns="">6281808147137</recipient>
+         </property>
+         <enrich>
+            <source type="property" clone="true" property="recipientnum"/>
+            <target xpath="$ctx:recipient/text()"/>
+         </enrich>
+         <enrich>
+            <source type="property" clone="true" property="recipient"/>
+            <target action="child" xpath="//return"/>
+         </enrich>
+         <aggregate id="receiverAddIteratorID">
+            <completeCondition>
+               <messageCount min="-1" max="-1"/>
+            </completeCondition>
+            <onComplete xmlns:ns1="urn:interactivewsdl"
+                        expression="//ns1:getSMSDRResponse/return"
+                        enclosingElementProperty="returnsprop">
+               <property name="responsePayload" expression="//returns"/>
+               <xslt key="conf:/deliveryInfoList.xslt"/>
+               <property name="messageType" value="application/json" scope="axis2"/>
+               <send/>
+            </onComplete>
+         </aggregate>
+         <send/>
+      </outSequence>
+   </resource>
+</api>

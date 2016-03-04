@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="APIErrorHandlerSequence">
+    <log level="custom" category="ERROR" description="">
+        <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+        <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+    </log>
+    <makefault version="soap11">
+        <code xmlns:soap11Env="http://schemas.xmlsoap.org/soap/envelope/" value="soap11Env:Server"/>
+        <reason expression="get-property('ERROR_MESSAGE')"/>
+        <role/>
+        <detail>500: Fault occurred in the XOCL API insequence and message is not passed to backend.</detail>
+    </makefault>
+    <property name="messageType" value="application/json" scope="axis2" type="STRING"/>
+    <respond/>
+</sequence>

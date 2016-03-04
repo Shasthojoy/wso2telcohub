@@ -1,0 +1,56 @@
+<%
+jagg.block("menu/primary", {
+    initializer:function (data) {
+
+    },
+
+    getOutputs:function (inputs) {
+
+        var user =jagg.getUser();
+        var links = [], path = inputs.pagePath;
+        
+        links.push({
+			"title":"Home",
+        	"url":jagg.getMappedUrl("/"),
+        	"classes":"link-home",
+        	"classIcon":"icon-billing",
+        	"tooltip":"",
+        	"active":(path == "/site/pages/home.jag")
+		});
+        
+        links.push({
+			"title":"Billing & Metering",
+			"url":jagg.getMappedUrl("/site/pages/billing.jag"),
+			"classes":"link-home",
+			"classIcon":"icon-billing",
+			"tooltip":"",
+			"active":(path == "/site/pages/billing.jag")
+		});
+        
+		links.push({
+			"title":"Workflow",
+			"url":jagg.getMappedUrl("/site/pages/workflow.jag"),
+			"classes":"link-home",
+			"classIcon":"icon-workflow",
+			"tooltip":"",
+			"active":(path == "/site/pages/workflow.jag")
+		});
+
+                links.push({
+			"title":"New Billing & Metering",
+			"url":jagg.getMappedUrl("/site/pages/billing-metering.jag"),
+			"classes":"link-home",
+			"classIcon":"icon-workflow",
+			"tooltip":"",
+			"active":(path == "/site/pages/billing-metering.jag")
+		});
+        
+        return {
+            "user": user,
+        	"links":links
+        };
+    }
+
+
+});
+%>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse"
+     name="USSDMOSubscribe"
+     context="/ussdmosubscribe">
+   <resource methods="POST">
+      <inSequence>
+         <header name="To"
+                 scope="transport"
+                 value="http://10.174.15.20:8280/ussdmosubscribe"/>
+         <log level="custom">
+            <property name="headerto" expression="get-property('To')"/>
+         </log>
+         <property name="sc" expression="json-eval($.subscription.shortCode)"/>
+         <property name="keyword" expression="json-eval($.subscription.keyword)"/>
+         <property name="notifyURL"
+                   expression="json-eval($.subscription.callbackReference.notifyURL)"/>
+         <property name="callbackData"
+                   expression="json-eval($.subscription.callbackReference.callbackData)"/>
+         <property name="shortcode"
+                   expression="fn:substring-after(get-property('sc'), 'tel:')"/>
+         <dbreport>
+            <connection>
+               <pool>
+                  <password>axiatadbpassword</password>
+                  <user>axiatadbuser</user>
+                  <url>jdbc:mysql://10.174.15.26:3306/smsdata</url>
+                  <driver>com.mysql.jdbc.Driver</driver>
+               </pool>
+            </connection>
+            <statement>
+               <sql>insert into ussdmosubscription(shortcode,keyword,notifyURL,callbackData) values (?,?,?,?)</sql>
+               <parameter xmlns:ns="http://org.apache.synapse/xsd"
+                          expression="get-property('shortcode')"
+                          type="VARCHAR"/>
+               <parameter xmlns:ns="http://org.apache.synapse/xsd"
+                          expression="get-property('keyword')"
+                          type="VARCHAR"/>
+               <parameter xmlns:ns="http://org.apache.synapse/xsd"
+                          expression="get-property('notifyURL')"
+                          type="VARCHAR"/>
+               <parameter xmlns:ns="http://org.apache.synapse/xsd"
+                          expression="get-property('callbackData')"
+                          type="VARCHAR"/>
+            </statement>
+         </dbreport>
+         <payloadFactory media-type="xml">
+            <format>
+               <subscription>
+                  <callbackReference>
+                     <callbackData>$1</callbackData>
+                     <notifyURL>$2</notifyURL>
+                  </callbackReference>
+                  <destinationAddress>$3</destinationAddress>
+                  <resourceURL>http://test.com/ussd/v1/inbound/subscriptions/$4</resourceURL>
+               </subscription>
+            </format>
+            <args>
+               <arg xmlns:ns="http://org.apache.synapse/xsd"
+                    evaluator="xml"
+                    expression="get-property('callbackData')"/>
+               <arg xmlns:ns="http://org.apache.synapse/xsd"
+                    evaluator="xml"
+                    expression="get-property('notifyURL')"/>
+               <arg xmlns:ns="http://org.apache.synapse/xsd"
+                    evaluator="xml"
+                    expression="get-property('shortcode')"/>
+               <arg xmlns:ns="http://org.apache.synapse/xsd"
+                    evaluator="xml"
+                    expression="get-property('shortcode')"/>
+            </args>
+         </payloadFactory>
+         <log level="full"/>
+         <respond/>
+      </inSequence>
+      <outSequence/>
+   </resource>
+</api>

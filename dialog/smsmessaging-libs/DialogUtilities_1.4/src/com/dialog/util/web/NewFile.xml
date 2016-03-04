@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+	<soap:Body>
+		<Sell_Product xmlns="http://tempuri.org/">
+			<ezMARTUserName>string</ezMARTUserName>
+			<encryptedKey>string</encryptedKey>
+			<itemID>int</itemID>
+			<Price>decimal</Price>
+			<PriceRange>decimal</PriceRange>
+			<QuantityMin>double</QuantityMin>
+			<QuantityMax>double</QuantityMax>
+			<ValidityFrom>string</ValidityFrom>
+			<ValidityTo>string</ValidityTo>
+			<SpecialTerms>string</SpecialTerms>
+			<SendAlerts>int</SendAlerts>
+		</Sell_Product>
+	</soap:Body>
+</soap:Envelope>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="addressHandlerSequence">
+   <property xmlns:ns="http://org.apache.synapse/xsd"
+             name="messageid"
+             expression="//address[text()]"/>
+   <property xmlns:ns="http://org.apache.synapse/xsd"
+             name="messageid1"
+             expression="fn:substring-after(get-property('messageid'), 'tel:+')"
+             scope="default"/>
+   <script language="js">var randomnumber1=Math.floor((Math.random() * 10000) + 1);                                                                        mc.setProperty("refcodenumber", randomnumber1);</script>
+   <dbreport>
+      <connection>
+         <pool>
+            <password>axiatadbpassword</password>
+            <user>axiatadbuser</user>
+            <url>jdbc:mysql://10.174.15.26:3306/smsdata</url>
+            <driver>com.mysql.jdbc.Driver</driver>
+         </pool>
+      </connection>
+      <statement>
+         <sql>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        insert into sentsms (message_id,address,ref_code) values (?,?,?);</sql>
+         <parameter xmlns:ns="http://org.apache.synapse/xsd"
+                    expression="get-property('primarymsgId')"
+                    type="VARCHAR"/>
+         <parameter xmlns:ns="http://org.apache.synapse/xsd"
+                    expression="get-property('messageid1')"
+                    type="VARCHAR"/>
+         <parameter xmlns:ns="http://org.apache.synapse/xsd"
+                    expression="get-property('refcodenumber')"
+                    type="VARCHAR"/>
+      </statement>
+   </dbreport>
+   <payloadFactory media-type="xml">
+      <format>
+         <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+                            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                            xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+                            xmlns:tns="urn:interactivewsdl"
+                            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                            SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+            <SOAP-ENV:Body>
+               <tns:sendSMS>
+                  <input xsi:type="tns:reqSMS">
+                     <sender xsi:type="xsd:string">$1</sender>
+                     <recipient xsi:type="xsd:string">$2</recipient>
+                     <message xsi:type="xsd:string">$3</message>
+                     <msg_id xsi:type="xsd:string">$4</msg_id>
+                     <encoding xsi:type="xsd:string">$5</encoding>
+                  </input>
+               </tns:sendSMS>
+            </SOAP-ENV:Body>
+         </SOAP-ENV:Envelope>
+      </format>
+      <args>
+         <arg xmlns:ns="http://org.apache.synapse/xsd"
+              evaluator="xml"
+              expression="$ctx:senderAddress"/>
+         <arg xmlns:ns="http://org.apache.synapse/xsd"
+              evaluator="xml"
+              expression="get-property('messageid1')"/>
+         <arg xmlns:ns="http://org.apache.synapse/xsd"
+              evaluator="xml"
+              expression="$ctx:textMessage"/>
+         <arg xmlns:ns="http://org.apache.synapse/xsd"
+              evaluator="xml"
+              expression="get-property('refcodenumber')"/>
+         <arg xmlns:ns="http://org.apache.synapse/xsd"
+              evaluator="xml"
+              expression="$ctx:encoding"/>
+      </args>
+   </payloadFactory>
+   <log level="full"/>
+   <property xmlns:ns="http://org.apache.synapse/xsd"
+             name="Authorization"
+             expression="fn:concat('Basic ', base64Encode('mife:mife12345'))"
+             scope="transport"/>
+   <send>
+      <endpoint key="xlBackendEP"/>
+   </send>
+</sequence>

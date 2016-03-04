@@ -1,0 +1,12 @@
+{
+  "subscription" : {
+    "clientCorrelator" : "12345",
+    "criteria" : "Vote12",
+    "destinationAddress" : "3456",
+    "callbackReference" : {
+      "notifyURL" : "http://www.yoururl.here/notifications/DeliveryInfoNotification",
+      "callbackData" : "doSomething()"
+    },
+    "notificationFormat" : "JSON"
+  }
+}

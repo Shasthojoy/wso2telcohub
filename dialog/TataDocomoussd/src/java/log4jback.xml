@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<log4j:configuration>
+
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.out"/>
+		<param name="Threshold" value="ERROR"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{ABSOLUTE} %-5p [%c{1}] %m%n"/>
+		</layout>
+	</appender>	
+	<appender name="smscomp_debug_log" class="org.apache.log4j.DailyRollingFileAppender">
+			<param name="File" value="D:/devenv/smsc/workspace/smpp/sms/logs/smscomp_debug.log"/>
+			<param name="Append" value="true"/>
+			<param name="Threshold" value="debug"/>
+			<layout class="org.apache.log4j.PatternLayout">
+				<param name="ConversionPattern" value="%d %-5p [%c], %m%n"/>
+			</layout>	    		
+	</appender>
+	<appender name="smscomp_error_log" class="org.apache.log4j.DailyRollingFileAppender">
+			<param name="File" value="D:/devenv/smsc/workspace/smpp/sms/logs/smscomp_error.log"/>
+			<param name="Append" value="true"/>
+			<param name="Threshold" value="debug"/>
+			<layout class="org.apache.log4j.PatternLayout">
+				<param name="ConversionPattern" value="%d %-5p [%c], %m%n"/>
+			</layout>	    		
+	</appender>
+	<appender name="smscomp_event_log" class="org.apache.log4j.DailyRollingFileAppender">
+			<param name="File" value="D:/devenv/smsc/workspace/smpp/sms/logs/smscomp_event.log"/>
+			<param name="Append" value="true"/>
+			<param name="Threshold" value="debug"/>
+			<layout class="org.apache.log4j.PatternLayout">
+				<param name="ConversionPattern" value="%d %-5p [%c], %m%n"/>
+			</layout>	    		
+	</appender>
+	<appender name="smscomp_incoming_log" class="org.apache.log4j.DailyRollingFileAppender">
+			<param name="File" value="D:/devenv/smsc/workspace/smpp/sms/logs/smscomp_incoming.log"/>
+			<param name="Append" value="true"/>
+			<param name="Threshold" value="debug"/>
+			<layout class="org.apache.log4j.PatternLayout">
+				<param name="ConversionPattern" value="%d %-5p [%c], %m%n"/>
+			</layout>	    		
+	</appender>
+	<appender name="discardlog_log" class="org.apache.log4j.DailyRollingFileAppender">
+			<param name="File" value="D:/devenv/smsc/workspace/smpp/sms/logs/discardlog.log"/>
+			<param name="Append" value="true"/>
+			<param name="Threshold" value="debug"/>
+			<layout class="org.apache.log4j.PatternLayout">
+				<param name="ConversionPattern" value="%d %-5p [%c], %m%n"/>
+			</layout>	    		
+	</appender>
+	<appender name="smscomp_unsubmitted_log" class="org.apache.log4j.DailyRollingFileAppender">
+			<param name="File" value="D:/devenv/smsc/workspace/smpp/sms/logs/smscomp_unsubmitted.log"/>
+			<param name="Append" value="true"/>
+			<param name="Threshold" value="debug"/>
+			<layout class="org.apache.log4j.PatternLayout">
+				<param name="ConversionPattern" value="%d %-5p [%c], %m%n"/>
+			</layout>	    		
+	</appender>	
+	<category name="smscomp_debug">
+		<appender-ref ref="smscomp_debug_log"/>
+	</category>
+	<category name="smscomp_error">
+		<appender-ref ref="smscomp_error_log"/>
+	</category>
+	<category name="smscomp_event">
+		<appender-ref ref="smscomp_event_log"/>
+	</category>
+	<category name="smscomp_incoming">
+		<appender-ref ref="smscomp_incoming_log"/>
+	</category>
+	<category name="discardlog">
+		<appender-ref ref="discardlog_log"/>
+	</category>
+	<category name="smscomp_unsubmitted">
+		<appender-ref ref="smscomp_unsubmitted_log"/>
+	</category>
+	<root>
+		<appender-ref ref="CONSOLE"/>
+	</root>								
+</log4j:configuration>

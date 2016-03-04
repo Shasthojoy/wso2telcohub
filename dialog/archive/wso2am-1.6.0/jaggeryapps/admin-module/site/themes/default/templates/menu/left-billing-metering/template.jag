@@ -1,0 +1,21 @@
+<% jagg.template("menu/left-billing-metering", function(inputs, outputs, jagg) { %>
+<%  var site = require("/site/conf/site.json");
+    var ssoEnabled = site.ssoConfiguration.enabled;
+
+    var reqUrl = request.getRequestURI();
+    var listUrl=jagg.getAbsoluteUrl("/site/pages/billing-metering.jag");
+    var listMappedUrl=jagg.getMappedUrl("/site/pages/billing-metering.jag");
+    var subsUrl=jagg.getAbsoluteUrl("/site/pages/billing-metering.jag");
+    var subsMappedUrl=jagg.getMappedUrl("/site/pages/billing-metering.jag");    
+%>
+
+<div class="sidebar-nav left-menu-back01">
+    <ul class="nav nav-list">
+    <li class="nav-header"><%=i18n.localize("tasks")%></li>
+        <li <% if(request.getParameter("task")==null || request.getParameter("task")=="billing"){%>class="active"<% } %>><a href="<%=subsMappedUrl%>?task=billing" onclick="jagg.sessionAwareJS({redirect:'<%=subsMappedUrl%>?task=billing',e:event,ssoEnabled:<%=ssoEnabled%>})"><%=i18n.localize("billing")%></a></li>
+        <li <%if(request.getParameter("task")=="finance"){%>class="active"<% } %>><a href="<%=listMappedUrl%>?task=finance"  onclick="jagg.sessionAwareJS({redirect:'<%=listMappedUrl%>?task=finance',e:event,ssoEnabled:<%=ssoEnabled%>})"><%=i18n.localize("finance")%></a></li>
+        <li <%if(request.getParameter("task")=="performance"){%>class="active"<% } %>><a href="<%=listMappedUrl%>?task=performance"  onclick="jagg.sessionAwareJS({redirect:'<%=listMappedUrl%>?task=performance',e:event,ssoEnabled:<%=ssoEnabled%>})"><%=i18n.localize("performance")%></a></li>
+     </ul>
+</div>
+
+<%});%>

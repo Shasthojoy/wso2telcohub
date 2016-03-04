@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse"
+     name="reservepayment"
+     context="/reservepayment">
+   <resource methods="POST">
+      <inSequence>
+         <property name="storeid" expression="//StoreId"/>
+         <property name="trxid" expression="//TrxId"/>
+         <payloadFactory media-type="xml">
+            <format>
+               <Response>
+                  <Type>RESERVE</Type>
+                  <StoreId> 20012</StoreId>
+                  <TrxId> 2014030514553962819841558461798450</TrxId>
+                  <StoreTrxId> 139400613595003324714</StoreTrxId>
+                  <ResponseCode>00</ResponseCode>
+                  <ResponseMessage> Transaction success</ResponseMessage>
+                  <Price>2000</Price>
+                  <Timestamp> 1394006142</Timestamp>
+                  <Signature> cbdee07ce4472807c13b8453a780efd5</Signature>
+                  <CustomVar1/>
+                  <CustomVar2/>
+                  <CustomVar3/>
+               </Response>
+            </format>
+            <args>
+               <arg evaluator="xml" expression="get-property('msisdn')"/>
+               <arg evaluator="xml" expression="get-property('message')"/>
+            </args>
+         </payloadFactory>
+         <header name="Action" value="urn:sendSMSDR"/>
+         <property name="Authorization"
+                   value="Basic bWlmZTpkaWFsMTIzIQ=="
+                   scope="transport"/>
+         <send>
+            <endpoint key="xlBackendEP"/>
+         </send>
+      </inSequence>
+      <outSequence>
+         <property name="messageType" value="application/json" scope="axis2"/>
+         <property name="message" value="xxx" scope="default" type="STRING"/>
+         <property name="message1" value="xxxy" scope="default" type="STRING"/>
+         <enrich>
+            <source type="property" clone="true" property="orginalPayload"/>
+            <target type="body"/>
+         </enrich>
+         <send/>
+      </outSequence>
+   </resource>
+</api>

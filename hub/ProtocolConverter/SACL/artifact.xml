@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><artifacts>
+    <artifact name="SACLOperatorid" groupId="com.gsma.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/SACLOperatorid.xml</file>
+    </artifact>
+    <artifact name="SACLPayment" groupId="com.gsma.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/SACLPayment.xml</file>
+    </artifact>
+    <artifact name="SACLLocation" groupId="com.gsma.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/SACLLocation.xml</file>
+    </artifact>
+    <artifact name="SACLSmsmessaging" groupId="com.gsma.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/SACLSmsmessaging.xml</file>
+    </artifact>
+    <artifact name="hub_endpoint" groupId="com.gsma.local-entry" version="1.0.0" type="synapse/local-entry" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/local-entries/hub_endpoint.xml</file>
+    </artifact>
+    <artifact name="exchange_so_host" groupId="com.gsma.local-entry" version="1.0.0" type="synapse/local-entry" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/local-entries/exchange_so_host.xml</file>
+    </artifact>
+    <artifact name="organization" groupId="com.gsma.local-entry" version="1.0.0" type="synapse/local-entry" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/local-entries/organization.xml</file>
+    </artifact>
+    <artifact name="RequestValidation" groupId="com.gsma.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/RequestValidation.xml</file>
+    </artifact>
+    <artifact name="TransactionLogging" groupId="com.gsma.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/TransactionLogging.xml</file>
+    </artifact>
+    <artifact name="TransactionLoggingPayment" groupId="com.gsma.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/TransactionLoggingPayment.xml</file>
+    </artifact>
+    <artifact name="RequestValidationExchangeEnpoint" groupId="com.gsma.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/RequestValidationExchangeEnpoint.xml</file>
+    </artifact>
+    <artifact name="TransactionLoggingExchangeEnpoint" groupId="com.gsma.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/TransactionLoggingExchangeEnpoint.xml</file>
+    </artifact>
+    <artifact name="RequestValidationErrorHandler" groupId="com.gsma.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/RequestValidationErrorHandler.xml</file>
+    </artifact>
+    <artifact name="TransactionLoggingErrorHandler" groupId="com.gsma.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/TransactionLoggingErrorHandler.xml</file>
+    </artifact>
+    <artifact name="APIErrorHandlerOutSequence" groupId="com.gsma.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/APIErrorHandlerOutSequence.xml</file>
+    </artifact>
+</artifacts>

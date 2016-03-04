@@ -1,0 +1,34 @@
+{
+    "theme" : {
+        "base" : "default",
+        "subtheme" : "dark"
+    },
+    "context" : "/manage",
+    "tasksPerPage": 10,
+    "allowedRole":"admin",
+    "allowedRoles":"admin,subscriber,dialog-admin-role,celcom-admin-role",
+    "adminRole":"admin",
+    "workflows":{
+     "applicationWorkFlowServerURL": "https://localhost:9445/services/",
+     "subscriptionWorkFlowServerURL": "https://localhost:9445/services/",
+     "signupWorkFlowServerURL": "https://localhost:9445/services/"
+
+    },
+    "operators":{
+     "DIALOG": "dialog-admin-role",
+     "ROBI": "robi-admin-role",
+     "CELCOM": "celcom-admin-role"
+    },
+    "ssoConfiguration" : {
+        "enabled" : "true",
+        "issuer" : "API_MANAGE",
+        "identityProviderURL" : "https://localhost:9444/samlsso",
+        "keyStorePassword" : "wso2carbon",
+        "identityAlias" : "wso2carbon",
+        "responseSigningEnabled":"true",
+        "keyStoreName" :"repository/resources/security/wso2carbon.jks"
+    },
+    "externalServicesUrl":"http://10.62.96.185:8080/"
+
+
+}

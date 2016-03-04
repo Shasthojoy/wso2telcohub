@@ -1,0 +1,103 @@
+CREATE EXTERNAL TABLE IF NOT EXISTS SBAPIRequestData (messageID STRING,api STRING,
+	api_version STRING,consumerKey STRING,userId STRING,
+	context STRING,version STRING, request INT, requestTime BIGINT, resourcePath STRING, method STRING, hostName STRING, apiPublisher STRING,
+	requestId STRING, operatorId STRING, sbEndpoint STRING, chargeAmount STRING, purchaseCategoryCode STRING, jsonBody STRING) STORED BY
+	'org.apache.hadoop.hive.cassandra.CassandraStorageHandler' WITH SERDEPROPERTIES ( 'wso2.carbon.datasource.name'='WSO2BAM_CASSANDRA_DATASOURCE',
+	"cassandra.cf.name" = "mife_statistics_southbound_request",
+	"cassandra.columns.mapping" = ":key,payload_api, payload_api_version,payload_consumerKey,payload_userId,payload_context,payload_version, payload_request, payload_requestTime, payload_resourcePath, payload_method,payload_hostName,payload_apiPublisher,payload_requestId,payload_operatorId,payload_sbEndpoint,payload_chargeAmount,payload_purchaseCategoryCode,payload_jsonBody" );
+
+CREATE EXTERNAL TABLE IF NOT EXISTS SBAPIRequestSummaryData (messageRowID STRING, api STRING, api_version STRING, version STRING, apiPublisher STRING,
+	consumerKey STRING,userId STRING,context STRING,
+	request_count INT, hostName STRING, resourcePath STRING, method STRING, requestId STRING, operatorId STRING, chargeAmount STRING, purchaseCategoryCode STRING, jsonBody STRING,
+	year SMALLINT,month SMALLINT,day SMALLINT, time STRING) STORED BY
+	'org.wso2.carbon.hadoop.hive.jdbc.storage.JDBCStorageHandler' TBLPROPERTIES ( 'wso2.carbon.datasource.name'='WSO2AM_STATS_DB',
+	'hive.jdbc.update.on.duplicate' = 'true',
+	'hive.jdbc.primary.key.fields'='messageRowID',
+	'hive.jdbc.table.create.query' = 'CREATE TABLE SB_API_REQUEST_SUMMARY (messageRowID VARCHAR(100) NOT NULL PRIMARY KEY, api VARCHAR(100), api_version VARCHAR(100), version VARCHAR(100),
+	apiPublisher VARCHAR(100),consumerKey VARCHAR(100),userId VARCHAR(100), context VARCHAR(100), request_count INT, hostName VARCHAR(100),
+	resourcePath VARCHAR(100), method VARCHAR(10), requestId VARCHAR(100), operatorId VARCHAR(100), chargeAmount VARCHAR(20), purchaseCategoryCode VARCHAR(40), jsonBody TEXT,
+	year SMALLINT, month SMALLINT, day SMALLINT, time VARCHAR(30))' );
+
+@Incremental(name="requestDataAnalysisSB", tables="SBAPIRequestData", bufferTime="2")
+insert overwrite table SBAPIRequestSummaryData select messageID, api, api_version,version, apiPublisher, COALESCE(consumerKey,''),userId,context,request as request_count, hostName,
+	resourcePath, method, requestId, operatorId, chargeAmount, purchaseCategoryCode, jsonBody,
+	year(from_unixtime(cast(requestTime/1000 as BIGINT),'yyyy-MM-dd HH:mm:ss.SSS' )) as year, month(from_unixtime(cast(requestTime/1000 as BIGINT),'yyyy-MM-dd HH:mm:ss.SSS' )) as month,day(from_unixtime(cast(requestTime/1000 as BIGINT),'yyyy-MM-dd HH:mm:ss.SSS' )) as day, from_unixtime(cast(requestTime/1000 as BIGINT), 'yyyy-MM-dd HH:mm:ss') as time from SBAPIRequestData;
+
+CREATE EXTERNAL TABLE IF NOT EXISTS SBAPIResponseData (messageID STRING,api STRING,
+	api_version STRING,consumerKey STRING,userId STRING,
+	context STRING,version STRING, serviceTime BIGINT, response INT, responseTime BIGINT, resourcePath STRING, method STRING, hostName STRING, apiPublisher STRING,
+	requestId STRING, operatorId STRING, responseCode STRING, msisdn STRING, operatorRef STRING, chargeAmount STRING, purchaseCategoryCode STRING, exceptionId STRING, exceptionMessage STRING, jsonBody STRING, operationType INT, merchantId STRING, category STRING, subCategory STRING) STORED BY
+	'org.apache.hadoop.hive.cassandra.CassandraStorageHandler' WITH SERDEPROPERTIES ('wso2.carbon.datasource.name'='WSO2BAM_CASSANDRA_DATASOURCE',
+	"cassandra.cf.name" = "mife_statistics_southbound_response",
+	"cassandra.columns.mapping" = ":key,payload_api, payload_api_version,payload_consumerKey,payload_userId,payload_context,payload_version,payload_serviceTime, payload_response, payload_responseTime, payload_resourcePath, payload_method,payload_hostName,payload_apiPublisher,payload_requestId,payload_operatorId,payload_responseCode,payload_msisdn,payload_operatorRef,payload_chargeAmount, payload_purchaseCategoryCode,payload_exceptionId,payload_exceptionMessage,payload_jsonBody,payload_operationType,payload_merchantId,payload_category,payload_subCategory" );
+
+CREATE EXTERNAL TABLE IF NOT EXISTS SBAPIResponseSummaryData (messageRowID STRING, api STRING, api_version STRING, version STRING, apiPublisher STRING,
+	consumerKey STRING,userId STRING,context STRING, serviceTime INT,response_count INT,
+	hostName STRING, resourcePath STRING, method STRING, requestId STRING, operatorId STRING, responseCode STRING, msisdn STRING, operatorRef STRING, chargeAmount STRING, purchaseCategoryCode STRING, exceptionId STRING, exceptionMessage STRING, jsonBody STRING,
+	year SMALLINT,month SMALLINT,day SMALLINT, time STRING, operationType INT, merchantId STRING, category STRING, subCategory STRING
+	) STORED BY
+	'org.wso2.carbon.hadoop.hive.jdbc.storage.JDBCStorageHandler' TBLPROPERTIES ( 'wso2.carbon.datasource.name'='WSO2AM_STATS_DB',
+	'hive.jdbc.update.on.duplicate' = 'true',
+	'hive.jdbc.primary.key.fields'='messageRowID',
+	'hive.jdbc.table.create.query' = 'CREATE TABLE SB_API_RESPONSE_SUMMARY ( messageRowID VARCHAR(100) NOT NULL PRIMARY KEY, api VARCHAR(100), api_version VARCHAR(100), version VARCHAR(100),
+	apiPublisher VARCHAR(100),consumerKey VARCHAR(100),userId VARCHAR(100), context VARCHAR(100), serviceTime INT,response_count INT, hostName VARCHAR(100),
+	resourcePath VARCHAR(100), method VARCHAR(10), requestId VARCHAR(100), operatorId VARCHAR(100), responseCode VARCHAR(5), msisdn VARCHAR(20), operatorRef VARCHAR(100), chargeAmount VARCHAR(20), purchaseCategoryCode VARCHAR(40), exceptionId VARCHAR(10), exceptionMessage VARCHAR(255), jsonBody TEXT,
+	year SMALLINT, month SMALLINT, day SMALLINT, time VARCHAR(30), operationType INT, merchantId VARCHAR(100), category VARCHAR(100), subCategory VARCHAR(100)
+	)' );
+
+@Incremental(name="responseDataAnalysisSB", tables="SBAPIResponseData", bufferTime="2")
+insert overwrite table SBAPIResponseSummaryData select messageID, api, api_version,version, apiPublisher, COALESCE(consumerKey,''),userId,context,serviceTime, response as response_count, hostName,
+	resourcePath, method, requestId, operatorId, responseCode, msisdn, operatorRef, chargeAmount, purchaseCategoryCode, exceptionId, exceptionMessage, jsonBody,
+	year(from_unixtime(cast(responseTime/1000 as BIGINT),'yyyy-MM-dd HH:mm:ss.SSS' )) as year, month(from_unixtime(cast(responseTime/1000 as BIGINT),'yyyy-MM-dd HH:mm:ss.SSS' )) as month,day(from_unixtime(cast(responseTime/1000 as BIGINT),'yyyy-MM-dd HH:mm:ss.SSS' )) as day, from_unixtime(cast(responseTime/1000 as BIGINT), 'yyyy-MM-dd HH:mm:ss') as time, operationType, merchantId, category, subCategory from SBAPIResponseData;
+
+CREATE EXTERNAL TABLE IF NOT EXISTS NBAPIRequestData (messageID STRING,api STRING,
+	api_version STRING,consumerKey STRING,userId STRING,
+	context STRING,version STRING, request INT, requestTime BIGINT, resourcePath STRING, method STRING, hostName STRING, apiPublisher STRING,
+	requestId STRING, sbEndpoint STRING, chargeAmount STRING, purchaseCategoryCode STRING, jsonBody STRING) STORED BY
+	'org.apache.hadoop.hive.cassandra.CassandraStorageHandler' WITH SERDEPROPERTIES ( 'wso2.carbon.datasource.name'='WSO2BAM_CASSANDRA_DATASOURCE',
+	"cassandra.cf.name" = "mife_statistics_northbound_request",
+	"cassandra.columns.mapping" = ":key,payload_api, payload_api_version,payload_consumerKey,payload_userId,payload_context,payload_version, payload_request, payload_requestTime, payload_resourcePath, payload_method,payload_hostName,payload_apiPublisher,payload_requestId,payload_sbEndpoint,payload_chargeAmount,payload_purchaseCategoryCode,payload_jsonBody" );
+
+CREATE EXTERNAL TABLE IF NOT EXISTS NBAPIRequestSummaryData (messageRowID STRING, api STRING, api_version STRING, version STRING, apiPublisher STRING,
+	consumerKey STRING,userId STRING,context STRING,
+	request_count INT, hostName STRING, resourcePath STRING, method STRING, requestId STRING, chargeAmount STRING, purchaseCategoryCode STRING, jsonBody STRING,
+	year SMALLINT,month SMALLINT,day SMALLINT, time STRING) STORED BY
+	'org.wso2.carbon.hadoop.hive.jdbc.storage.JDBCStorageHandler' TBLPROPERTIES ( 'wso2.carbon.datasource.name'='WSO2AM_STATS_DB',
+	'hive.jdbc.update.on.duplicate' = 'true',
+	'hive.jdbc.primary.key.fields'='messageRowID',
+	'hive.jdbc.table.create.query' = 'CREATE TABLE NB_API_REQUEST_SUMMARY (messageRowID VARCHAR(100) NOT NULL PRIMARY KEY, api VARCHAR(100), api_version VARCHAR(100), version VARCHAR(100),
+	apiPublisher VARCHAR(100),consumerKey VARCHAR(100),userId VARCHAR(100), context VARCHAR(100), request_count INT, hostName VARCHAR(100),
+	resourcePath VARCHAR(100), method VARCHAR(10), requestId VARCHAR(100), chargeAmount VARCHAR(20), purchaseCategoryCode VARCHAR(40), jsonBody TEXT,
+	year SMALLINT, month SMALLINT, day SMALLINT, time VARCHAR(30))' );
+
+@Incremental(name="requestDataAnalysisNB", tables="NBAPIRequestData", bufferTime="2")
+insert overwrite table NBAPIRequestSummaryData select messageID, api, api_version,version, apiPublisher, COALESCE(consumerKey,''),userId,context,request as request_count, hostName,
+	resourcePath, method, requestId, chargeAmount, purchaseCategoryCode, jsonBody,
+	year(from_unixtime(cast(requestTime/1000 as BIGINT),'yyyy-MM-dd HH:mm:ss.SSS' )) as year, month(from_unixtime(cast(requestTime/1000 as BIGINT),'yyyy-MM-dd HH:mm:ss.SSS' )) as month,day(from_unixtime(cast(requestTime/1000 as BIGINT),'yyyy-MM-dd HH:mm:ss.SSS' )) as day, from_unixtime(cast(requestTime/1000 as BIGINT), 'yyyy-MM-dd HH:mm:ss') as time from NBAPIRequestData;
+
+CREATE EXTERNAL TABLE IF NOT EXISTS NBAPIResponseData (messageID STRING,api STRING,
+	api_version STRING,consumerKey STRING,userId STRING,
+	context STRING,version STRING, serviceTime BIGINT, response INT, responseTime BIGINT, resourcePath STRING, method STRING, hostName STRING, apiPublisher STRING,
+	requestId STRING, responseCode STRING, msisdn STRING, operatorRef STRING, chargeAmount STRING, purchaseCategoryCode STRING, exceptionId STRING, exceptionMessage STRING, jsonBody STRING, operationType INT, merchantId STRING, category STRING, subCategory STRING) STORED BY
+	'org.apache.hadoop.hive.cassandra.CassandraStorageHandler' WITH SERDEPROPERTIES ('wso2.carbon.datasource.name'='WSO2BAM_CASSANDRA_DATASOURCE',
+	"cassandra.cf.name" = "mife_statistics_northbound_response",
+	"cassandra.columns.mapping" = ":key,payload_api, payload_api_version,payload_consumerKey,payload_userId,payload_context,payload_version,payload_serviceTime, payload_response, payload_responseTime, payload_resourcePath, payload_method,payload_hostName,payload_apiPublisher,payload_requestId,payload_responseCode,payload_msisdn,payload_operatorRef,payload_chargeAmount, payload_purchaseCategoryCode,payload_exceptionId,payload_exceptionMessage,payload_jsonBody,payload_operationType,payload_merchantId,payload_category,payload_subCategory" );
+
+CREATE EXTERNAL TABLE IF NOT EXISTS NBAPIResponseSummaryData (messageRowID STRING, api STRING, api_version STRING, version STRING, apiPublisher STRING,
+	consumerKey STRING,userId STRING,context STRING, serviceTime INT,response_count INT,
+	hostName STRING, resourcePath STRING, method STRING, requestId STRING, responseCode STRING, msisdn STRING, operatorRef STRING, chargeAmount STRING, purchaseCategoryCode STRING, exceptionId STRING, exceptionMessage STRING, jsonBody STRING,
+	year SMALLINT,month SMALLINT,day SMALLINT, time STRING, operationType INT, merchantId STRING, category STRING, subCategory STRING
+	) STORED BY
+	'org.wso2.carbon.hadoop.hive.jdbc.storage.JDBCStorageHandler' TBLPROPERTIES ( 'wso2.carbon.datasource.name'='WSO2AM_STATS_DB',
+	'hive.jdbc.update.on.duplicate' = 'true',
+	'hive.jdbc.primary.key.fields'='messageRowID',
+	'hive.jdbc.table.create.query' = 'CREATE TABLE NB_API_RESPONSE_SUMMARY ( messageRowID VARCHAR(100) NOT NULL PRIMARY KEY, api VARCHAR(100), api_version VARCHAR(100), version VARCHAR(100),
+	apiPublisher VARCHAR(100),consumerKey VARCHAR(100),userId VARCHAR(100), context VARCHAR(100), serviceTime INT,response_count INT, hostName VARCHAR(100),
+	resourcePath VARCHAR(100), method VARCHAR(10), requestId VARCHAR(100), responseCode VARCHAR(5), msisdn VARCHAR(20), operatorRef VARCHAR(100), chargeAmount VARCHAR(20), purchaseCategoryCode VARCHAR(40), exceptionId VARCHAR(10), exceptionMessage VARCHAR(255), jsonBody TEXT,
+	year SMALLINT, month SMALLINT, day SMALLINT, time VARCHAR(30), operationType INT, merchantId VARCHAR(100), category VARCHAR(100), subCategory VARCHAR(100)
+	)' );
+
+@Incremental(name="responseDataAnalysisNB", tables="NBAPIResponseData", bufferTime="2")
+insert overwrite table NBAPIResponseSummaryData select messageID, api, api_version,version, apiPublisher, COALESCE(consumerKey,''),userId,context,serviceTime, response as response_count, hostName,
+	resourcePath, method, requestId, responseCode, msisdn, operatorRef, chargeAmount, purchaseCategoryCode, exceptionId, exceptionMessage, jsonBody,
+	year(from_unixtime(cast(responseTime/1000 as BIGINT),'yyyy-MM-dd HH:mm:ss.SSS' )) as year, month(from_unixtime(cast(responseTime/1000 as BIGINT),'yyyy-MM-dd HH:mm:ss.SSS' )) as month,day(from_unixtime(cast(responseTime/1000 as BIGINT),'yyyy-MM-dd HH:mm:ss.SSS' )) as day, from_unixtime(cast(responseTime/1000 as BIGINT), 'yyyy-MM-dd HH:mm:ss') as time, operationType, merchantId, category, subCategory from NBAPIResponseData;

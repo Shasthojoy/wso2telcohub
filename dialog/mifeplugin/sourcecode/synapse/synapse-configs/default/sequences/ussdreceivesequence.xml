@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="ussdreceivesequence">
+   <payloadFactory media-type="json">
+      <format>         {"inboundUSSDMessageRequest":{"address":" tel:+$1","shortCode":"tel:$2","keyword":"$3","inboundUSSDMessage":"$4","clientCorrelator":"123456","responseRequest":{"notifyURL":"$5","callbackData":"$6"},"ussdAction":"mtcont"}}      </format>
+      <args>
+         <arg xmlns:ns="http://org.apache.synapse/xsd"
+              evaluator="xml"
+              expression="get-property('senderAddress')"/>
+         <arg xmlns:ns="http://org.apache.synapse/xsd"
+              evaluator="xml"
+              expression="get-property('shortCode')"/>
+         <arg xmlns:ns="http://org.apache.synapse/xsd"
+              evaluator="xml"
+              expression="get-property('keyword')"/>
+         <arg xmlns:ns="http://org.apache.synapse/xsd"
+              evaluator="xml"
+              expression="get-property('shortCode')"/>
+         <arg xmlns:ns="http://org.apache.synapse/xsd"
+              evaluator="xml"
+              expression="get-property('notifyURL')"/>
+         <arg xmlns:ns="http://org.apache.synapse/xsd"
+              evaluator="xml"
+              expression="get-property('callbackData')"/>
+      </args>
+   </payloadFactory>
+   <log level="full"/>
+   <send>
+      <endpoint key="mockservice"/>
+   </send>
+</sequence>

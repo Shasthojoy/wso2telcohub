@@ -1,0 +1,6 @@
+{
+	"server" : {
+		"carbon_url" : "identity.mifetest.com:9443/",
+		"webapps_url" : "identity.mifetest.com:9763/",
+	}
+}

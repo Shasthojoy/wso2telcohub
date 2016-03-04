@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/wso2/custom/projects/!svn/ver/23148/clients/dialogrepos/org.dialog.custom.hostobject/1.0.0/src/main/java/org/dialog/custom/hostobjects
+END
+BillingDataAccessObject.java
+K 25
+svn:wc:ra_dav:version-url
+V 164
+/wso2/custom/projects/!svn/ver/23140/clients/dialogrepos/org.dialog.custom.hostobject/1.0.0/src/main/java/org/dialog/custom/hostobjects/BillingDataAccessObject.java
+END
+BillingHostObject.java
+K 25
+svn:wc:ra_dav:version-url
+V 158
+/wso2/custom/projects/!svn/ver/23148/clients/dialogrepos/org.dialog.custom.hostobject/1.0.0/src/main/java/org/dialog/custom/hostobjects/BillingHostObject.java
+END
+BillingSubscription.java
+K 25
+svn:wc:ra_dav:version-url
+V 160
+/wso2/custom/projects/!svn/ver/23140/clients/dialogrepos/org.dialog.custom.hostobject/1.0.0/src/main/java/org/dialog/custom/hostobjects/BillingSubscription.java
+END
+HostObjectUtils.java
+K 25
+svn:wc:ra_dav:version-url
+V 156
+/wso2/custom/projects/!svn/ver/23148/clients/dialogrepos/org.dialog.custom.hostobject/1.0.0/src/main/java/org/dialog/custom/hostobjects/HostObjectUtils.java
+END

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="ReceiveUSSDContinueSec">
+   <sequence key="USSDContinueSec"/>
+   <property name="createdPayload" value="//message"/>
+   <enrich>
+      <source type="property" clone="true" property="createdPayload"/>
+      <target type="body"/>
+   </enrich>
+</sequence>

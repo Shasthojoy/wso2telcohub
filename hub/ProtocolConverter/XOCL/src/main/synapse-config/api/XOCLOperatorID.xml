@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse" name="XOCLOperatorID" context="/operatorid">
+    <resource methods="GET" uri-template="/authorize?response_type={responsetype}&amp;client_id={clientid}&amp;redirect_uri={redirecturi}&amp;scope={scope}&amp;state={state}&amp;nonce={nonce}&amp;*" faultSequence="APIErrorHandlerSequence">
+        <inSequence>
+            <log>
+                <property name="API Call : " value="Authorize Request"/>
+            </log>
+            <filter xpath="$url:acr_values">
+                <then>
+                    <property name="uri.var.query" expression="get-property('axis2', 'REST_URL_POSTFIX')" scope="default" type="STRING"/>
+                    <property name="uri.var.mccmnc" expression="get-property('transport','mccmnc')" scope="default" type="STRING"/>
+                    <sequence key="Discovery"/>
+                    <property name="serving_operator" expression="json-eval(response.subscriber_operator)" scope="default" type="STRING"/>
+                    <property name="SOEndpoint" expression="json-eval(response.apis.operatorid.link[0].href)" scope="transport" type="STRING"/>
+                    <property name="uri.var.so_endpoint" expression="get-property('so_endpoint')" scope="transport" type="STRING"/>
+                    <property name="redirectUri" expression="get-property('uri.var.redirecturi')" scope="default" type="STRING"/>
+                    <script language="js">var redirectUri = encodeURIComponent(mc.getProperty('redirectUri')); mc.setProperty('redirect_Uri',redirectUri);</script>
+                    <property name="uri.var.redirect_uri" expression="get-property('redirect_Uri')" scope="default" type="STRING"/>
+                    <property name="clientid" expression="json-eval(response.client_id)" scope="transport" type="STRING"/>
+                    <property name="clientsecret" expression="json-eval(response.client_secret)" scope="transport" type="STRING"/>
+                    <property name="mccmnc" expression="get-property('uri.var.mccmnc')" scope="transport" type="STRING"/>
+                    <property name="subscriber_operator" expression="get-property('serving_operator')" scope="transport" type="STRING"/>
+                    <header name="Accept" scope="transport" value="application/json"/>
+                    <send>
+                        <endpoint>
+                            <http method="get" uri-template="{uri.var.so_endpoint}{uri.var.query}"/>
+                        </endpoint>
+                    </send>
+                </then>
+                <else>
+                    <loopback/>
+                </else>
+            </filter>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </resource>
+    <resource methods="POST" uri-template="/token" faultSequence="APIErrorHandlerSequence">
+        <inSequence>
+            <log>
+                <property name="API Call : " value="Token Request"/>
+            </log>
+            <property name="uri.var.query" expression="get-property('axis2', 'REST_URL_POSTFIX')" scope="default" type="STRING"/>
+            <property name="request_body" expression="$body" scope="default" type="STRING"/>
+            <property name="uri.var.mccmnc" expression="get-property('transport','mccmnc')" scope="default" type="STRING"/>
+            <sequence key="Discovery"/>
+            <property name="serving_operator" expression="json-eval(response.subscriber_operator)" scope="default" type="STRING"/>
+            <property name="SOEndpoint" expression="json-eval(response.apis.operatorid.link[1].href)" scope="transport" type="STRING"/>
+            <property name="uri.var.so_endpoint" expression="get-property('so_endpoint')" scope="transport" type="STRING"/>
+            <property name="clientid" expression="json-eval(response.client_id)" scope="transport" type="STRING"/>
+            <property name="clientsecret" expression="json-eval(response.client_secret)" scope="transport" type="STRING"/>
+            <property name="mccmnc" expression="get-property('uri.var.mccmnc')" scope="transport" type="STRING"/>
+            <property name="subscriber_operator" expression="get-property('serving_operator')" scope="transport" type="STRING"/>
+            <property name="ContentType" value="application/x-www-form-urlencoded" scope="axis2" type="STRING"/>
+            <header name="Accept" scope="transport" value="application/json"/>
+            <payloadFactory media-type="json">
+                <format>$1</format>
+                <args>
+                    <arg evaluator="xml" expression="get-property('request_body')"/>
+                </args>
+            </payloadFactory>
+            <send>
+                <endpoint>
+                    <http method="post" uri-template="{uri.var.so_endpoint}{uri.var.query}"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </resource>
+</api>

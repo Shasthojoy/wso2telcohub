@@ -1,0 +1,17 @@
+<vxml>
+    <form id="MainMenu" name="Main Menu">
+        <field name="oc_message">
+            <prompt>Login to SP</prompt>
+        </field>
+        <filled>
+            <assign name="vResponse" expr="oc_message"/>
+            <goto next="#responseMsg"/>
+        </filled>
+        <property name="oc_bIsFinal" value="1"/>
+    </form>
+    <form id="responseMsg" name="responseMsg">
+        <block name="oc_ActionUrl">
+            <goto next="http://172.22.163.88:8080/ussd/mt-cont/94777335365?resp=%vResponse%&amp;reqID=%vReqID%"/>
+        </block>
+    </form>
+</vxml>

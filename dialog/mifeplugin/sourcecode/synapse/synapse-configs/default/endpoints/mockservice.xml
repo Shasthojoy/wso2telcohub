@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoint xmlns="http://ws.apache.org/ns/synapse" name="mockservice">
+   <address uri="http://128.199.174.220/ideamart/test/echo.php"/>
+</endpoint>

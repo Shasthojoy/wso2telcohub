@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse" name="SACLSmsmessaging" context="/smsmessaging">
+    <resource methods="POST" uri-template="/{apiversion}/outbound/{senderAddress}/requests" faultSequence="APIErrorHandlerSequence">
+        <inSequence>
+            <log>
+                <property name="API Call : " value="Send SMS"/>
+            </log>
+            <property name="request_body" expression="json-eval($.)" scope="default" type="STRING"/>
+            <sequence key="RequestValidation"/>
+            <property name="endUser_Id" expression="get-property('uri.var.senderAddress')" scope="default" type="STRING"/>
+            <script language="js">var endUser = encodeURIComponent(mc.getProperty('endUser_Id')); mc.setProperty('endUser',endUser);</script>
+            <property name="uri.var.senderaddress" expression="get-property('endUser')" scope="default" type="STRING"/>
+            <property name="uri.var.so_endpoint" expression="normalize-space(get-property('hub_endpoint'))" scope="default" type="STRING"/>
+            <header name="Authorization" scope="transport" expression="wso2:vault-lookup('hub_token')"/>
+            <payloadFactory media-type="json">
+                <format>$1</format>
+                <args>
+                    <arg evaluator="xml" expression="get-property('request_body')"/>
+                </args>
+            </payloadFactory>
+            <send>
+                <endpoint>
+                    <http method="post" uri-template="{uri.var.so_endpoint}/smsmessaging/{uri.var.apiversion}/outbound/{uri.var.senderaddress}/requests"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <log>
+                <property name="Serving Operator" expression="json-eval($.)"/>
+            </log>
+            <property name="request_body_out" expression="json-eval($.)" scope="default" type="STRING"/>
+            <sequence key="TransactionLogging"/>
+            <payloadFactory media-type="json">
+                <format>$1</format>
+                <args>
+                    <arg evaluator="xml" expression="get-property('request_body_out')"/>
+                </args>
+            </payloadFactory>
+            <send/>
+        </outSequence>
+    </resource>
+    <resource methods="GET" uri-template="/{apiversion}/outbound/{senderAddress}/requests/{requestId}/deliveryInfos" faultSequence="APIErrorHandlerSequence">
+        <inSequence>
+            <log>
+                <property name="Serving Operator" value="Query the delivery status of a SMS"/>
+            </log>
+            <sequence key="RequestValidation"/>
+            <property name="endUser_Id" expression="get-property('uri.var.senderAddress')" scope="default" type="STRING"/>
+            <script language="js">var endUser = encodeURIComponent(mc.getProperty('endUser_Id')); mc.setProperty('endUser',endUser);</script>
+            <property name="uri.var.senderaddress" expression="get-property('endUser')" scope="default" type="STRING"/>
+            <header name="Authorization" scope="transport" expression="wso2:vault-lookup('hub_token')"/>
+            <header name="Accept" scope="transport" value="application/json"/>
+            <property name="uri.var.so_endpoint" expression="normalize-space(get-property('hub_endpoint'))" scope="default" type="STRING"/>
+            <send>
+                <endpoint>
+                    <http method="get" uri-template="{uri.var.so_endpoint}/smsmessaging/{uri.var.apiversion}/outbound/{uri.var.senderaddress}/requests/{uri.var.requestId}/deliveryInfos"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <log>
+                <property name="Serving Operator" expression="json-eval($.)"/>
+            </log>
+            <property name="request_body_out" expression="json-eval($.)" scope="default" type="STRING"/>
+            <sequence key="TransactionLogging"/>
+            <payloadFactory media-type="json">
+                <format>$1</format>
+                <args>
+                    <arg evaluator="xml" expression="get-property('request_body_out')"/>
+                </args>
+            </payloadFactory>
+            <send/>
+        </outSequence>
+    </resource>
+    <resource methods="GET" uri-template="/{apiversion}/inbound/registrations/{registrationId}/messages" faultSequence="APIErrorHandlerSequence">
+        <inSequence>
+            <log>
+                <property name="Serving Operator" value="Request Location"/>
+            </log>
+            <sequence key="RequestValidation"/>
+            <header name="Authorization" scope="transport" expression="wso2:vault-lookup('hub_token')"/>
+            <header name="Accept" scope="transport" value="application/json"/>
+            <property name="uri.var.so_endpoint" expression="normalize-space(get-property('hub_endpoint'))" scope="default" type="STRING"/>
+            <send>
+                <endpoint>
+                    <http method="get" uri-template="{uri.var.so_endpoint}/smsmessaging/{uri.var.apiversion}/inbound/registrations/{uri.var.registrationId}/messages"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <log>
+                <property name="Serving Operator" expression="json-eval($.)"/>
+            </log>
+            <property name="request_body_out" expression="json-eval($.)" scope="default" type="STRING"/>
+            <sequence key="TransactionLogging"/>
+            <payloadFactory media-type="json">
+                <format>$1</format>
+                <args>
+                    <arg evaluator="xml" expression="get-property('request_body_out')"/>
+                </args>
+            </payloadFactory>
+            <send/>
+        </outSequence>
+    </resource>
+    <resource methods="POST" uri-template="/{apiversion}/inbound/subscriptions" faultSequence="APIErrorHandlerSequence">
+        <inSequence>
+            <log>
+                <property name="Serving Operator" value="Subscribe to notifications of messages sent to your application"/>
+            </log>
+            <property name="request_body" expression="json-eval($.)" scope="default" type="STRING"/>
+            <sequence key="RequestValidation"/>
+            <header name="Authorization" scope="transport" expression="wso2:vault-lookup('hub_token')"/>
+            <header name="Accept" scope="transport" value="application/json"/>
+            <property name="uri.var.so_endpoint" expression="normalize-space(get-property('hub_endpoint'))" scope="default" type="STRING"/>
+            <payloadFactory media-type="json">
+                <format>$1</format>
+                <args>
+                    <arg evaluator="xml" expression="get-property('request_body')"/>
+                </args>
+            </payloadFactory>
+            <log>
+                <property name="PAYLOAD" expression="json-eval($.)"/>
+            </log>
+            <send>
+                <endpoint>
+                    <http method="post" uri-template="{uri.var.so_endpoint}/smsmessaging/{uri.var.apiversion}/inbound/subscriptions"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <log>
+                <property name="Serving Operator" expression="json-eval($.)"/>
+            </log>
+            <property name="request_body_out" expression="json-eval($.)" scope="default" type="STRING"/>
+            <sequence key="TransactionLogging"/>
+            <payloadFactory media-type="json">
+                <format>$1</format>
+                <args>
+                    <arg evaluator="xml" expression="get-property('request_body_out')"/>
+                </args>
+            </payloadFactory>
+            <send/>
+        </outSequence>
+    </resource>
+</api>

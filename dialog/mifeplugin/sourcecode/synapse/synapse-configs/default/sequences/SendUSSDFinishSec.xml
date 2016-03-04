@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="SendUSSDFinishSec">
+   <payloadFactory media-type="xml">
+      <format>
+         <tns:sendUSSD xmlns:tns="urn:interactivewsdl"
+                       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <input xsi:type="tns:reqUSSD">
+               <msisdn xsi:type="xsd:string">$1</msisdn>
+               <message xsi:type="xsd:string">&lt;umb&gt;&lt;type&gt;text&lt;/type&gt;&lt;content&gt;$2&lt;/content&gt;&lt;/umb&gt;</message>
+            </input>
+         </tns:sendUSSD>
+      </format>
+      <args>
+         <arg xmlns:ns="http://org.apache.synapse/xsd"
+              xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"
+              xmlns:ns3="http://org.apache.synapse/xsd"
+              evaluator="xml"
+              expression="get-property('receiveradd')"/>
+         <arg xmlns:ns="http://org.apache.synapse/xsd"
+              xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"
+              xmlns:ns3="http://org.apache.synapse/xsd"
+              evaluator="xml"
+              expression="get-property('message')"/>
+      </args>
+   </payloadFactory>
+</sequence>

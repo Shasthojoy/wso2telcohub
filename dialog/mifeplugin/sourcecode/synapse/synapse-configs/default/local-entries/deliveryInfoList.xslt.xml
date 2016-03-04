@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<localEntry xmlns="http://ws.apache.org/ns/synapse" key="deliveryInfoList.xslt">
+   <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                   xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                   version="1.0">
+      <xsl:template match="/returns">
+         <deliveryInfoList>
+            <xsl:for-each select="//return">
+               <deliveryInfo>
+                  <address>
+                     <xsl:value-of select="recipient"/>
+                  </address>
+                  <deliveryStatus>
+                     <xsl:value-of select="state"/>
+                  </deliveryStatus>
+               </deliveryInfo>
+            </xsl:for-each>
+         </deliveryInfoList>
+      </xsl:template>
+   </xsl:stylesheet>
+   <description/>
+</localEntry>

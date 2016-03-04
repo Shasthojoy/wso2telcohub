@@ -1,0 +1,11 @@
+<endpoint xmlns="http://ws.apache.org/ns/synapse" name="TransactionLoggingExchangeEnpoint" >
+	<http uri-template="https://{uri.var.exchange_so_host}/v1/exchange/organizations/{uri.var.organizationid}/transactions/{uri.var.transactionBatchId}" method="put">
+		<suspendOnFailure>
+			<progressionFactor>1.0</progressionFactor>
+		</suspendOnFailure>
+		<markForSuspension>
+			<retriesBeforeSuspension>0</retriesBeforeSuspension>
+			<retryDelay>0</retryDelay>
+		</markForSuspension>
+	</http>
+</endpoint>

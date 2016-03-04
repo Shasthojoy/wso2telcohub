@@ -1,0 +1,37 @@
+<MobileConnectConfig>
+    <DataSourceName>jdbc/CONNECT_DB</DataSourceName>
+    <EncryptAppend>TheServingOperatorthencanrecognizetheyhavereceivedanencryptedMSISDNanddecryptthestringusingitsprivatekeywichisnotknowntotheOneAPI</EncryptAppend>
+    <GSMAExchangeConfig>
+        <SOHost>integration-axiatagroup.apiexchange.org</SOHost>
+        <Organization>axiatagroup</Organization>
+        <AuthToken>{ExchangeHubCredentials}</AuthToken>
+    </GSMAExchangeConfig>
+    <SMS>
+        <Endpoint>http://smshost/send</Endpoint>
+        <AuthToken>{SmsAuthToken}</AuthToken>
+        <MessageContent>Click on following URL to provide consent to application -</MessageContent>
+    </SMS>
+    <USSD>
+        <Endpoint>http://ussdhost/request</Endpoint>
+        <AuthToken>{UssdAuthToken}</AuthToken>
+        <MessageContent>Login to SP with Mobile Connect?</MessageContent>
+        <ShortCode>1721</ShortCode>
+        <Keyword>123</Keyword>
+        <Pinauth>true</Pinauth>
+	<DashBoard>connect</DashBoard>
+    </USSD>
+
+    <!-- Hostname/IP and port of the SMS Listener web-app. This should be set to publicly accessible hostname/IP of
+    Identity Server. By default the port would be 9763+[offset] -->
+    <!--<ListenerWebappHost>http://{is.host.name}:9764</ListenerWebappHost>-->
+
+    <HEADERENRICH>
+        <Endpoint>http://ussdhost/request</Endpoint>
+        <Enrichflg>true</Enrichflg>        
+        <MobileIPRanges>
+            <IPRange>127.0.0.0:127.0.0.255</IPRange>
+            <IPRange>192.168.0.0:192.168.0.255</IPRange>
+        </MobileIPRanges>        
+    </HEADERENRICH>
+    
+</MobileConnectConfig>

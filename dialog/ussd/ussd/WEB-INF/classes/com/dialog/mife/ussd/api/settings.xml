@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="ni_ussd_url"><![CDATA[http://10.62.192.140/services/NIrequest5.php?msisdn={0}&code={1}&msg={2}]]></entry>
+	<entry key="ussd_callback"><![CDATA[http://172.22.163.88:8080/ussd/route/{0}?resp=%vResponse%&reqID={1}]]></entry>
+	<entry key="ussd_cont"><![CDATA[http://172.22.163.88:8080/ussd/mt-cont/{0}?resp=%vResponse%&reqID={1}]]></entry>
+	<entry key="ussd_ni_match"><![CDATA[^(mtinit|mtcont|moinit|mocont|mtfin)[:][\d]{3}[:][\d]+$]]></entry>	
+</properties>

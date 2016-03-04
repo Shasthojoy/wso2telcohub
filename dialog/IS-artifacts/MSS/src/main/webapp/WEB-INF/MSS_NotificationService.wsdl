@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions targetNamespace="http://telefonica.es/mobileconnect" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:mss="http://uri.etsi.org/TS102204/v1.1.2#" xmlns:tns="http://telefonica.es/mobileconnect" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/">
+  <types>
+    <xs:schema>
+      <xs:import id="MSS.xsd" namespace="http://uri.etsi.org/TS102204/v1.1.2#" schemaLocation="MSS.xsd"/>
+    </xs:schema>
+  </types>
+  <message name="MSS_NotificationInput">
+    <part name="MSS_StatusResp" type="mss:MSS_StatusRespType">
+    </part>
+  </message>
+  <message name="MSS_SignatureOutput">
+    <part name="MSS_SignatureResp" type="mss:MSS_SignatureRespType">
+    </part>
+  </message>
+  <message name="MSS_SignatureInput">
+    <part name="MSS_SignatureReq" type="mss:MSS_SignatureReqType">
+    </part>
+  </message>
+  <message name="MSS_ProfileQueryInput">
+    <part name="MSS_ProfileReq" type="mss:MSS_ProfileReqType">
+    </part>
+  </message>
+  <message name="MSS_HandshakeInput">
+    <part name="MSS_HandshakeReq" type="mss:MSS_HandshakeReqType">
+    </part>
+  </message>
+  <message name="MSS_ReceiptOutput">
+    <part name="MSS_ReceiptResp" type="mss:MSS_ReceiptRespType">
+    </part>
+  </message>
+  <message name="MSS_NotificationOutput">
+    <part name="MSS_ReceiptReq" type="mss:MSS_ReceiptReqType">
+    </part>
+  </message>
+  <message name="MSS_ReceiptInput">
+    <part name="MSS_ReceiptReq" type="mss:MSS_ReceiptReqType">
+    </part>
+  </message>
+  <message name="MSS_RegistrationInput">
+    <part name="MSS_RegistrationReq" type="mss:MSS_RegistrationReqType">
+    </part>
+  </message>
+  <message name="MSS_HandshakeOutput">
+    <part name="MSS_HandshakeResp" type="mss:MSS_HandshakeRespType">
+    </part>
+  </message>
+  <message name="MSS_RegistrationOutput">
+    <part name="MSS_RegistrationResp" type="mss:MSS_RegistrationRespType">
+    </part>
+  </message>
+  <message name="MSS_StatusQueryInput">
+    <part name="MSS_StatusReq" type="mss:MSS_StatusReqType">
+    </part>
+  </message>
+  <message name="MSS_StatusQueryOutput">
+    <part name="MSS_StatusResp" type="mss:MSS_StatusRespType">
+    </part>
+  </message>
+  <message name="MSS_ProfileQueryOutput">
+    <part name="MSS_ProfileResp" type="mss:MSS_ProfileRespType">
+    </part>
+  </message>
+  <portType name="MSS_SignaturePortType">
+    <operation name="MSS_Signature">
+      <input message="tns:MSS_SignatureInput">
+    </input>
+      <output message="tns:MSS_SignatureOutput">
+    </output>
+    </operation>
+  </portType>
+  <portType name="MSS_ProfileQueryPortType">
+    <operation name="MSS_ProfileQuery">
+      <input message="tns:MSS_ProfileQueryInput">
+    </input>
+      <output message="tns:MSS_ProfileQueryOutput">
+    </output>
+    </operation>
+  </portType>
+  <portType name="MSS_StatusQueryPortType">
+    <operation name="MSS_StatusQuery">
+      <input message="tns:MSS_StatusQueryInput">
+    </input>
+      <output message="tns:MSS_StatusQueryOutput">
+    </output>
+    </operation>
+  </portType>
+  <portType name="MSS_HandshakePortType">
+    <operation name="MSS_Handshake">
+      <input message="tns:MSS_HandshakeInput">
+    </input>
+      <output message="tns:MSS_HandshakeOutput">
+    </output>
+    </operation>
+  </portType>
+  <portType name="MSS_RegistrationPortType">
+    <operation name="MSS_Registration">
+      <input message="tns:MSS_RegistrationInput">
+    </input>
+      <output message="tns:MSS_RegistrationOutput">
+    </output>
+    </operation>
+  </portType>
+  <portType name="MSS_NotificationPortType">
+    <operation name="MSS_Notification">
+      <input message="tns:MSS_NotificationInput">
+    </input>
+      <output message="tns:MSS_NotificationOutput">
+    </output>
+    </operation>
+  </portType>
+  <portType name="MSS_ReceiptPortType">
+    <operation name="MSS_Receipt">
+      <input message="tns:MSS_ReceiptInput">
+    </input>
+      <output message="tns:MSS_ReceiptOutput">
+    </output>
+    </operation>
+  </portType>
+  <binding name="MSS_HandshakeBinding" type="tns:MSS_HandshakePortType">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="MSS_Handshake">
+      <soap:operation soapAction="tns:MSS_Handshake" style="rpc"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <binding name="MSS_RegistrationBinding" type="tns:MSS_RegistrationPortType">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="MSS_Registration">
+      <soap:operation soapAction="tns:MSS_Registration" style="rpc"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <binding name="MSS_ProfileQueryBinding" type="tns:MSS_ProfileQueryPortType">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="MSS_ProfileQuery">
+      <soap:operation soapAction="tns:MSS_ProfileQuery" style="rpc"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <binding name="MSS_ReceiptBinding" type="tns:MSS_ReceiptPortType">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="MSS_Receipt">
+      <soap:operation soapAction="tns:MSS_Receipt" style="rpc"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <binding name="MSS_NotificationBinding" type="tns:MSS_NotificationPortType">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="MSS_Notification">
+      <soap:operation soapAction="tns:MSS_Notification" style="rpc"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <binding name="MSS_StatusQueryBinding" type="tns:MSS_StatusQueryPortType">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="MSS_StatusQuery">
+      <soap:operation soapAction="tns:MSS_StatusQuery" style="rpc"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <binding name="MSS_SignatureBinding" type="tns:MSS_SignaturePortType">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="MSS_Signature">
+      <soap:operation soapAction="tns:MSS_Signature" style="rpc"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="MSS_NotificationService">
+    <port name="MSS_NotificationPort" binding="tns:MSS_NotificationBinding">
+      <soap:address location="http://localhost:9767/TestWebservice/services/MSS_NotificationService"/>
+    </port>
+  </service>
+</definitions>

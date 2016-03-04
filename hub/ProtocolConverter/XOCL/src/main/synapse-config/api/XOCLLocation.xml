@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse" name="XOCLLocation" context="/location">
+    <resource methods="GET" uri-template="/{apiversion}/queries/location?address={address}&amp;requestedAccuracy={metres}" faultSequence="APIErrorHandlerSequence">
+        <inSequence>
+            <log>
+                <property name="API Call : " value="Request Location"/>
+            </log>
+            <property name="uri.var.mccmnc" expression="get-property('transport','mccmnc')" scope="default" type="STRING"/>
+            <sequence key="Discovery"/>
+            <property name="serving_operator" expression="json-eval(response.subscriber_operator)" scope="default" type="STRING"/>
+            <property name="SOEndpoint" expression="json-eval(response.apis.location.link[0].href)" scope="transport" type="STRING"/>
+            <property name="uri.var.so_endpoint" expression="get-property('so_endpoint')" scope="transport" type="STRING"/>
+            <property name="clientid" expression="json-eval(response.client_id)" scope="transport" type="STRING"/>
+            <property name="clientsecret" expression="json-eval(response.client_secret)" scope="transport" type="STRING"/>
+            <property name="endUser_Id" expression="get-property('uri.var.address')" scope="default" type="STRING"/>
+            <script language="js">var endUser = encodeURIComponent(mc.getProperty('endUser_Id')); mc.setProperty('endUser',endUser);</script>
+            <property name="uri.var.Address" expression="get-property('endUser')" scope="default" type="STRING"/>
+            <property name="mccmnc" expression="get-property('uri.var.mccmnc')" scope="transport" type="STRING"/>
+            <property name="subscriber_operator" expression="get-property('serving_operator')" scope="transport" type="STRING"/>
+            <header name="Accept" scope="transport" value="application/json"/>
+            <send>
+                <endpoint>
+                    <http method="get" uri-template="{uri.var.so_endpoint}/{uri.var.apiversion}/queries/location?address={uri.var.Address}&amp;requestedAccuracy={uri.var.metres}"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <log>
+                <property name="RESPONSE" expression="json-eval($.)"/>
+            </log>
+            <send/>
+        </outSequence>
+    </resource>
+</api>

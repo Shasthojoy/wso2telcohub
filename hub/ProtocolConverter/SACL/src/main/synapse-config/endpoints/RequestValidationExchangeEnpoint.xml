@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoint xmlns="http://ws.apache.org/ns/synapse" name="RequestValidationExchangeEnpoint">
+    <http method="get" uri-template="http://{uri.var.hostname}/v1/exchange/organizations/{uri.var.organizationID}/validate?client_id={uri.var.clientid}&amp;client_secret={uri.var.clientsecret}"/>
+</endpoint>

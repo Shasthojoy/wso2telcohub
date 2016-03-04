@@ -1,0 +1,66 @@
+/*
+* ==========================================
+* MySQL script related to custom tables in
+* Api Manager Stats database
+* Database: AM stats database
+* ==========================================
+*/
+
+ALTER TABLE `subscription_rates` CHANGE `rate_name` `rate_id_sb` varchar( 50 ) ;
+
+
+ALTER TABLE `subscription_rates` ADD `operation_id` int( 11 ) ;
+
+
+ALTER TABLE `subscription_rates` DROP PRIMARY KEY ,
+ADD PRIMARY KEY ( `application_id` , `api_id` , `operator_name` , `operation_id` ) ;
+
+
+CREATE TABLE IF NOT EXISTS `subscription_rates_nb` (
+  `application_id` int(11) NOT NULL,
+  `api_id` int(11) NOT NULL,
+  `rate_id_nb` varchar(50) DEFAULT NULL,
+  `operation_id` int(11) NOT NULL,
+  PRIMARY KEY (`application_id`,`api_id`,`operation_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE IF NOT EXISTS `api_operation_types` (
+  `operation_id` int(11) NOT NULL DEFAULT '0',
+  `api` varchar(225) DEFAULT NULL,
+  `operation` varchar(225) DEFAULT NULL,
+  `default_rate` varchar(255) NOT NULL,
+  PRIMARY KEY (`operation_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+INSERT INTO `api_operation_types` (`operation_id`, `api`, `operation`,`default_rate`) VALUES
+(100, 'payment', 'Charge', 'p1'),
+(101, 'payment', 'Refund', 'RF2'),
+(200, 'smsmessaging', 'Send SMS' ,'SM1'),
+(201, 'smsmessaging', 'Retrive SMS','SM2'),
+(202, 'smsmessaging', 'Query SMS Delivery','SM2'),
+(203, 'smsmessaging', 'Delivery Subscription','SM2'),
+(204, 'smsmessaging', 'Stop Delivery Subscription','SM2'),
+(205, 'smsmessaging', 'Retrive SMS Subscription','SM2'),
+(206, 'smsmessaging ', 'Stop Retrive SMS Subscription','SM2'),
+(207, 'smsmessaging', 'SMS Inbound Notification','SM2'),
+(300, 'lbs', 'Location','lb1'),
+(400, 'ussd', 'Send USSD','u1');
+
+
+
+
+
+CREATE TABLE `merchant_rates_percentages` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber` varchar(45) NOT NULL,
+  `merchant_code` varchar(45) NOT NULL,
+  `app_id` int(10) unsigned NOT NULL,
+  `sp_commission` double NOT NULL,
+  `ads_commission` double NOT NULL,
+  `opco_commission` double NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+

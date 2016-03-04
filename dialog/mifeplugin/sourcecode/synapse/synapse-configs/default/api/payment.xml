@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse"
+     name="payment"
+     context="/payment">
+   <resource methods="POST">
+      <inSequence>
+         <property name="msisdn" expression="json-eval($.amountTransaction.endUserId)"/>
+         <enrich>
+            <source xmlns:ns="http://org.apache.synapse/xsd"
+                    clone="true"
+                    xpath="//amountTransaction"/>
+            <target type="property" property="orginalPayload"/>
+         </enrich>
+         <payloadFactory media-type="xml">
+            <format>
+               <Response>
+                  <Type>MO</Type>
+                  <Channel>WEB</Channel>
+                  <StoreId>20012</StoreId>
+                  <LinkId>123456789</LinkId>
+                  <MSISDN>$1</MSISDN>
+                  <TelcoName>xl</TelcoName>
+                  <Reference/>
+                  <ProductId>K1</ProductId>
+                  <Timestamp>1394079709</Timestamp>
+                  <Signature>c3e26871cdce6e0ac001db33feb9c919</Signature>
+               </Response>
+            </format>
+            <args>
+               <arg evaluator="xml" expression="get-property('msisdn')"/>
+            </args>
+         </payloadFactory>
+         <log level="full"/>
+         <send>
+            <endpoint key="xlBackendEP"/>
+         </send>
+      </inSequence>
+      <outSequence>
+         <property name="messageType" value="application/json" scope="axis2"/>
+         <enrich>
+            <source type="property" clone="true" property="orginalPayload"/>
+            <target type="body"/>
+         </enrich>
+         <property name="totalAmount" scope="default">
+            <totalAmountCharged xmlns="">100</totalAmountCharged>
+         </property>
+         <property name="totalAmountValue"
+                   value="200"
+                   scope="default"
+                   type="STRING"/>
+         <enrich>
+            <source type="property" clone="true" property="totalAmountValue"/>
+            <target xpath="$ctx:totalAmount/text()"/>
+         </enrich>
+         <enrich>
+            <source type="property" clone="true" property="totalAmount"/>
+            <target action="child" xpath="//amountTransaction/paymentAmount"/>
+         </enrich>
+         <send/>
+      </outSequence>
+   </resource>
+</api>

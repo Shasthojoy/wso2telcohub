@@ -1,0 +1,32 @@
+{
+    "theme" : {
+        "base" : "default",
+        "subtheme" : "dark"
+    },
+    "context" : "/manage",
+    "tasksPerPage": 10,
+    "allowedRole":"admin",
+    "allowedRoles":"admin,subscriber,dialog-admin-role,celcom-admin-role",
+    "workflows":{
+     "applicationWorkFlowServerURL": "https://localhost:9445/services/",
+     "subscriptionWorkFlowServerURL": "https://localhost:9445/services/",
+     "signupWorkFlowServerURL": "https://localhost:9445/services/"
+
+    },
+    "operators":{
+     "DIALOG": "dialog-admin-role",
+     "ROBI": "robi-admin-role",
+     "CELCOM": "celcom-admin-role"
+    },
+    "ssoConfiguration" : {
+        "enabled" : "false",
+        "issuer" : "API_WORKFLOW_ADMIN",
+        "identityProviderURL" : "https://localhost:9443/samlsso",
+        "keyStorePassword" : "",
+        "identityAlias" : "",
+        "responseSigningEnabled":"true",
+        "keyStoreName" :""
+    }
+
+
+}

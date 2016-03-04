@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="TransactionLoggingPayment" onError="TransactionLoggingErrorHandler">
+    <log level="custom">
+        <property name="Message Flow" value="Request Received at Transaction logging Sequence"/>
+    </log>
+    <property xmlns:ns="http://org.apache.synapse/xsd" name="end_time" expression="get-property('SYSTEM_TIME')" scope="default" type="STRING"/>
+    <header xmlns:ns="http://org.apache.synapse/xsd" name="Authorization" scope="transport" expression="wso2:vault-lookup('exchanage_hub_credentials')"/>
+    <header name="Accept" scope="transport" value="application/json"/>
+    <header name="Content-Type" scope="transport" value="application/json"/>
+    <property name="messageType" value="application/json" scope="default" type="STRING"/>
+    <property name="uri.var.transactionBatchId" expression="json-eval(amountTransaction.clientCorrelator)" scope="default" type="STRING"/>
+    <property name="currency" expression="json-eval(amountTransaction.paymentAmount.chargingInformation.currency)" scope="default" type="STRING"/>
+    <property name="gross_price" expression="json-eval(amountTransaction.paymentAmount.chargingInformation.amount)" scope="default" type="STRING"/>
+    <property name="net_price" expression="json-eval(amountTransaction.paymentAmount.totalAmountCharged)" scope="default" type="STRING"/>
+    <property name="product_desc" expression="json-eval(amountTransaction.paymentAmount.chargingInformation.description)" scope="default" type="STRING"/>
+    <property name="tax" expression="json-eval(amountTransaction.paymentAmount.chargingMetaData.taxAmount)" scope="default" type="STRING"/>
+    <property name="tx_id" expression="json-eval(amountTransaction.referenceCode)" scope="default" type="STRING"/>
+    <property name="tx_status" expression="json-eval(amountTransaction.transactionOperationStatus)" scope="default" type="STRING"/>
+    <property xmlns:ns="http://org.apache.synapse/xsd" name="uri.var.organizationid" expression="normalize-space(get-property('organization'))" scope="default" type="STRING"/>
+    <property xmlns:ns="http://org.apache.synapse/xsd" name="uri.var.exchange_so_host" expression="normalize-space(get-property('exchange_so_host'))" scope="default" type="STRING"/>
+    <property xmlns:ns="http://org.apache.synapse/xsd" name="REQUEST_HOST_HEADER" expression="get-property('exchange_so_host')" scope="axis2" type="STRING"/>
+    <payloadFactory media-type="json">
+        <format>{"Transactions":{"Transaction": [{"api":{"currency": "$1", "gross_price": "$2","id": "payment","net_price": "$3","product_desc": "$4","tax": "$5"}, "application_state": "$6","client_id": "$7","subscriber_operator": {"mcc": "$8","mnc": "$9"},"timestamp": {"end": "$10","start": "$11"},"tx_id": "$12","tx_status": "$13"}],"count": $14}}</format>
+        <args>
+            <arg evaluator="xml" expression="get-property('currency')"/>
+            <arg evaluator="xml" expression="get-property('gross_price')"/>
+            <arg evaluator="xml" expression="get-property('net_price')"/>
+            <arg evaluator="xml" expression="get-property('product_desc')"/>
+            <arg evaluator="xml" expression="get-property('tax')"/>
+            <arg evaluator="xml" expression="get-property('application_state')"/>
+            <arg evaluator="xml" expression="get-property('uri.var.clientid')"/>
+            <arg evaluator="xml" expression="get-property('mcc')"/>
+            <arg evaluator="xml" expression="get-property('mnc')"/>
+            <arg evaluator="xml" expression="get-property('end_time')"/>
+            <arg evaluator="xml" expression="get-property('start_time')"/>
+            <arg evaluator="xml" expression="get-property('tx_id')"/>
+            <arg evaluator="xml" expression="get-property('tx_status')"/>
+            <arg value="1"/>
+        </args>
+    </payloadFactory>
+    <call>
+        <endpoint key="TransactionLoggingExchangeEnpoint"/>
+    </call>
+</sequence>

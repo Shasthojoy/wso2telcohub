@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?><proxy xmlns="http://ws.apache.org/ns/synapse" name="AxiataSubscriptionApprovalService" transports="https http" startOnLoad="true" trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <class name="org.wso2.carbon.am.axiata.workflow.AxiataSubscriptionApprovalHandlerMediator"/>
+	        <!--<drop/>-->
+	    <respond/>
+        </inSequence>
+    </target>
+    <publishWSDL>
+<wsdl:definitions xmlns:ax="http://org.wso2.carbon/subscriptions/axiata/workflow"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="AxiataSubscriptionApprovalService"
+	targetNamespace="http://org.wso2.carbon/subscriptions/axiata/workflow">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://org.wso2.carbon/subscriptions/axiata/workflow"
+			xmlns:ax="http://org.wso2.carbon/subscriptions/axiata/workflow" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			elementFormDefault="qualified">
+			<xsd:element name="OperatorRetrievalRequest" type="ax:OperatorRetrievalRequestType" />
+			<xsd:complexType name="OperatorRetrievalRequestType">
+				<xsd:sequence>
+					<xsd:element name="requestType" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="OperatorRetrievalResponse" type="ax:OperatorRetrievalResponseType" />
+			<xsd:complexType name="OperatorRetrievalResponseType">
+				<xsd:sequence>
+					<xsd:element name="operator" type="ax:OperatorType" minOccurs="0" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="OperatorType">
+				<xsd:sequence>
+					<xsd:element name="opID" type="xsd:int" />
+					<xsd:element name="opName" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="HUBApprovalDBUpdateRequest" type="ax:HUBApprovalDBUpdateRequestType" />
+			<xsd:complexType name="HUBApprovalDBUpdateRequestType">
+				<xsd:sequence>
+					<xsd:element name="requestType" type="xsd:string" />
+					<xsd:element name="appID" type="xsd:string" />
+					<xsd:element name="apiName" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="OpApprovalDBUpdateRequest" type="ax:OpApprovalDBUpdateRequestType" />
+			<xsd:complexType name="OpApprovalDBUpdateRequestType">
+				<xsd:sequence>
+					<xsd:element name="requestType" type="xsd:string" />
+					<xsd:element name="appID" type="xsd:string" />
+					<xsd:element name="opID" type="xsd:string" />
+					<xsd:element name="apiName" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="SubOperatorRetrievalRequest" type="ax:SubOperatorRetrievalRequestType" />
+			<xsd:complexType name="SubOperatorRetrievalRequestType">
+				<xsd:sequence>
+					<xsd:element name="requestType" type="xsd:string" />
+					<xsd:element name="apiName" type="xsd:string" />
+					<xsd:element name="apiVersion" type="xsd:string" />
+					<xsd:element name="apiProvider" type="xsd:string" />
+					<xsd:element name="appId" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="SubOperatorRetrievalResponse" type="ax:SubOperatorRetrievalResponseType" />
+			<xsd:complexType name="SubOperatorRetrievalResponseType">
+				<xsd:sequence>
+					<xsd:element name="subOperatorList" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+            <xsd:element name="HUBApprovalSubValidatorRequest" type="ax:HUBApprovalSubValidatorRequestType" />
+			<xsd:complexType name="HUBApprovalSubValidatorRequestType">
+				<xsd:sequence>
+					<xsd:element name="requestType" type="xsd:string" />
+					<xsd:element name="appID" type="xsd:string" />
+					<xsd:element name="apiID" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="OperatorRetrievalRequest">
+		<wsdl:part name="OperatorRetrievalRequest" element="ax:OperatorRetrievalRequest" />
+	</wsdl:message>
+	<wsdl:message name="OperatorRetrievalResponse">
+		<wsdl:part name="OperatorRetrievalResponse" element="ax:OperatorRetrievalResponse" />
+	</wsdl:message>
+	<wsdl:message name="HUBApprovalDBUpdateRequest">
+		<wsdl:part name="HUBApprovalDBUpdateRequest" element="ax:HUBApprovalDBUpdateRequest" />
+	</wsdl:message>
+	<wsdl:message name="OpApprovalDBUpdateRequest">
+		<wsdl:part name="OpApprovalDBUpdateRequest" element="ax:OpApprovalDBUpdateRequest" />
+	</wsdl:message>
+	<wsdl:message name="SubOperatorRetrievalRequest">
+		<wsdl:part name="SubOperatorRetrievalRequest" element="ax:SubOperatorRetrievalRequest" />
+	</wsdl:message>
+	<wsdl:message name="SubOperatorRetrievalResponse">
+		<wsdl:part name="SubOperatorRetrievalResponse" element="ax:SubOperatorRetrievalResponse" />
+	</wsdl:message>
+    <wsdl:message name="HUBApprovalSubValidatorRequest">
+		<wsdl:part name="HUBApprovalSubValidatorRequest" element="ax:HUBApprovalSubValidatorRequest" />
+	</wsdl:message>
+	<wsdl:portType name="AxiataSubscriptionApprovalServicePT">
+		<wsdl:operation name="retrieveOperatorList">
+			<wsdl:input message="ax:OperatorRetrievalRequest" />
+			<wsdl:output message="ax:OperatorRetrievalResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="updateDBHubApproval">
+			<wsdl:input message="ax:HUBApprovalDBUpdateRequest" />
+		</wsdl:operation>
+		<wsdl:operation name="updateDBOpApproval">
+			<wsdl:input message="ax:OpApprovalDBUpdateRequest" />
+		</wsdl:operation>
+		<wsdl:operation name="retrieveSubOperatorList">
+			<wsdl:input message="ax:SubOperatorRetrievalRequest" />
+			<wsdl:output message="ax:SubOperatorRetrievalResponse" />
+		</wsdl:operation>
+        <wsdl:operation name="insertValidatorForSubscription">
+			<wsdl:input message="ax:HUBApprovalSubValidatorRequest" />
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="AxiataSubscriptionApprovalServiceSOAP"
+		type="ax:AxiataSubscriptionApprovalServicePT">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="retrieveOperatorList">
+			<soap:operation
+				soapAction="http://org.wso2.carbon/subscriptions/axiata/workflow/retrieveOperatorList" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateDBHubApproval">
+			<soap:operation
+				soapAction="http://org.wso2.carbon/subscriptions/axiata/workflow/updateDBHubApproval" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+		</wsdl:operation>
+		<wsdl:operation name="updateDBOpApproval">
+			<soap:operation
+				soapAction="http://org.wso2.carbon/subscriptions/axiata/workflow/updateDBOpApproval" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+		</wsdl:operation>
+		<wsdl:operation name="retrieveSubOperatorList">
+			<soap:operation
+				soapAction="http://org.wso2.carbon/subscriptions/axiata/workflow/retrieveSubOperatorList" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+		</wsdl:operation>
+        <wsdl:operation name="insertValidatorForSubscription">
+			<soap:operation
+				soapAction="http://org.wso2.carbon/subscriptions/axiata/workflow/insertValidatorForSubscription" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="AxiataSubscriptionApprovalService">
+		<wsdl:port binding="ax:AxiataSubscriptionApprovalServiceSOAP"
+			name="AxiataSubscriptionApprovalServiceSOAP">
+			<soap:address
+				location="http://localhost:8280/services/AxiataSubscriptionApprovalService" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
+
+    </publishWSDL>
+</proxy>

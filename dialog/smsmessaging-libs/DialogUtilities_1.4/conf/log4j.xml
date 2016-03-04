@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<log4j:configuration>
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.out"/>
+		<param name="Threshold" value="info"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{ABSOLUTE} %-5p [%c{1}] %m%n"/>
+		</layout>
+	</appender>	
+	<root>
+		<appender-ref ref="CONSOLE"/>
+	</root>
+	
+	
+	<appender name="BILL_GW" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="D:/workspace/DialogUtilities_1.4/logs/billgw.log"/>
+		<param name="Append" value="true"/>
+		<param name="Threshold" value="DEBUG"/>	
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p [%c] %m%n"/>
+		</layout>	    		
+	</appender>					
+	<appender name="BILL_GW_ERR" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="D:/workspace/DialogUtilities_1.4/logs/billgwerr.log"/>
+		<param name="Append" value="true"/>
+		<param name="Threshold" value="DEBUG"/>	
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p [%c] %m%n"/>
+		</layout>	    		
+	</appender>						
+	<category name="billgw">
+		<appender-ref ref="BILL_GW"/>
+	</category>
+	<category name="billgwerr">
+		<appender-ref ref="BILL_GW_ERR"/>
+	</category> 
+</log4j:configuration>

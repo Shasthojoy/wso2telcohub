@@ -1,0 +1,20 @@
+<%
+jagg.module("finance-report", {
+	getAllSubscribers:function () {
+		return jagg.require(jagg.getModulesDir() + "finance-report/finance-report.jag").getAllSubscribers.apply(this, arguments);
+	},
+	getAllOperators:function () {
+		return jagg.require(jagg.getModulesDir() + "finance-report/finance-report.jag").getAllOperators.apply(this, arguments);
+	},
+	getAllAPIs:function () {
+		return jagg.require(jagg.getModulesDir() + "finance-report/finance-report.jag").getAllAPIs.apply(this, arguments);
+	},
+	getAppsBySubscriber:function () {
+		return jagg.require(jagg.getModulesDir() + "finance-report/finance-report.jag").getAppsBySubscriber.apply(this, arguments);
+	},
+	getBillingData:function () {
+		return jagg.require(jagg.getModulesDir() + "finance-report/finance-report.jag").getBillingData.apply(this, arguments);
+	}
+});
+%>
+

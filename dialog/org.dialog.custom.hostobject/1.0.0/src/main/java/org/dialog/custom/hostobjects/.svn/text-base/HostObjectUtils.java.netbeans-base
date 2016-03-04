@@ -1,0 +1,416 @@
+package org.dialog.custom.hostobjects;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.dialog.custom.hostobjects.internal.HostObjectComponent;
+import org.dialog.custom.hostobjects.util.ChargingPlanType;
+import org.mozilla.javascript.NativeArray;
+import org.mozilla.javascript.NativeObject;
+import org.wso2.carbon.apimgt.api.APIManagementException;
+import org.wso2.carbon.apimgt.api.model.APIKey;
+import org.wso2.carbon.apimgt.api.model.Application;
+import org.wso2.carbon.apimgt.api.model.SubscribedAPI;
+import org.wso2.carbon.apimgt.api.model.Subscriber;
+import org.wso2.carbon.apimgt.impl.APIConstants;
+import org.wso2.carbon.apimgt.impl.APIManagerConfiguration;
+import org.wso2.carbon.apimgt.impl.dao.ApiMgtDAO;
+import org.wso2.carbon.apimgt.impl.internal.ServiceReferenceHolder;
+import org.wso2.carbon.apimgt.usage.client.exception.APIMgtUsageQueryServiceClientException;
+import org.wso2.carbon.apimgt.usage.publisher.APIMgtUsagePublisherConstants;
+
+public class HostObjectUtils {
+
+	private static final Log log = LogFactory.getLog(HostObjectUtils.class);
+
+	protected static boolean checkDataPublishingEnabled() {
+		APIManagerConfiguration configuration =
+		                                        ServiceReferenceHolder.getInstance()
+		                                                              .getAPIManagerConfigurationService()
+		                                                              .getAPIManagerConfiguration();
+		String enabledStr =
+		                    configuration.getFirstProperty(APIMgtUsagePublisherConstants.API_USAGE_ENABLED);
+		return enabledStr != null && Boolean.parseBoolean(enabledStr);
+	}
+
+	public static Map<Application, Set<BillingSubscription>> getBillingSubscriptionsForUser(String username)
+	                                                                                                        throws APIManagementException {
+		Subscriber subscriber = new Subscriber(username);
+		ApiMgtDAO apiMgtDAO = new ApiMgtDAO();
+		Set<SubscribedAPI> apis = apiMgtDAO.getSubscribedAPIs(subscriber);
+		Map<Application, Set<BillingSubscription>> billingDetails = null;
+		if (apis != null) {
+			billingDetails = new HashMap<Application, Set<BillingSubscription>>();
+			log.info("::: Subscribed APIs not null :::");
+			for (SubscribedAPI api : apis) {
+				log.info("::: Subscribed API : " + api.getApplication().getName() + " , " +
+				         api.getTier().getName() + " , " + api.getApiId());
+				if (billingDetails.containsKey(api.getApplication())) {
+					billingDetails.get(api.getApplication()).add(new BillingSubscription(api));
+				} else {
+					Set<BillingSubscription> set = new HashSet<BillingSubscription>();
+					set.add(new BillingSubscription(api));
+					billingDetails.put(api.getApplication(), set);
+				}
+			}
+		} else {
+			log.info("::: Subscribed APIS null");
+		}
+
+		return billingDetails;
+	}
+
+	public static APIKey getAppKey(Application app, String keyType) {
+		List<APIKey> apiKeys = app.getKeys();
+		return getKeyOfType(apiKeys, keyType);
+	}
+
+	public static APIKey getKeyOfType(List<APIKey> apiKeys, String keyType) {
+		for (APIKey key : apiKeys) {
+			if (keyType.equals(key.getType())) {
+				return key;
+			}
+		}
+		return null;
+	}
+
+	public static void applyChargingPlan(Map<Application, Set<BillingSubscription>> billingSubs,
+	                                     Map<String, Float> chargingPlan) {
+		Set<Map.Entry<Application, Set<BillingSubscription>>> entries = billingSubs.entrySet();
+		for (Map.Entry<Application, Set<BillingSubscription>> entry : entries) {
+			Set<BillingSubscription> subscriptions = entry.getValue();
+			for (BillingSubscription subscription : subscriptions) {
+				if (subscription.getTier().getName().equals(ChargingPlanType.UNLIMITED.getValue())) {
+					subscription.setTotalPrice(subscription.getCount() *
+					                           chargingPlan.get(ChargingPlanType.UNLIMITED.getValue()));
+				} else if (subscription.getTier().getName()
+				                       .equals(ChargingPlanType.GOLD.getValue())) {
+					subscription.setTotalPrice(subscription.getCount() *
+					                           chargingPlan.get(ChargingPlanType.GOLD.getValue()));
+				} else if (subscription.getTier().getName()
+				                       .equals(ChargingPlanType.SILVER.getValue())) {
+					subscription.setTotalPrice(subscription.getCount() *
+					                           chargingPlan.get(ChargingPlanType.SILVER.getValue()));
+				} else if (subscription.getTier().getName()
+				                       .equals(ChargingPlanType.BRONZE.getValue())) {
+					subscription.setTotalPrice(subscription.getCount() *
+					                           chargingPlan.get(ChargingPlanType.BRONZE.getValue()));
+				}
+			}
+		}
+	}
+
+	public static Map<Application, Set<BillingSubscription>> chargeSubscriberForMonth(String subscriber,
+	                                                                                  String year,
+	                                                                                  String month,
+	                                                                                  Map<String, Float> chargingPlan)
+	                                                                                                                  throws APIManagementException,
+	                                                                                                                  APIMgtUsageQueryServiceClientException {
+		Map<Application, Set<BillingSubscription>> billingSubs =
+		                                                         getBillingSubscriptionsForUser(subscriber);
+		populateAPICounts(billingSubs, year, month, subscriber);
+		applyChargingPlan(billingSubs, chargingPlan);
+
+		return billingSubs;
+	}
+
+	public static FileWriter getReportLocation(String subscriber, String period) throws IOException {
+		String year = null;
+		String month = null;
+		if (period != null) {
+			String[] periodArray = period.split("-");
+			year = periodArray[0];
+			month = periodArray[1];
+		}
+		String carbonHome = System.getProperty("carbon.home");
+		String fileName = subscriber + "-" + period + ".csv";
+		File reports = new File(carbonHome + "/reports/");
+
+		if (!reports.exists()) {
+			reports.mkdirs();
+			reports = new File(reports.getAbsoluteFile() + "/" + fileName);
+			reports.createNewFile();
+		} else {
+			reports = new File(reports.getAbsoluteFile() + "/" + fileName);
+			if (!reports.exists()) {
+				reports.createNewFile();
+			}
+		}
+		return new FileWriter(reports.getAbsolutePath());
+	}
+
+	private static File getCSVFile(String subscriber, String period) throws IOException {
+
+		String carbonHome = System.getProperty("carbon.home");
+		String fileName = subscriber + "-" + period + ".csv";
+		File reports = new File(carbonHome + "/reports/");
+
+		if (!reports.exists()) {
+			reports.mkdirs();
+			reports = new File(reports.getAbsoluteFile() + "/" + fileName);
+			reports.createNewFile();
+		} else {
+			reports = new File(reports.getAbsoluteFile() + "/" + fileName);
+			if (!reports.exists()) {
+				reports.createNewFile();
+			}
+		}
+		return reports;
+	}
+
+	public static NativeArray generateReportofSubscriber(boolean isPersistReport,
+	                                                     String subscriberName, String period,
+	                                                     Map<String, Float> chargingPlan)
+	                                                                                     throws IOException,
+	                                                                                     SQLException,
+	                                                                                     APIMgtUsageQueryServiceClientException,
+	                                                                                     APIManagementException {
+
+		String year = null;
+		String month = null;
+		if (period != null) {
+			String[] periodArray = period.split("-");
+			year = periodArray[0];
+			month = periodArray[1];
+		}
+		FileWriter fileWriter = getReportLocation(subscriberName, period);
+
+		if (isPersistReport)
+			fileWriter.write(String.format("%s, %s, %s, %s, %s, %s,%s %n", "Subscriber",
+			                               "Application", "API", "Version", "Plan", "Count",
+			                               "Total"));
+
+		NativeArray subscribers = new NativeArray(0);
+
+		if (HostObjectUtils.isUserAdminUser(subscriberName)) {
+			List<String> subscriberNames = HostObjectUtils.getAllSubscribers();
+
+			for (String sub : subscriberNames) {
+				Map<Application, Set<BillingSubscription>> billingSubs =
+				                                                         HostObjectUtils.chargeSubscriberForMonth(sub,
+				                                                                                                  year,
+				                                                                                                  month,
+				                                                                                                  chargingPlan);
+
+				NativeObject subscriber = new NativeObject();
+				subscriber.put("subscriber", subscriber, sub);
+				NativeArray applications = new NativeArray(0);
+
+				if (isPersistReport)
+					fileWriter.write(String.format("%s, %s, %s, %s, %s, %s, %s %n", sub, "", "",
+					                               "", "", "", ""));
+
+				for (Map.Entry<Application, Set<BillingSubscription>> billingEntries : billingSubs.entrySet()) {
+
+					NativeObject application = new NativeObject();
+					String applicationName = "";
+
+					NativeArray subscriptionAPIs = new NativeArray(0);
+
+					int a = 0;
+					for (BillingSubscription billingSubscription : billingEntries.getValue()) {
+
+						NativeObject subscriptionAPI = new NativeObject();
+						subscriptionAPI.put("subscriptionapi", subscriptionAPI,
+						                    billingSubscription.getApiId().getApiName());
+						subscriptionAPI.put("subscriptionapiversion", subscriptionAPI,
+						                    billingSubscription.getApiId().getVersion());
+						subscriptionAPI.put("charginplan", subscriptionAPI,
+						                    billingSubscription.getTier().getName());
+						subscriptionAPI.put("count", subscriptionAPI,
+						                    billingSubscription.getCount());
+						subscriptionAPI.put("total", subscriptionAPI,
+						                    billingSubscription.getTotalPrice());
+
+						applicationName = billingEntries.getKey().getName();
+
+						subscriptionAPIs.put(subscriptionAPIs.size(), subscriptionAPIs,
+						                     subscriptionAPI);
+
+						if (a == 0 && isPersistReport) {
+							fileWriter.write(String.format("%s, %s, %s, %s, %s, %s, %s %n", "",
+							                               applicationName, "", "", "", "", ""));
+						}
+
+						if (isPersistReport)
+							fileWriter.write(String.format("%s, %s, %s, %s, %s, %s, %s %n", "", "",
+							                               billingSubscription.getApiId()
+							                                                  .getApiName(),
+							                               billingSubscription.getApiId()
+							                                                  .getVersion(),
+							                               billingSubscription.getTier().getName(),
+							                               billingSubscription.getCount(),
+							                               billingSubscription.getTotalPrice()));
+
+						a++;
+
+					}
+
+					application.put("applicationname", application, applicationName);
+					application.put("subscriptions", application, subscriptionAPIs);
+
+					applications.put(applications.size(), applications, application);
+
+				}
+
+				subscriber.put("applications", subscriber, applications);
+				subscribers.put(subscribers.size(), subscribers, subscriber);
+
+			}
+		} else {
+
+			NativeObject subscriber = new NativeObject();
+			subscriber.put("subscriber", subscriber, subscriberName);
+			NativeArray applications = new NativeArray(0);
+
+			Map<Application, Set<BillingSubscription>> billingSubs =
+			                                                         HostObjectUtils.chargeSubscriberForMonth(subscriberName,
+			                                                                                                  year,
+			                                                                                                  month,
+			                                                                                                  chargingPlan);
+			if (isPersistReport)
+				fileWriter.write(String.format("%s, %s, %s, %s, %s, %s, %s %n", subscriberName, "",
+				                               "", "", "", "", ""));
+
+			for (Map.Entry<Application, Set<BillingSubscription>> billingEntries : billingSubs.entrySet()) {
+
+				NativeObject application = new NativeObject();
+				String applicationName = "";
+
+				NativeArray subscriptionAPIs = new NativeArray(0);
+
+				fileWriter.write(String.format("%s, %s, %s, %s, %s, %s %n", "",
+				                               billingEntries.getKey().getName(), "", "", "", "",
+				                               ""));
+
+				for (BillingSubscription billingSubscription : billingEntries.getValue()) {
+					if (isPersistReport)
+						fileWriter.write(String.format("%s, %s, %s, %s, %s, %s %n", "", "",
+						                               billingSubscription.getApiId().getApiName(),
+						                               billingSubscription.getApiId().getVersion(),
+						                               billingSubscription.getCount(),
+						                               billingSubscription.getTotalPrice()));
+
+					NativeObject subscriptionAPI = new NativeObject();
+					subscriptionAPI.put("subscriptionapi", subscriptionAPI,
+					                    billingSubscription.getApiId().getApiName());
+					subscriptionAPI.put("subscriptionapiversion", subscriptionAPI,
+					                    billingSubscription.getApiId().getVersion());
+					subscriptionAPI.put("charginplan", subscriptionAPI,
+					                    billingSubscription.getTier().getName());
+					subscriptionAPI.put("count", subscriptionAPI, billingSubscription.getCount());
+					subscriptionAPI.put("total", subscriptionAPI,
+					                    billingSubscription.getTotalPrice());
+
+					applicationName = billingEntries.getKey().getName();
+
+					subscriptionAPIs.put(subscriptionAPIs.size(), subscriptionAPIs, subscriptionAPI);
+				}
+
+				application.put("applicationname", application, applicationName);
+				application.put("subscriptions", application, subscriptionAPIs);
+
+				applications.put(applications.size(), applications, application);
+
+			}
+
+			subscriber.put("applications", subscriber, applications);
+			subscribers.put(subscribers.size(), subscribers, subscriber);
+
+		}
+
+		fileWriter.close();
+
+		return subscribers;
+	}
+
+	public static boolean isUserAdminUser(String username) {
+		String adminUserName =
+		                       HostObjectComponent.getRealmService()
+		                                          .getBootstrapRealmConfiguration()
+		                                          .getAdminUserName();
+		log.info("::: AdminUser Name ::: " + adminUserName);
+		return adminUserName.equals(username);
+	}
+
+	public static List<String> getAllSubscribers() throws SQLException,
+	                                              APIMgtUsageQueryServiceClientException {
+		return BillingDataAccessObject.getAllSubscriptions();
+	}
+
+	public static void populateAPICounts(Map<Application, Set<BillingSubscription>> billingSubs,
+	                                     String year, String month, String subscriber)
+	                                                                                  throws APIManagementException,
+	                                                                                  APIMgtUsageQueryServiceClientException {
+		Set<Map.Entry<Application, Set<BillingSubscription>>> entries = billingSubs.entrySet();
+		for (Map.Entry<Application, Set<BillingSubscription>> mapEntry : entries) {
+			Application application = mapEntry.getKey();
+			if (application == null)
+				throw new APIManagementException("no key genenarted for this api");
+			APIKey prodKey = getAppKey(application, APIConstants.API_KEY_TYPE_PRODUCTION);
+			Map<String, Integer> usageCounts =
+			                                   BillingDataAccessObject.getAPICountsForApplication(prodKey.getConsumerKey(),
+			                                                                                      year,
+			                                                                                      month,
+			                                                                                      subscriber);
+			for (BillingSubscription bill : mapEntry.getValue()) {
+				String apiKey = bill.getApiId().getApiName() + ":v" + bill.getApiId().getVersion();
+				if (usageCounts.containsKey(apiKey)) {
+					bill.setCount(usageCounts.get(apiKey));
+				}
+			}
+		}
+
+	}
+
+	/**
+	 * 
+	 * Reading report file from file system
+	 * 
+	 * @param suscriber
+	 * @param period
+	 * @return
+	 */
+	public static String getReport(String suscriber, String period) {
+		String fileContent = "";
+		BufferedReader bufferedReader = null;
+		try {
+			File file = getCSVFile(suscriber, period);
+			bufferedReader = new BufferedReader(new FileReader(file));
+
+			StringBuilder fileAppender = new StringBuilder();
+
+			int c = -1 ;
+			
+			while((c=bufferedReader.read())!=-1){
+				char ch = (char)c;
+				fileAppender.append(ch);
+			}
+
+			fileContent = fileAppender.toString();
+
+		} catch (IOException e) {
+			log.error("report file reading error : " + e.getMessage());
+		} finally {
+			try {
+				bufferedReader.close();
+			} catch (IOException e) {
+				log.error("Buuffered Reader closing error : " + e.getMessage());
+			}
+		}
+		return fileContent;
+	}
+
+}

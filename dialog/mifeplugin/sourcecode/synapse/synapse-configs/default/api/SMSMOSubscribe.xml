@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse"
+     name="SMSMOSubscribe"
+     context="/smsmosubscribe">
+   <resource methods="POST">
+      <inSequence>
+         <property name="port" expression="json-eval($.subscription.destinationAddress)"/>
+         <property name="notifyURL"
+                   expression="json-eval($.subscription.callbackReference.notifyURL)"/>
+         <property name="criteria" expression="json-eval($.subscription.criteria)"/>
+         <property name="callbackData"
+                   expression="json-eval($.subscription.callbackReference.callbackData)"/>
+         <property name="notificationFormat"
+                   expression="json-eval($.subscription.notificationFormat)"/>
+         <dbreport>
+            <connection>
+               <pool>
+                  <password>axiatadbpassword</password>
+                  <user>axiatadbuser</user>
+                  <url>jdbc:mysql://10.174.15.26:3306/smsdata</url>
+                  <driver>com.mysql.jdbc.Driver</driver>
+               </pool>
+            </connection>
+            <statement>
+               <sql>insert into smsmosubscription(port,notifyURL,criteria,callbackData,notificationFormat) values (?,?,?,?,?)</sql>
+               <parameter xmlns:ns="http://org.apache.synapse/xsd"
+                          expression="get-property('port')"
+                          type="VARCHAR"/>
+               <parameter xmlns:ns="http://org.apache.synapse/xsd"
+                          expression="get-property('notifyURL')"
+                          type="VARCHAR"/>
+               <parameter xmlns:ns="http://org.apache.synapse/xsd"
+                          expression="get-property('criteria')"
+                          type="VARCHAR"/>
+               <parameter xmlns:ns="http://org.apache.synapse/xsd"
+                          expression="get-property('callbackData')"
+                          type="VARCHAR"/>
+               <parameter xmlns:ns="http://org.apache.synapse/xsd"
+                          expression="get-property('notificationFormat')"
+                          type="VARCHAR"/>
+            </statement>
+         </dbreport>
+         <log level="full"/>
+         <respond/>
+      </inSequence>
+      <outSequence/>
+   </resource>
+</api>

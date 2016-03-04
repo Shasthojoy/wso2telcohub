@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="smsdrsequence">
+   <payloadFactory media-type="xml">
+      <format>
+         <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+                            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                            xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+                            xmlns:tns="urn:interactivewsdl"
+                            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                            SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+            <SOAP-ENV:Body>
+               <tns:getSMSDR>
+                  <input xsi:type="tns:reqGetSMSDR">
+                     <sender xsi:type="xsd:string">$1</sender>
+                     <recipient xsi:type="xsd:string">$2</recipient>
+                     <msg_id xsi:type="xsd:string">$3</msg_id>
+                  </input>
+               </tns:getSMSDR>
+            </SOAP-ENV:Body>
+         </SOAP-ENV:Envelope>
+      </format>
+      <args>
+         <arg xmlns:ns="http://org.apache.synapse/xsd"
+              evaluator="xml"
+              expression="//sender/@sender"/>
+         <arg xmlns:ns="http://org.apache.synapse/xsd"
+              evaluator="xml"
+              expression="//sender/@recipient"/>
+         <arg xmlns:ns="http://org.apache.synapse/xsd"
+              evaluator="xml"
+              expression="//sender/@messageId"/>
+      </args>
+   </payloadFactory>
+   <log level="full"/>
+   <property xmlns:ns="http://org.apache.synapse/xsd"
+             name="Authorization"
+             expression="fn:concat('Basic ', base64Encode('mife:mife12345'))"
+             scope="transport"/>
+   <send>
+      <endpoint key="xlBackendEP"/>
+   </send>
+</sequence>

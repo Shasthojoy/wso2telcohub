@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="https://localhost:9443/services/AuthenticationAdmin?wsdl" uri="wsdl/localhost_9443/services/AuthenticationAdmin.wsdl"/>
+</catalog>

@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:env="http://www.w3.org/2003/05/soap-envelope" xmlns:mss="http://uri.etsi.org/TS102204/v1.1.2#" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://uri.etsi.org/TS102204/v1.1.2#">
+    <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
+    <xs:import namespace="http://www.w3.org/2001/04/xmlenc#" schemaLocation="xenc-schema.xsd"/>
+    <xs:import namespace="http://www.w3.org/2003/05/soap-envelope" schemaLocation="soap-envelope.xsd"/>
+    <xs:complexType abstract="true" name="MessageAbstractType">
+        <xs:sequence>
+            <xs:element name="AP_Info">
+                <xs:complexType>
+                    <xs:attribute name="AP_ID" type="xs:anyURI" use="required"/>
+                    <xs:attribute name="AP_TransID" type="xs:NCName" use="required"/>
+                    <xs:attribute name="AP_PWD" type="xs:string" use="required"/>
+                    <xs:attribute name="Instant" type="xs:dateTime" use="required"/>
+                    <xs:attribute name="AP_URL" type="xs:anyURI" use="optional"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="MSSP_Info">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="MSSP_ID" type="mss:MeshMemberType"/>
+                    </xs:sequence>
+                    <xs:attribute name="Instant" type="xs:dateTime" use="optional"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="MajorVersion" type="xs:integer" use="required"/>
+        <xs:attribute name="MinorVersion" type="xs:integer" use="required"/>
+    </xs:complexType>
+    <xs:element name="MSS_SignatureReq" type="mss:MSS_SignatureReqType"/>
+    <xs:complexType name="MSS_SignatureReqType">
+        <xs:complexContent>
+            <xs:extension base="mss:MessageAbstractType">
+                <xs:sequence>
+                    <xs:element name="MobileUser" type="mss:MobileUserType"/>
+                    <xs:element name="DataToBeSigned" type="mss:DataType"/>
+                    <xs:element minOccurs="0" name="DataToBeDisplayed" type="mss:DataType"/>
+                    <xs:element minOccurs="0" name="SignatureProfile" type="mss:mssURIType"/>
+                    <xs:element minOccurs="0" name="AdditionalServices">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="unbounded" name="Service" type="mss:AdditionalServiceType"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="MSS_Format" type="mss:mssURIType"/>
+                    <xs:element minOccurs="0" name="KeyReference" type="mss:KeyReferenceType"/>
+                    <xs:element minOccurs="0" name="SignatureProfileComparison" type="mss:SignatureProfileComparisonType"/>
+                </xs:sequence>
+                <xs:attribute name="ValidityDate" type="xs:dateTime" use="optional"/>
+                <xs:attribute name="TimeOut" type="xs:positiveInteger" use="optional"/>
+                <xs:attribute name="MessagingMode" type="mss:MessagingModeType" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="MSS_SignatureResp" type="mss:MSS_SignatureRespType"/>
+    <xs:complexType name="MSS_SignatureRespType">
+        <xs:complexContent>
+            <xs:extension base="mss:MessageAbstractType">
+                <xs:sequence>
+                    <xs:element name="MobileUser" type="mss:MobileUserType"/>
+                    <xs:element minOccurs="0" name="MSS_Signature" type="mss:SignatureType"/>
+                    <xs:element minOccurs="0" name="SignatureProfile" type="mss:mssURIType"/>
+                    <xs:element name="Status" type="mss:StatusType"/>
+                </xs:sequence>
+                <xs:attribute name="MSSP_TransID" type="xs:NCName" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="MSS_StatusReq" type="mss:MSS_StatusReqType"/>
+    <xs:complexType name="MSS_StatusReqType">
+        <xs:complexContent>
+            <xs:extension base="mss:MessageAbstractType">
+                <xs:attribute name="MSSP_TransID" type="xs:NCName" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="MSS_StatusResp" type="mss:MSS_StatusRespType"/>
+    <xs:complexType name="MSS_StatusRespType">
+        <xs:complexContent>
+            <xs:extension base="mss:MessageAbstractType">
+                <xs:sequence>
+                    <xs:element name="MobileUser" type="mss:MobileUserType"/>
+                    <xs:element minOccurs="0" name="MSS_Signature" type="mss:SignatureType"/>
+                    <xs:element name="Status" type="mss:StatusType"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="MSS_RegistrationReq" type="mss:MSS_RegistrationReqType"/>
+    <xs:complexType name="MSS_RegistrationReqType">
+        <xs:complexContent>
+            <xs:extension base="mss:MessageAbstractType">
+                <xs:sequence>
+                    <xs:element name="MobileUser" type="mss:MobileUserType"/>
+                    <xs:element minOccurs="0" name="EncryptedData" type="xenc:EncryptedType"/>
+                    <xs:element minOccurs="0" name="EncryptResponseBy" type="xs:anyURI"/>
+                    <xs:element minOccurs="0" name="CertificateURI" type="xs:anyURI"/>
+                    <xs:element minOccurs="0" name="X509Certificate" type="xs:base64Binary"/>
+                    <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="MSS_RegistrationResp" type="mss:MSS_RegistrationRespType"/>
+    <xs:complexType name="MSS_RegistrationRespType">
+        <xs:complexContent>
+            <xs:extension base="mss:MessageAbstractType">
+                <xs:sequence>
+                    <xs:element name="Status" type="mss:StatusType"/>
+                    <xs:element minOccurs="0" name="EncryptedData" type="xenc:EncryptedType"/>
+                    <xs:element minOccurs="0" name="CertificateURI" type="xs:anyURI"/>
+                    <xs:element minOccurs="0" name="X509Certificate" type="xs:base64Binary"/>
+                    <xs:element minOccurs="0" name="PublicKey" type="xs:base64Binary"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="MSS_ProfileReq" type="mss:MSS_ProfileReqType"/>
+    <xs:complexType name="MSS_ProfileReqType">
+        <xs:complexContent>
+            <xs:extension base="mss:MessageAbstractType">
+                <xs:sequence>
+                    <xs:element name="MobileUser" type="mss:MobileUserType"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="MSS_ProfileResp" type="mss:MSS_ProfileRespType"/>
+    <xs:complexType name="MSS_ProfileRespType">
+        <xs:complexContent>
+            <xs:extension base="mss:MessageAbstractType">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="SignatureProfile" type="mss:mssURIType"/>
+                    <xs:element name="Status" type="mss:StatusType"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="MSS_ReceiptReq" type="mss:MSS_ReceiptReqType"/>
+    <xs:complexType name="MSS_ReceiptReqType">
+        <xs:complexContent>
+            <xs:extension base="mss:MessageAbstractType">
+                <xs:sequence>
+                    <xs:element name="MobileUser" type="mss:MobileUserType"/>
+                    <xs:element minOccurs="0" name="Status" type="mss:StatusType"/>
+                    <xs:element minOccurs="0" name="Message" type="mss:DataType"/>
+                    <xs:element minOccurs="0" name="SignedReceipt" type="ds:SignatureType"/>
+                </xs:sequence>
+                <xs:attribute name="MSSP_TransID" type="xs:NCName" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="MSS_ReceiptResp" type="mss:MSS_ReceiptRespType"/>
+    <xs:complexType name="MSS_ReceiptRespType">
+        <xs:complexContent>
+            <xs:extension base="mss:MessageAbstractType">
+                <xs:sequence>
+                    <xs:element name="Status" type="mss:StatusType"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="MSS_HandshakeReq" type="mss:MSS_HandshakeReqType"/>
+    <xs:complexType name="MSS_HandshakeReqType">
+        <xs:complexContent>
+            <xs:extension base="mss:MessageAbstractType">
+                <xs:sequence>
+                    <xs:element name="SecureMethods">
+                        <xs:complexType>
+                            <xs:attribute name="MSS_Signature" type="xs:boolean" use="required"/>
+                            <xs:attribute name="MSS_Registration" type="xs:boolean" use="required"/>
+                            <xs:attribute name="MSS_Notification" type="xs:boolean" use="required"/>
+                            <xs:attribute name="MSS_ProfileQuery" type="xs:boolean" use="required"/>
+                            <xs:attribute name="MSS_Receipt" type="xs:boolean" use="required"/>
+                            <xs:attribute name="MSS_Status" type="xs:boolean" use="required"/>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="Certificates">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="unbounded" minOccurs="0" name="Certificate" type="xs:base64Binary"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="RootCAs">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="unbounded" minOccurs="0" name="DN" type="xs:string"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="SignatureAlgList">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="unbounded" minOccurs="0" name="Algorithm" type="mss:mssURIType"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="MSS_HandshakeResp" type="mss:MSS_HandshakeRespType"/>
+    <xs:complexType name="MSS_HandshakeRespType">
+        <xs:complexContent>
+            <xs:extension base="mss:MessageAbstractType">
+                <xs:sequence>
+                    <xs:element name="SecureMethods">
+                        <xs:complexType>
+                            <xs:attribute name="MSS_Signature" type="xs:boolean" use="required"/>
+                            <xs:attribute name="MSS_Registration" type="xs:boolean" use="required"/>
+                            <xs:attribute name="MSS_Notification" type="xs:boolean" use="required"/>
+                            <xs:attribute name="MSS_ProfileQuery" type="xs:boolean" use="required"/>
+                            <xs:attribute name="MSS_Receipt" type="xs:boolean" use="required"/>
+                            <xs:attribute name="MSS_Status" type="xs:boolean" use="required"/>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="MatchingMSSPCertificates">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="unbounded" minOccurs="0" name="Certificate" type="xs:base64Binary"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="MatchingAPCertificates">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="unbounded" minOccurs="0" name="Certificate" type="xs:base64Binary"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="MatchingSigAlgList">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="unbounded" minOccurs="0" name="Algorithm" type="mss:mssURIType"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="MSSP_TransID" type="xs:NCName" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="MobileUserType">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="IdentityIssuer" type="mss:MeshMemberType"/>
+            <xs:element minOccurs="0" name="UserIdentifier" type="xs:string"/>
+            <xs:element minOccurs="0" name="HomeMSSP" type="mss:MeshMemberType"/>
+            <xs:element minOccurs="0" name="MSISDN" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="DataType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="MimeType" type="xs:string" use="optional"/>
+                <xs:attribute name="Encoding" type="xs:string" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="SignatureProfileComparisonType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="exact"/>
+            <xs:enumeration value="minimum"/>
+            <xs:enumeration value="better"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MessagingModeType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="synch"/>
+            <xs:enumeration value="asynchClientServer"/>
+            <xs:enumeration value="asynchServerServer"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="DigestAlgAndValueType">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="DigestMethod" type="ds:DigestMethodType"/>
+            <xs:element name="DigestValue" type="ds:DigestValueType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="mssURIType">
+        <xs:sequence>
+            <xs:element name="mssURI" type="xs:anyURI"/>
+            <xs:element minOccurs="0" name="DigestAlgAndValue" type="mss:DigestAlgAndValueType"/>
+            <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="MeshMemberType">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="DNSName" type="xs:string"/>
+            <xs:element minOccurs="0" name="IPAddress" type="xs:string"/>
+            <xs:element minOccurs="0" name="URI" type="xs:anyURI"/>
+            <xs:element minOccurs="0" name="IdentifierString" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="KeyReferenceType">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="CertificateURL" type="xs:anyURI"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="CertificateIssuerDN" type="xs:string"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="HashOfUsersPublicKey" type="mss:DigestAlgAndValueType"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="HashOfCAPublicKey" type="mss:DigestAlgAndValueType"/>
+            <xs:any namespace="##other" processContents="lax"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="SignatureType">
+        <xs:choice>
+            <xs:element name="XMLSignature" type="ds:SignatureType"/>
+            <xs:element name="Base64Signature" type="xs:base64Binary"/>
+            <xs:any minOccurs="0" namespace="##other" processContents="lax"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:element name="MSS_MessageSignature">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="ds:Signature"/>
+            </xs:sequence>
+            <xs:attribute ref="env:role" use="required"/>
+            <xs:attribute ref="env:mustUnderstand" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="AdditionalServiceType">
+        <xs:sequence>
+            <xs:element name="Description" type="mss:mssURIType"/>
+            <xs:element minOccurs="0" name="Entity" type="mss:MeshMemberType"/>
+            <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="StatusType">
+        <xs:sequence>
+            <xs:element name="StatusCode" type="mss:StatusCodeType"/>
+            <xs:element minOccurs="0" name="StatusMessage" type="xs:string"/>
+            <xs:element minOccurs="0" name="StatusDetail" type="mss:StatusDetailType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="StatusCodeType">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="StatusCode" type="mss:StatusCodeType"/>
+        </xs:sequence>
+        <xs:attribute name="Value" type="xs:integer" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="StatusDetailType">
+        <xs:sequence>
+            <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##any" processContents="lax"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

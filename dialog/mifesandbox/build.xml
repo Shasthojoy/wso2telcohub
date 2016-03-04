@@ -1,0 +1,118 @@
+<?xml version="1.0"?> 
+<project name="mifesandbox" default="server" basedir="."> 
+		
+    <path id="classpath.base">
+        <fileset dir="WebContent/WEB-INF/lib" includes="**/*.jar" excludes="**/mifesandbox*.jar"/>
+        <pathelement location="hibernate"/>
+    </path>
+
+    <target name="init">
+        <delete dir='build'/>
+        <mkdir dir="build"/>
+        <mkdir dir="genlib"/>
+    </target>
+
+    <target name="compile" depends="init"> 
+        <javac destdir="build" debug="on" encoding="ISO-8859-1">
+            <classpath refid="classpath.base" />
+            <compilerarg value="-Xlint:all,unchecked"/>
+            <src path="src"/>
+            <include name="**/*.java"/>
+        </javac>
+    </target>
+
+    <target name="jar" depends="compile">
+        <jar destfile="genlib/mifesandbox.jar" basedir="build">
+            <include name="**/*.class"/>
+        </jar>
+        <jar destfile="WebContent/WEB-INF/lib/mifesandbox.jar" basedir="build">
+            <include name="**/*.class"/>
+        </jar>
+    </target>
+	
+    <target name="server" depends="jar">
+        <mkdir dir="build/server"/>
+        <war destfile="build/server/mifesandbox.war" webxml="conf/web.xml">    
+            <manifest>
+                <attribute name="Built-By" value="${user.name}"/>
+                <section name="common">
+                    <attribute name="Specification-Title" value="Mife API Sandbox Server"/>
+                    <attribute name="Specification-Vendor" value="MIFE"/>
+                    <attribute name="Implementation-Title" value="Mife API Sandbox Server"/>
+                    <attribute name="Implementation-Version" value="${TODAY}"/> 
+                    <attribute name="Implementation-Vendor" value="Dialog Axata."/>
+                </section>
+            </manifest>
+
+            <zipfileset dir="conf"
+                                    prefix="WEB-INF/classes" casesensitive="yes" >
+                <include name="*.properties"/>
+                <include name="*.cfg.*"/>
+                <exclude name='CVS/**/*'/>
+            </zipfileset>
+    		
+            <zipfileset file="genlib/mifesandbox.jar" fullpath="WEB-INF/lib/mifesandbox.jar" casesensitive="yes" />
+
+            <zipfileset dir="WebContent" casesensitive="yes" >
+                <include name="**/*.ico"/>
+                <include name="**/*.jsp"/>
+                <include name="**/*.inc"/>
+                <include name="**/*.pdf"/>
+                <include name="**/*.css"/>
+                <include name="**/*.gif"/>
+                <include name="**/*.jpg"/>
+
+            </zipfileset>
+
+            <lib dir='WebContent/WEB-INF/lib'>
+                <exclude name='**/javax-servlet.jar'/>
+                <exclude name='**/jsp-api.jar'/>
+                <exclude name='**/servlet-api.jar'/>
+                <exclude name='**/mifesandbox.jar'/>
+                <include name='**/*.jar'/>
+            </lib>			
+        </war>          
+    </target>
+	
+    <target name="code" depends="jar">
+        <mkdir dir="release"/>
+        <mkdir dir="release/java"/>
+        <tar destfile="release/java/mifesandbox.tar">
+            <tarfileset dir="src"
+                                    prefix="src"
+                                    preserveLeadingSlashes="true">
+                <exclude name='CVS/**/*'/>
+            </tarfileset>
+            <tarfileset dir="WebContent"
+                                    prefix="WebContent"
+                                    preserveLeadingSlashes="true">
+                <exclude name='CVS/**/*'/>
+            </tarfileset>
+            <tarfileset dir="conf"
+                                    prefix="conf"
+                                    preserveLeadingSlashes="true">
+                <exclude name='CVS/**/*'/>
+            </tarfileset>
+            <tarfileset dir="."
+                                    prefix="."
+                                    preserveLeadingSlashes="true">
+                <include name='build.xml'/>
+            </tarfileset>
+		
+        </tar>
+        <tar destfile="release/php/mifesandbox-php.tar">
+            <tarfileset dir="PHPAPI"
+                                    prefix="mifesandbox"
+                                    preserveLeadingSlashes="true">
+                <exclude name='CVS/**/*'/>
+            </tarfileset>
+            <tarfileset dir="PHPTestPages"
+                                    prefix=""
+                                    preserveLeadingSlashes="true">
+                <exclude name='CVS/**/*'/>
+            </tarfileset>
+        </tar>
+				
+    </target>
+
+</project>

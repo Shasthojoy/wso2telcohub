@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="MockService"
+       transports="https http"
+       startOnLoad="true"
+       trace="disable">
+   <description/>
+   <target>
+      <inSequence>
+         <log level="custom">
+            <property name="sd" value="********************Came here 57*******************"/>
+         </log>
+         <log level="full"/>
+         <log level="custom">
+            <property name="sd" value="********************Came here 6*******************"/>
+         </log>
+         <payloadFactory media-type="json">
+            <format>         {"inboundUSSDMessageRequest":{"address":" tel:+11211","shortCode":"tel:343","keyword":"ssff","inboundUSSDMessage":"sdsd","clientCorrelator":"123456","responseRequest":{"notifyURL":"dvdv","callbackData":"dvdd"},"ussdAction":"mtcont"}}      </format>
+            <args/>
+         </payloadFactory>
+         <property name="messageType" value="application/json" scope="axis2"/>
+         <respond/>
+      </inSequence>
+   </target>
+</proxy>

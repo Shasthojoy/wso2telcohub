@@ -1,0 +1,33 @@
+<%
+jagg.block("finance", {
+	initializer:function (data) {
+
+	} ,
+// 	getInputs:function () {
+// 		return {
+// 			"usage":null
+// 		}
+// 	},
+
+	getOutputs:function (inputs) {
+			
+		var data, user = inputs.user;
+		if (user.isAdmin){
+			var financeReportModule = jagg.module("finance-report");
+			var result_subscribers = financeReportModule.getAllSubscribers();
+			var result_operators = financeReportModule.getAllOperators();
+			var result_apis = financeReportModule.getAllAPIs();
+
+			data_subscribers = result_subscribers.data;
+			data_operators = result_operators.data;
+			data_apis = result_apis.data;
+		}
+		return {
+			"subscribers" : data_subscribers,
+			"operators" : data_operators,
+			"apis" : data_apis
+		};
+	}
+
+});
+%>

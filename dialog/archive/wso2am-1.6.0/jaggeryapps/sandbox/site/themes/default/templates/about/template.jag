@@ -1,0 +1,91 @@
+<% jagg.template("about", function(inputs, outputs, jagg) { %>
+<script src="<%=jagg.getAbsoluteUrl(jagg.getThemeFile("templates/utils/custom-validation/hira-validations.js"))%>"></script>
+<div id="listing">
+    <div class="title-section">
+        <h2>Manage Numbers</h2>
+    </div>
+    <div class="alert alert-error" id="tableError" style="display:none">
+         <span id="tableErrorSpan"></span>
+    </div>
+    <div class="alert alert-success" id="tableSuccess" style="display:none">
+         <span id="tableSuccessSpan"></span>
+    </div>
+    <div class="content-section shadow-up">
+        <div class="content-data">
+			<input type="button" class="btn btn-primary"
+				id="add_number_row_button" value="Add New" />
+			<div class="" style="float: right;">
+				<link rel="stylesheet" type="text/css" href="<%=jagg.getAbsoluteUrl(jagg.getThemeFile("lib/select2-3.4.2/select2.css"))%>" />
+				<script src="<%=jagg.getAbsoluteUrl(jagg.getThemeFile("lib/select2-3.4.2/select2.js"))%>"></script>
+
+				<select id="filter_txt_num" class="input-large"
+					style="margin-bottom: 0px;">
+
+					<option value="" selected disabled="disabled">Number</option>
+					<option value="">  </option>
+					<%
+					var i, j, number, selectedNumber, api, apis, key, lenI = 0, clazz, lenJ, path, numbers = outputs.numbers; if(numbers!=null){
+lenI = numbers.length;
+}
+selectedNumber = '';
+%>
+					<%
+					if(request.getParameter('removeSession')!=null){
+session.remove('selectedNumber')}
+for(i = 0; i < lenI; i++) {
+                number = numbers[i];
+                if(number != null){
+                %>
+					<option value="<%=number%>"><%=number%></option>
+					<% }} %>
+				</select>
+				 
+				<select id="filter_txt_desc" class="input-large"
+					style="margin-bottom: 0px;">
+
+					<option value="" selected disabled="disabled">Description</option>
+					<option value="">  </option>
+					<%
+					var y, description, selectedDescription, lenDesc = 0, descriptions = outputs.descriptions; if(descriptions!=null){
+lenDesc = descriptions.length;
+}
+selectedDescription = '';
+%>
+					<%
+					for(y = 0; y < lenDesc; y++) {
+                description = descriptions[y];
+                if(description != null){
+                %>
+					<option value="<%=description%>"><%=description%></option>
+					<% }} %>
+				</select>
+				<input type="button" class="btn" id="filter_table_button" value="Filter" />
+				<input type="button" class="btn" id="reset_table_button" value="Reset" />
+			</div>
+			<br /> <br />
+
+			<table class="table table-bordered table-striped" id="numbers_data_table">
+				<thead>
+					<tr class="alt first last">
+						<th>Number</th>
+						<th style="width: 40%;">Description</th>
+						<th>Balance</th>
+						<th width="10%;">Actions</th>
+					</tr>
+				</thead>
+				<tbody id="data_class_body">
+
+				</tbody>
+			</table>
+			<!--START Pagination links-->
+			<div class="pagination"></div>
+			<!--END Pagination links-->
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+$("#mainnavi").find('li.subnavi').removeClass("active");
+$("#mainnavi").find('li.subnavi:nth-child(2)').addClass("active");
+</script>
+<% }); %>

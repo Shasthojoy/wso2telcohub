@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="Discovery" onError="DiscoveryFaultHandler">
+    <header xmlns:ns="http://org.apache.synapse/xsd" name="Authorization" scope="transport" expression="get-property('transport','Authorization')"/>
+    <header name="Accept" scope="transport" value="application/json"/>
+    <property xmlns:ns="http://org.apache.synapse/xsd" name="uri.var.discoveryhost" expression="normalize-space(get-property('exchange_do_host'))" scope="default" type="STRING"/>
+    <property xmlns:ns="http://org.apache.synapse/xsd" name="REQUEST_HOST_HEADER" expression="normalize-space(get-property('exchange_do_host'))" scope="axis2" type="STRING"/>
+    <property name="uri.var.mccmnc" expression="get-property('transport','mccmnc')" scope="default" type="STRING"/>
+    <call>
+        <endpoint key="ExchangeEnpoint"/>
+    </call>
+    <switch source="get-property('axis2', 'HTTP_SC')">
+        <case regex="200"/>
+        <default>
+            <respond/>
+        </default>
+    </switch>
+</sequence>

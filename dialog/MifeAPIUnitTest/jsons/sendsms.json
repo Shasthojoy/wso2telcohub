@@ -1,0 +1,15 @@
+{
+  "outboundSMSMessageRequest" : {
+    "senderAddress" : "tel:+94773214589",
+    "senderName" : "ACME Inc.",
+    "clientCorrelator" : "123456",
+    "outboundSMSTextMessage" : {
+      "message" : "Hello World"
+    },
+    "address" : [ "tel:+94770000976", "tel:+94770000977" ],
+    "receiptRequest" : {
+      "notifyURL" : "http://application.example.com/notifications/DeliveryInfoNotification",
+      "callbackData" : "some-data-useful-to-the-requester"
+    }
+  }
+}

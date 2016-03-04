@@ -1,0 +1,18 @@
+<operators>
+	<operator>
+		<CallingCode>9477</CallingCode>
+		<name>dialog</name>
+	</operator>
+	<operator>
+		<CallingCode>9476</CallingCode>
+		<name>dialog</name>
+	</operator>
+	<operator>
+		<CallingCode>880</CallingCode>
+		<name>robi</name>
+	</operator>
+	<operator>
+		<CallingCode>60</CallingCode>
+		<name>celcom</name>
+	</operator>
+</operators>

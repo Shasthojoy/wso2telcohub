@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse" name="SACLLocation" context="/location">
+    <resource methods="GET" uri-template="/{apiversion}/queries/location?address={Address}&amp;requestedAccuracy={metres}" faultSequence="APIErrorHandlerSequence">
+        <inSequence>
+            <log>
+                <property name="API Call : " value="Request Location"/>
+            </log>
+            <sequence key="RequestValidation"/>
+            <property name="endUser_Id" expression="get-property('uri.var.Address')" scope="default" type="STRING"/>
+            <script language="js">var endUser = encodeURIComponent(mc.getProperty('endUser_Id')); mc.setProperty('endUser',endUser);</script>
+            <property name="uri.var.address" expression="get-property('endUser')" scope="default" type="STRING"/>
+            <property name="Accept" value="application/json" scope="transport" type="STRING"/>
+            <property name="messageType" value="application/json" scope="default" type="STRING"/>
+            <property name="uri.var.so_endpoint" expression="get-property('hub_endpoint')" scope="default" type="STRING"/>
+            <header name="Authorization" scope="transport" expression="wso2:vault-lookup('hub_token')"/>
+            <send>
+                <endpoint>
+                    <http method="get" uri-template="{uri.var.so_endpoint}/location/{uri.var.apiversion}/queries/location?address={uri.var.address}&amp;requestedAccuracy={uri.var.metres}"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <log>
+                <property name="Serving Operator" expression="json-eval($.)"/>
+            </log>
+            <property name="request_body_out" expression="json-eval($.)" scope="default" type="STRING"/>
+            <sequence key="TransactionLogging"/>
+            <payloadFactory media-type="json">
+                <format>$1</format>
+                <args>
+                    <arg evaluator="xml" expression="get-property('request_body_out')"/>
+                </args>
+            </payloadFactory>
+            <send/>
+        </outSequence>
+    </resource>
+</api>

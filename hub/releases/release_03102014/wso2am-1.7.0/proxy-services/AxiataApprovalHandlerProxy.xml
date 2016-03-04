@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><proxy xmlns="http://ws.apache.org/ns/synapse" name="AxiataApprovalHandlerService" transports="https http" startOnLoad="true" trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <class name="org.wso2.carbon.am.axiata.workflow.AxiataApprovalHandlerMediator"/>
+	        <drop/>
+        </inSequence>
+    </target>
+    <publishWSDL>
+        <wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ax="http://org.wso2.carbon/applications/axiata/workflow" name="AxiataApprovalHandlerService" targetNamespace="http://org.wso2.carbon/applications/axiata/workflow">
+            <wsdl:types>
+                <xsd:schema targetNamespace="http://org.wso2.carbon/applications/axiata/workflow" elementFormDefault="qualified">
+                    <xsd:element name="OperatorRetrievalRequest" type="ax:OperatorRetrievalRequestType"/>
+                    <xsd:complexType name="OperatorRetrievalRequestType">
+                        <xsd:sequence>
+                            <xsd:element name="requestType" type="xsd:string"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                    <xsd:element name="OperatorRetrievalResponse" type="ax:OperatorRetrievalResponseType"/>
+                    <xsd:complexType name="OperatorRetrievalResponseType">
+                        <xsd:sequence>
+                            <xsd:element name="operator" type="ax:OperatorType" minOccurs="0" maxOccurs="unbounded"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                    <xsd:complexType name="OperatorType">
+                        <xsd:sequence>
+                            <xsd:element name="opID" type="xsd:int"/>
+                            <xsd:element name="opName" type="xsd:string"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                    <xsd:element name="HUBApprovalDBUpdateRequest" type="ax:HUBApprovalDBUpdateRequestType"/>
+                    <xsd:complexType name="HUBApprovalDBUpdateRequestType">
+                        <xsd:sequence>
+                            <xsd:element name="requestType" type="xsd:string"/>
+                            <xsd:element name="appID" type="xsd:string"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                    <xsd:element name="OpApprovalDBUpdateRequest" type="ax:OpApprovalDBUpdateRequestType"/>
+                    <xsd:complexType name="OpApprovalDBUpdateRequestType">
+                        <xsd:sequence>
+                            <xsd:element name="requestType" type="xsd:string"/>
+                            <xsd:element name="appID" type="xsd:string"/>
+                            <xsd:element name="opID" type="xsd:string"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:schema>
+            </wsdl:types>
+            <wsdl:message name="OperatorRetrievalRequest">
+                <wsdl:part name="OperatorRetrievalRequest" element="ax:OperatorRetrievalRequest"/>
+            </wsdl:message>
+            <wsdl:message name="OperatorRetrievalResponse">
+                <wsdl:part name="OperatorRetrievalResponse" element="ax:OperatorRetrievalResponse"/>
+            </wsdl:message>
+            <wsdl:message name="HUBApprovalDBUpdateRequest">
+                <wsdl:part name="HUBApprovalDBUpdateRequest" element="ax:HUBApprovalDBUpdateRequest"/>
+            </wsdl:message>
+            <wsdl:message name="OpApprovalDBUpdateRequest">
+                <wsdl:part name="OpApprovalDBUpdateRequest" element="ax:OpApprovalDBUpdateRequest"/>
+            </wsdl:message>
+            <wsdl:portType name="AxiataApprovalHandlerServicePT">
+                <wsdl:operation name="retrieveOperatorList">
+                    <wsdl:input message="ax:OperatorRetrievalRequest"/>
+                    <wsdl:output message="ax:OperatorRetrievalResponse"/>
+                </wsdl:operation>
+                <wsdl:operation name="updateDBHubApproval">
+                    <wsdl:input message="ax:HUBApprovalDBUpdateRequest"/>
+                </wsdl:operation>
+                <wsdl:operation name="updateDBOpApproval">
+                    <wsdl:input message="ax:OpApprovalDBUpdateRequest"/>
+                </wsdl:operation>
+            </wsdl:portType>
+            <wsdl:binding name="AxiataApprovalHandlerServiceSOAP" type="ax:AxiataApprovalHandlerServicePT">
+                <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+                <wsdl:operation name="retrieveOperatorList">
+                    <soap:operation soapAction="http://org.wso2.carbon/applications/axiata/workflow/retrieveOperatorList"/>
+                    <wsdl:input>
+                        <soap:body use="literal"/>
+                    </wsdl:input>
+                    <wsdl:output>
+                        <soap:body use="literal"/>
+                    </wsdl:output>
+                </wsdl:operation>
+                <wsdl:operation name="updateDBHubApproval">
+                    <soap:operation soapAction="http://org.wso2.carbon/applications/axiata/workflow/updateDBHubApproval"/>
+                    <wsdl:input>
+                        <soap:body use="literal"/>
+                    </wsdl:input>
+                </wsdl:operation>
+                <wsdl:operation name="updateDBOpApproval">
+                    <soap:operation soapAction="http://org.wso2.carbon/applications/axiata/workflow/updateDBOpApproval"/>
+                    <wsdl:input>
+                        <soap:body use="literal"/>
+                    </wsdl:input>
+                </wsdl:operation>
+            </wsdl:binding>
+            <wsdl:service name="AxiataApprovalHandlerService">
+                <wsdl:port binding="ax:AxiataApprovalHandlerServiceSOAP" name="AxiataApprovalHandlerServiceSOAP">
+                    <soap:address location="http://anuradha-ThinkPad-T530:8280/services/AxiataApprovalHandlerService"/>
+                </wsdl:port>
+            </wsdl:service>
+        </wsdl:definitions>
+    </publishWSDL>
+</proxy>

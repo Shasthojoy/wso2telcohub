@@ -1,0 +1,20 @@
+<% jagg.template("home", function(inputs, outputs, jagg) {
+%>
+<link rel="stylesheet" type="text/css" href="<%=jagg.getAbsoluteUrl(jagg.getThemeFile("css/styles-axiata.css"))%>" media="all"/>
+<div id="listing" class="listing">
+    <div class="title-section">
+        <h2>Create your own mobile applications</h2>
+    </div>
+    <img src="<%=jagg.getAbsoluteUrl(jagg.getThemeFile("images/BizBannerWeb2.png"))%>">
+
+    <p>Create mobile applications to suit your company requirements. It is cheap, faster and could be custom built.<br>
+			Engage with your employees and customers equally – empower them to better your business.<br>
+			IdeaBiz enables your organization to use Dialog network features to best suit your company requirements. Create your own applications here.</p>
+
+    <h3>Resources</h3>
+    <hr />
+    <button class="btn btn-home">Documentation</button>
+    <button class="btn btn-home">White Paper</button>
+    <button class="btn btn-home">TONE</button>
+</div>
+<% }); %>

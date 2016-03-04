@@ -1,0 +1,17 @@
+<MCCConfiguration>
+    <PathFinderHost>156.154.59.224</PathFinderHost>
+    <Port>7007</Port>
+    <TermDomain>e164enum.net</TermDomain>    
+    <MobileCountryCodes>
+        <Mcc>
+            <Code>413</Code>                
+            <Stage>0</Stage>
+            <DefaultMnc>Dialog</DefaultMnc>                
+        </Mcc>
+        <Mcc>
+            <Code>502</Code>                
+            <Stage>1</Stage>
+            <DefaultMnc>Celcom</DefaultMnc>                            
+        </Mcc>
+    </MobileCountryCodes>	
+</MCCConfiguration>

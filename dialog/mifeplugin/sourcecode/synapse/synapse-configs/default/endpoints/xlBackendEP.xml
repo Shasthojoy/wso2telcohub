@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoint xmlns="http://ws.apache.org/ns/synapse" name="xlBackendEP">
+   <address uri="http://10.174.14.10:9003/interactive_api/service/interactive_api_v2.php"
+            format="soap11"/>
+</endpoint>

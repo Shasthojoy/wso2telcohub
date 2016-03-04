@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="USSDContinueSec">
+   <payloadFactory media-type="xml">
+      <format>
+         <tns:sendUSSD xmlns:tns="urn:interactivewsdl"
+                       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <input xsi:type="tns:reqUSSD">
+               <msisdn xsi:type="xsd:string">$1</msisdn>
+               <message xsi:type="xsd:string">1|&lt;umb&gt;
+&lt;type&gt;input&lt;/type&gt;
+&lt;headers&gt;
+&lt;header&gt;$2l&lt;/header&gt;
+&lt;/headers&gt;
+&lt;content&gt;
+&lt;label&gt;label 1&lt;/label&gt;
+&lt;url&gt;http://10.174.15.20:8280/receiveussd&lt;/url&gt;
+&lt;/content&gt;
+&lt;/umb&gt;</message>
+            </input>
+         </tns:sendUSSD>
+      </format>
+      <args>
+         <arg xmlns:ns="http://org.apache.synapse/xsd"
+              evaluator="xml"
+              expression="get-property('receiveradd')"/>
+         <arg xmlns:ns="http://org.apache.synapse/xsd"
+              evaluator="xml"
+              expression="get-property('message')"/>
+      </args>
+   </payloadFactory>
+</sequence>

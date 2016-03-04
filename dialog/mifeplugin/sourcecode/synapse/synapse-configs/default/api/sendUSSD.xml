@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse" name="sendUSSD" context="/ussd">
+   <resource methods="POST">
+      <inSequence>
+         <property name="msisdn"
+                   expression="json-eval($.outboundUSSDMessageRequest.address)"/>
+         <property name="receiveradd"
+                   expression="fn:substring-after(get-property('msisdn'), 'tel:+')"
+                   scope="default"/>
+         <property name="shortCode"
+                   expression="json-eval($.outboundUSSDMessageRequest.shortCode)"/>
+         <property name="keyword"
+                   expression="json-eval($.outboundUSSDMessageRequest.keyword)"/>
+         <property name="message"
+                   expression="json-eval($.outboundUSSDMessageRequest.outboundUSSDMessage)"/>
+         <property name="ussdAction"
+                   expression="json-eval($.outboundUSSDMessageRequest.ussdAction)"/>
+         <log>
+            <property name="TIME" expression="get-property('SYSTEM_TIME')"/>
+         </log>
+         <log>
+            <property name="TIME1" expression="get-property('SYSTEM_TIME')"/>
+         </log>
+         <filter source="get-property('keyword')" regex="^$">
+            <then>
+               <dblookup>
+                  <connection>
+                     <pool>
+                        <password>axiatadbpassword</password>
+                        <user>axiatadbuser</user>
+                        <url>jdbc:mysql://10.174.15.26:3306/smsdata</url>
+                        <driver>com.mysql.jdbc.Driver</driver>
+                     </pool>
+                  </connection>
+                  <statement>
+                     <sql>select appid from ussdmosubscription where shortcode =?;</sql>
+                     <parameter expression="get-property('shortCode')" type="VARCHAR"/>
+                     <result name="appid" column="appid"/>
+                  </statement>
+               </dblookup>
+            </then>
+         </filter>
+         <dblookup>
+            <connection>
+               <pool>
+                  <password>axiatadbpassword</password>
+                  <user>axiatadbuser</user>
+                  <url>jdbc:mysql://10.174.15.26:3306/smsdata</url>
+                  <driver>com.mysql.jdbc.Driver</driver>
+               </pool>
+            </connection>
+            <statement>
+               <sql>select appid from ussdmosubscription where shortcode =? AND keyword=?;</sql>
+               <parameter expression="get-property('shortCode')" type="VARCHAR"/>
+               <parameter expression="get-property('keyword')" type="VARCHAR"/>
+               <result name="appid" column="appid"/>
+            </statement>
+         </dblookup>
+         <dblookup>
+            <connection>
+               <pool>
+                  <password>axiatadbpassword</password>
+                  <user>axiatadbuser</user>
+                  <url>jdbc:mysql://10.174.15.26:3306/smsdata</url>
+                  <driver>com.mysql.jdbc.Driver</driver>
+               </pool>
+            </connection>
+            <statement>
+               <sql>select session_id from ussdsession where app_id =?;</sql>
+               <parameter expression="get-property('appid')" type="VARCHAR"/>
+               <result name="sessionID" column="session_id"/>
+            </statement>
+         </dblookup>
+         <log level="custom">
+            <property name="deliveryres" expression="get-property('sessionID')"/>
+         </log>
+         <filter source="get-property('sessionID')" regex="null">
+            <then>
+               <property name="currentTime" expression="get-property('SYSTEM_TIME')"/>
+               <property name="sessionId"
+                         expression="fn:concat(get-property('currentTime'),get-property('receiveradd'))"/>
+               <dbreport>
+                  <connection>
+                     <pool>
+                        <password>axiatadbpassword</password>
+                        <user>axiatadbuser</user>
+                        <url>jdbc:mysql://10.174.15.26:3306/smsdata</url>
+                        <driver>com.mysql.jdbc.Driver</driver>
+                     </pool>
+                  </connection>
+                  <statement>
+                     <sql>insert into ussdsession(session_id,app_id) values (?,?);</sql>
+                     <parameter expression="get-property('sessionId')" type="VARCHAR"/>
+                     <parameter expression="get-property('appid')" type="VARCHAR"/>
+                  </statement>
+               </dbreport>
+               <property name="sessionID" expression="sessionId"/>
+            </then>
+            <else>
+               <property name="currentTime" expression="get-property('SYSTEM_TIME')"/>
+               <property name="sessionId"
+                         expression="fn:concat(get-property('currentTime'),get-property('receiveradd'))"/>
+               <dbreport>
+                  <connection>
+                     <pool>
+                        <password>axiatadbpassword</password>
+                        <user>axiatadbuser</user>
+                        <url>jdbc:mysql://10.174.15.26:3306/smsdata</url>
+                        <driver>com.mysql.jdbc.Driver</driver>
+                     </pool>
+                  </connection>
+                  <statement>
+                     <sql>insert into ussdsession(session_id,app_id) values (?,?);</sql>
+                     <parameter expression="get-property('sessionId')" type="VARCHAR"/>
+                     <parameter expression="get-property('appid')" type="VARCHAR"/>
+                  </statement>
+               </dbreport>
+               <property name="sessionID" expression="sessionId"/>
+            </else>
+         </filter>
+         <enrich>
+            <source xmlns:ns="http://org.apache.synapse/xsd" clone="true" xpath="/"/>
+            <target type="property" property="orginalPayload"/>
+         </enrich>
+         <filter source="get-property('ussdAction')" regex="mtcont">
+            <then>
+               <sequence key="USSDContinueSec"/>
+            </then>
+            <else>
+               <sequence key="USSDFinishSec"/>
+            </else>
+         </filter>
+         <log level="full"/>
+         <property xmlns:ns="http://org.apache.synapse/xsd"
+                   name="Authorization"
+                   expression="fn:concat('Basic ', base64Encode('mife:mife12345'))"
+                   scope="transport"/>
+         <send>
+            <endpoint key="xlBackendEP"/>
+         </send>
+      </inSequence>
+      <outSequence>
+         <log level="full"/>
+         <property name="messageType" value="application/json" scope="axis2"/>
+         <enrich>
+            <source type="property" clone="true" property="orginalPayload"/>
+            <target type="body"/>
+         </enrich>
+         <property name="deliverystatus" scope="default">
+            <deliveryStatus xmlns="">shbh</deliveryStatus>
+         </property>
+         <property name="deliveryresult" expression="//return/result" scope="default"/>
+         <log level="custom">
+            <property xmlns:ns1="urn:interactivewsdl"
+                      name="deliveryresult1"
+                      expression="//sendUSSDResponse/return/result"/>
+         </log>
+         <enrich>
+            <source type="property" clone="true" property="deliveryresult"/>
+            <target xpath="$ctx:deliverystatus/text()"/>
+         </enrich>
+         <enrich>
+            <source type="property" clone="true" property="deliverystatus"/>
+            <target action="child" xpath="//outboundUSSDMessageRequest"/>
+         </enrich>
+         <send/>
+      </outSequence>
+   </resource>
+</api>

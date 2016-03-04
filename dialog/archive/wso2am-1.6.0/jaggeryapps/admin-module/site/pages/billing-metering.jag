@@ -1,0 +1,69 @@
+<%
+include("/jagg/jagg.jag");
+include("header.jag");
+var site = require("/site/conf/site.json");
+
+var i18n = require("i18n");
+var localeResourcesBasePath="/site/conf/locales/jaggery/";
+i18n.init(request,localeResourcesBasePath);
+
+var middlePage="billing";
+
+var pageName=request.getParameter("task");
+if(pageName=="finance"){
+	middlePage="finance";
+}else if(pageName=="performance"){
+	middlePage="performance";
+}else if(pageName=="billing"){
+	middlePage="billing";
+}
+
+var usage, user = jagg.getUser();
+
+(function () {
+    var user = jagg.getUser();
+    if (!user) {
+        response.sendRedirect(getRedirectPathForNonAuthenticatedUser());
+        return;
+    }
+
+    jagg.render({
+        "name":"page/base",
+        "inputs":{
+            "title":"Billing & Metering",
+            "header":{
+                "name":"menu/primary",
+                "inputs":{
+   			"pagePath":"/site/pages/billing-metering.jag"
+    		}
+            },
+            "body":[	
+                {
+                    "name":"layout/base",
+                    "inputs":{
+                        "middle":[{
+                            "name":middlePage,
+                			"inputs":{
+								"user":user,
+								"usage":usage
+                	           }
+                        	}
+                        ],
+                        "left":[{
+                        	"name":"menu/left-billing-metering"
+                     		}
+                        ]
+                    }
+                }
+            ],
+            "footer":[
+                {
+                    "name":"footer"
+                }
+            ]
+        }
+    });
+}());
+
+
+%>

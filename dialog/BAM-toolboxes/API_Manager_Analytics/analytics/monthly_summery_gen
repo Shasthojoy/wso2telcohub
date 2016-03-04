@@ -1,0 +1,19 @@
+CREATE EXTERNAL TABLE IF NOT EXISTS APIRequestSummaryDataReader (api STRING, api_version STRING, version STRING,
+	consumerKey STRING,userId STRING,context STRING, max_request_time BIGINT,
+	total_request_count INT, year STRING, month STRING) STORED BY 
+	'org.wso2.carbon.hadoop.hive.jdbc.storage.JDBCStorageHandler' TBLPROPERTIES (
+	'wso2.carbon.datasource.name'='WSO2AM_STATS_DB',
+	'mapred.jdbc.input.table.name' = 'API_REQUEST_SUMMARY' );
+	
+CREATE EXTERNAL TABLE IF NOT EXISTS APIRequestSummaryMonthlyData (month STRING, api STRING, api_version STRING, version STRING,
+	consumerKey STRING,userId STRING,context STRING, max_request_time BIGINT,
+	total_request_count INT) STORED BY 
+	'org.wso2.carbon.hadoop.hive.jdbc.storage.JDBCStorageHandler' TBLPROPERTIES ( 'wso2.carbon.datasource.name'='WSO2AM_STATS_DB',
+	'hive.jdbc.update.on.duplicate' = 'true',
+	'hive.jdbc.primary.key.fields'='api,api_version,version,consumerKey,userId,context,month',
+	'hive.jdbc.table.create.query' = 'CREATE TABLE API_REQUEST_MONTHLY_SUMMARY ( api VARCHAR(100), api_version VARCHAR(100), version VARCHAR(100),
+	consumerKey VARCHAR(100),userId VARCHAR(100), context VARCHAR(100),max_request_time BIGINT, total_request_count INT,month VARCHAR(100),  PRIMARY KEY(api,api_version,consumerKey,userId,context,month))' );                                   
+	
+insert overwrite table APIRequestSummaryMonthlyData select concat(year,'-',lpad(month,2,'0')) as month, api, api_version,version, consumerKey,userId,context,max(max_request_time), sum(total_request_count) as total_request_count from APIRequestSummaryDataReader group by api,api_version,version,consumerKey,userId,context,year,month;
+
+                                                                        

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse"
+     name="recieveUSSD"
+     context="/recieveussd">
+   <resource methods="POST" uri-template="*">
+      <inSequence>
+         <property name="senderAddress" expression="//msisdn"/>
+         <property name="data" expression="//data"/>
+         <property name="sessionID"
+                   expression="fn:substring-after(get-property('To'),'recieveussd/')"/>
+         <script language="js">var data=mc.getProperty("data");  var seperateddata=data.split("\\*");  mc.setProperty("shortCode",seperateddata[1]);mc.setProperty("otherData",seperateddata[2]);</script>
+         <filter source="get-property('sessionID')" regex="^$">
+            <then>
+               <class name="com.axiate.plugin.SubscriptionDBRead.SubscriptionDBReader"/>
+               <sequence key="ussdreceivesequence"/>
+            </then>
+         </filter>
+         <sequence key="ussdreceivesequence"/>
+      </inSequence>
+      <outSequence>
+         <property name="msisdn"
+                   expression="json-eval($.outboundUSSDMessageRequest.address)"/>
+         <property name="receiveradd"
+                   expression="fn:substring-after(get-property('msisdn'), 'tel:+')"
+                   scope="default"/>
+         <property name="shortCode"
+                   expression="json-eval($.outboundUSSDMessageRequest.shortCode)"/>
+         <property name="keyword"
+                   expression="json-eval($.outboundUSSDMessageRequest.keyword)"/>
+         <property name="message"
+                   expression="json-eval($.outboundUSSDMessageRequest.outboundUSSDMessage)"/>
+         <property name="ussdAction"
+                   expression="json-eval($.outboundUSSDMessageRequest.ussdAction)"/>
+         <filter source="get-property('ussdAction')" regex="mtcont">
+            <then>
+               <sequence key="ReceiveUSSDContinueSec"/>
+            </then>
+            <else>
+               <sequence key="ReceiveUSSDFinishSec"/>
+            </else>
+         </filter>
+         <log level="full"/>
+         <send/>
+      </outSequence>
+   </resource>
+</api>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+    <servlet>
+        <servlet-name>Resteasy</servlet-name>
+        <servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Resteasy</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping> 
+    
+    <!--<servlet>
+        <servlet-name>init</servlet-name>
+        <jsp-file>/Init.jsp</jsp-file>
+        <load-on-startup>1</load-on-startup>
+    </servlet> -->
+    <context-param>
+        <param-name>javax.ws.rs.Application</param-name>
+        <param-value>com.dialog.psi.api.SMSRestAPI</param-value>
+    </context-param>
+     <listener>
+        <description>ServletContextListener</description>
+        <listener-class>com.dialog.psi.api.service.listener.ApplicationInit</listener-class>        
+    </listener>    
+    <listener>
+        <listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
+    </listener>
+    <context-param>
+        <param-name>config_path</param-name>
+       <param-value>/home/dialog/jboss/smsc/workspace/smpp/sms/conf/</param-value> 
+       <!--param-value>D:/DIALOG/kottamalli/devenv/smpp/conf/</param-value -->
+    </context-param>
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+</web-app>

@@ -1,0 +1,10 @@
+<%
+jagg.module("customer-care", {
+	getCustomerCareData:function () {
+		return jagg.require(jagg.getModulesDir() + "customer-care/customer-care.jag").getCustomerCareData.apply(this, arguments);
+	},
+	getAppsByOperator:function () {
+			return jagg.require(jagg.getModulesDir() + "customer-care/customer-care.jag").getAppsByOperator.apply(this, arguments);
+		},
+});
+%>

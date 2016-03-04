@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:ax="http://org.wso2.carbon/axiata/workflow/audit" name="AxiataWorkflowApprovalAuditService"
+	targetNamespace="http://org.wso2.carbon/axiata/workflow/audit">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://org.wso2.carbon/axiata/workflow/audit"
+			elementFormDefault="qualified">
+			<xsd:element name="AppApprovalAuditRequest" type="ax:AppApprovalAuditRequestType" />
+			<xsd:complexType name="AppApprovalAuditRequestType">
+				<xsd:sequence>
+					<xsd:element name="requestType" type="xsd:string" />
+					<xsd:element name="appName" type="xsd:string" />
+					<xsd:element name="appCreator" type="xsd:string" />
+					<xsd:element name="appStatus" type="xsd:string" />
+					<xsd:element name="appApprovalType" type="xsd:string" />
+					<xsd:element name="completedByRole" type="xsd:string" />
+					<xsd:element name="completedByUser" type="xsd:string" />
+					<xsd:element name="completedOn" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="SubApprovalAuditRequest" type="ax:SubApprovalAuditRequestType" />
+			<xsd:complexType name="SubApprovalAuditRequestType">
+				<xsd:sequence>
+					<xsd:element name="requestType" type="xsd:string" />
+					<xsd:element name="apiProvider" type="xsd:string" />
+					<xsd:element name="apiName" type="xsd:string" />
+					<xsd:element name="apiVersion" type="xsd:string" />
+					<xsd:element name="appId" type="xsd:string" />
+					<xsd:element name="subStatus" type="xsd:string" />
+					<xsd:element name="subApprovalType" type="xsd:string" />
+					<xsd:element name="completedByRole" type="xsd:string" />
+					<xsd:element name="completedByUser" type="xsd:string" />
+					<xsd:element name="completedOn" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="AppApprovalAuditRequest">
+		<wsdl:part name="AppApprovalAuditRequest" element="ax:AppApprovalAuditRequest" />
+	</wsdl:message>
+	<wsdl:message name="SubApprovalAuditRequest">
+		<wsdl:part name="SubApprovalAuditRequest" element="ax:SubApprovalAuditRequest" />
+	</wsdl:message>
+	<wsdl:portType name="AxiataWorkflowApprovalAuditServicePT">
+		<wsdl:operation name="insertAppApprovalAuditRecord">
+			<wsdl:input message="ax:AppApprovalAuditRequest" />
+		</wsdl:operation>
+		<wsdl:operation name="insertSubApprovalAuditRecord">
+			<wsdl:input message="ax:SubApprovalAuditRequest" />
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="AxiataWorkflowApprovalAuditServiceSOAP"
+		type="ax:AxiataWorkflowApprovalAuditServicePT">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="insertAppApprovalAuditRecord">
+			<soap:operation
+				soapAction="http://org.wso2.carbon/axiata/workflow/audit/insertAppApprovalAuditRecord" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="insertSubApprovalAuditRecord">
+			<soap:operation
+				soapAction="http://org.wso2.carbon/axiata/workflow/audit/insertSubApprovalAuditRecord" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="AxiataWorkflowApprovalAuditService">
+		<wsdl:port binding="ax:AxiataWorkflowApprovalAuditServiceSOAP"
+			name="AxiataWorkflowApprovalAuditServiceSOAP">
+			<soap:address
+				location="http://localhost/services/AxiataWorkflowApprovalAuditService" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

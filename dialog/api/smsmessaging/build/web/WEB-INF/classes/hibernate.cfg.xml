@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <!-- Database connection settings -->
+    <property name="connection.datasource">java:/SMPP</property>
+    <!-- JDBC connection pool (use the built-in) -->
+    <property name="connection.pool_size">10</property>
+    <property name="hibernate.connection.autocommit">true</property>
+    <property name="hibernate.validator.apply_to_ddl">false</property>
+    <property name="hibernate.validator.autoregister_listeners">false</property>
+    <property name="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
+    <property name="hibernate.jdbc.batch_size">20</property>
+    <!-- SQL dialect -->
+    <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+    <!-- Echo all executed SQL to stdout -->
+    <property name="show_sql">false</property>
+    <!-- Drop and re-create the database schema on startup -->
+    <property name="hbm2ddl.auto">update</property>
+    <!-- Class level mapping -->
+    <mapping class="com.dialog.psi.api.entity.Application"/>
+    <mapping class="com.dialog.psi.api.entity.SmsInbound"/>
+    <mapping class="com.dialog.psi.api.entity.SmppReceiptSubs"/>
+    <mapping class="com.dialog.psi.api.entity.SmppIdeamart"/>
+
+  </session-factory>
+</hibernate-configuration>

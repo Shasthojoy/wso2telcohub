@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse"
+     name="sendSMS"
+     context="/sendsms">
+   <resource methods="POST">
+      <inSequence>
+         <property name="ContentType" value="application/xml" scope="axis2"/>
+         <property name="notifyURL"
+                   expression="json-eval($.outboundSMSMessageRequest.receiptRequest.notifyURL)"/>
+         <property name="senderName"
+                   expression="json-eval($.outboundSMSMessageRequest.senderName)"/>
+         <property name="clientCorrelator"
+                   expression="json-eval($.outboundSMSMessageRequest.clientCorrelator)"/>
+         <property name="senderAdd"
+                   expression="json-eval($.outboundSMSMessageRequest.senderAddress)"/>
+         <property name="senderAddress"
+                   expression="fn:substring-after(get-property('senderAdd'), 'tel:+')"/>
+         <property name="textMessage"
+                   expression="json-eval($.outboundSMSMessageRequest.outboundSMSTextMessage.message)"/>
+         <property name="encoding" value="0"/>
+         <script language="js">var primarymsgid=Math.floor((Math.random() * 10000) + 1); mc.setProperty("primarymsgId", primarymsgid);</script>
+         <script language="js">var resourceurl="http://sendsms/"+encodeURIComponent(mc.getProperty("senderAdd"))+"/requests/"+mc.getProperty("primarymsgId")+"/deliveryInfos";          mc.setProperty("resourceURL", resourceurl);</script>
+         <enrich>
+            <source xmlns:ns="http://org.apache.synapse/xsd"
+                    clone="true"
+                    xpath="//outboundSMSMessageRequest"/>
+            <target type="property" property="orginalPayload"/>
+         </enrich>
+         <property name="returnsprop" scope="default">
+            <returns xmlns=""/>
+         </property>
+         <iterate id="addressIteratorID"
+                  expression="//outboundSMSMessageRequest/address"
+                  sequential="true">
+            <target sequence="addressHandlerSequence"/>
+         </iterate>
+      </inSequence>
+      <outSequence>
+         <log level="full"/>
+         <aggregate id="addressIteratorID">
+            <completeCondition>
+               <messageCount min="-1" max="-1"/>
+            </completeCondition>
+            <onComplete xmlns:urn="urn:interactivewsdl"
+                        expression="//urn:sendSMSResponse/return"
+                        enclosingElementProperty="returnsprop">
+               <xslt key="conf:/deliveryInfoList.xslt"/>
+               <enrich>
+                  <source xmlns:ns="http://org.apache.synapse/xsd"
+                          clone="true"
+                          xpath="//deliveryInfoList"/>
+                  <target type="property" action="child" property="deliveryInfoList"/>
+               </enrich>
+               <enrich>
+                  <source type="property" clone="true" property="orginalPayload"/>
+                  <target type="body"/>
+               </enrich>
+               <property name="resourceurl" scope="default">
+                  <resourceURL xmlns="">http://sendsms/2000/requests/1083.0/deliveryInfos</resourceURL>
+               </property>
+               <enrich>
+                  <source type="property" clone="true" property="resourceURL"/>
+                  <target xpath="$ctx:resourceurl/text()"/>
+               </enrich>
+               <enrich>
+                  <source type="property" clone="true" property="resourceurl"/>
+                  <target type="body" action="child"/>
+               </enrich>
+               <enrich>
+                  <source type="property" clone="true" property="deliveryInfoList"/>
+                  <target type="body" action="child"/>
+               </enrich>
+               <property name="messageType" value="application/json" scope="axis2"/>
+               <send/>
+            </onComplete>
+         </aggregate>
+      </outSequence>
+   </resource>
+</api>

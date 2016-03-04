@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="RequestValidation" onError="RequestValidationErrorHandler">
+    <log level="custom">
+        <property name="Message Flow" value="Request Received at Validation Sequence"/>
+    </log>
+    <property xmlns:ns="http://org.apache.synapse/xsd" name="start_time" expression="get-property('SYSTEM_TIME')" scope="default" type="STRING"/>
+    <property xmlns:ns="http://org.apache.synapse/xsd" name="Authorization" expression="wso2:vault-lookup('exchanage_hub_credentials')" scope="transport" type="STRING"/>
+    <header name="Accept" scope="transport" value="application/json"/>
+    <property xmlns:ns="http://org.apache.synapse/xsd" name="uri.var.clientid" expression="get-property('transport','clientid')" scope="default" type="STRING"/>
+    <property xmlns:ns="http://org.apache.synapse/xsd" name="uri.var.clientsecret" expression="get-property('transport','clientsecret')" scope="default" type="STRING"/>
+    <property xmlns:ns="http://org.apache.synapse/xsd" name="mccmnc" expression="get-property('transport','mccmnc')" scope="default" type="STRING"/>
+    <script language="js">var mcc_mnc = mc.getProperty('mccmnc');               var mcc = mcc_mnc.slice(0,3);               var mnc = mcc_mnc.slice(-2);               mc.setProperty('mcc',mcc);               mc.setProperty('mnc',mnc); print(mcc);print(mnc);</script>
+    <header xmlns:ns="http://org.apache.synapse/xsd" name="x-mcc" scope="transport" expression="get-property('mcc')"/>
+    <header xmlns:ns="http://org.apache.synapse/xsd" name="x-mnc" scope="transport" expression="get-property('mnc')"/>
+    <property xmlns:ns="http://org.apache.synapse/xsd" name="REQUEST_HOST_HEADER" expression="normalize-space(get-property('exchange_so_host'))" scope="axis2" type="STRING"/>
+    <property xmlns:ns="http://org.apache.synapse/xsd" name="uri.var.hostname" expression="normalize-space(get-property('exchange_so_host'))" scope="default" type="STRING"/>
+    <property xmlns:ns="http://org.apache.synapse/xsd" name="uri.var.organizationID" expression="normalize-space(get-property('organization'))" scope="default" type="STRING"/>
+    <call>
+        <endpoint key="RequestValidationExchangeEnpoint"/>
+    </call>
+    <switch source="get-property('axis2', 'HTTP_SC')">
+        <case regex="200">
+            <property name="application_state" expression="json-eval(response.application.application_state)" scope="default" type="STRING" description="application_state"/>
+        </case>
+        <default>
+            <respond/>
+        </default>
+    </switch>
+</sequence>

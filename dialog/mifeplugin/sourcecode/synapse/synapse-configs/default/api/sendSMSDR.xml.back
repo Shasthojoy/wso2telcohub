@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse"
+     name="sendSMSDR"
+     context="/smsdr">
+   <resource methods="GET">
+      <inSequence>
+         <property name="messageID" value="845.0"/>
+         <class name="org.wso2.malintha.DBRederpack.DBRead"/>
+         <log level="full"/>
+         <payloadFactory media-type="xml">
+            <format>
+               <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+                                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                                  xmlns:tns="urn:interactivewsdl"
+                                  xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+                                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                  SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+                  <SOAP-ENV:Body>
+                     <tns:getSMSDR>
+                        <input xsi:type="tns:reqGetSMSDR">
+                           <sender xsi:type="xsd:string">MIFE</sender>
+                           <recipient xsi:type="xsd:string">6281808147137</recipient>
+                           <msg_id xsi:type="xsd:string">3436.0</msg_id>
+                        </input>
+                     </tns:getSMSDR>
+                  </SOAP-ENV:Body>
+               </SOAP-ENV:Envelope>
+            </format>
+            <args>
+               <arg evaluator="xml" expression="get-property('query.param.Sender')"/>
+               <arg evaluator="xml" expression="get-property('query.param.recipient')"/>
+               <arg evaluator="xml" expression="get-property('query.param.msg_id')"/>
+            </args>
+         </payloadFactory>
+         <property xmlns:ns="http://org.apache.synapse/xsd"
+                   name="Authorization"
+                   expression="fn:concat('Basic ', base64Encode('mife:mife12345'))"
+                   scope="transport"/>
+         <send>
+            <endpoint key="xlBackendEP"/>
+         </send>
+      </inSequence>
+      <outSequence>
+         <log level="full"/>
+         <property xmlns:ns1="urn:interactivewsdl"
+                   name="smsDR_return_result"
+                   expression="//ns1:getSMSDRResponse/return/result[text()]"
+                   scope="default"
+                   type="STRING"/>
+         <property xmlns:ns1="urn:interactivewsdl"
+                   name="smsDR_return_state"
+                   expression="//ns1:getSMSDRResponse/return/state[text()]"
+                   scope="default"
+                   type="STRING"/>
+         <property name="messageType" value="application/json" scope="axis2"/>
+         <payloadFactory media-type="json">
+            <format>          {"deliveryInfoList" : { "deliveryInfo" : [ { "address" : "$1", "deliveryStatus" : "$3" } ], "resourceURL" : "sample requesrURL" }}        </format>
+            <args>
+               <arg evaluator="xml" expression="get-property('uri.var.recipient')"/>
+               <arg evaluator="xml" expression="$ctx:smsDR_return_result"/>
+               <arg evaluator="xml" expression="$ctx:smsDR_return_state"/>
+            </args>
+         </payloadFactory>
+         <send/>
+      </outSequence>
+   </resource>
+</api>

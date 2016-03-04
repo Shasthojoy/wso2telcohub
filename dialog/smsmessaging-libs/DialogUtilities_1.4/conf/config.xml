@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<admin>			
+	<cgw>		
+		<billUrl>http://172.26.1.40:8080/CGWebService?wsdl</billUrl>
+		<billAppID>API</billAppID>
+		<billUsername>API</billUsername>
+		<billPassword>wertyu</billPassword>
+		<domainID>GSM</domainID>		
+		<smsRCode>368</smsRCode>
+		<bak>
+			<billUrl>http://192.168.7.133/CGWebService?wsdl</billUrl>
+			<billAppID>API</billAppID>
+			<billUsername>API</billUsername>
+			<billPassword>wertyu</billPassword>
+			<domainID>GSM</domainID>		
+			<smsRCode>368</smsRCode>
+			<billUrl>http://172.26.1.45:8989/CGWebService?wsdl</billUrl>		
+			<billAppID>MUSIC_OD</billAppID>
+			<billUsername>MUSIC_OD</billUsername>
+			<billPassword>IVRmusiC</billPassword>
+			<domainID>GSM</domainID>		
+			<smsRCode>431</smsRCode>	
+			<mmsRCode>329</mmsRCode>
+			<pointsRCode>329</pointsRCode>
+			<smsCharge>2</smsCharge>
+			<mmsCharge>7</mmsCharge>
+		</bak>		
+		<requests>
+			<req_transactionKey><![CDATA[ <?xml version="1.0" encoding="UTF-8"?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><soapenv:Body><getSessionKey xmlns="urn:lk.dialog.cg.ws.types"><String_1 xmlns="">{0}</String_1><arrayOfbyte_2 xmlns="">{1}</arrayOfbyte_2></getSessionKey></soapenv:Body></soapenv:Envelope> ]]></req_transactionKey>
+			<req_creditCheck><![CDATA[ <?xml version="1.0" encoding="UTF-8"?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><soapenv:Body><performCreditCheck xmlns="urn:lk.dialog.cg.ws.types"><CreditCheckRequest_1 xmlns=""><appID>{0}</appID><authKey>{1}</authKey><domainID>{2}</domainID><refAccount>{3}</refAccount><transactionID>{4}</transactionID></CreditCheckRequest_1></performCreditCheck></soapenv:Body></soapenv:Envelope> ]]></req_creditCheck>			
+			<req_chargeToBill><![CDATA[ <?xml version="1.0" encoding="UTF-8"?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><soapenv:Body><chargeToBill xmlns="urn:lk.dialog.cg.ws.types"><ChargedToBillRequest_1 xmlns=""><appID>{0}</appID><authKey>{1}</authKey><domainID>{2}</domainID><refAccount>{3}</refAccount><transactionID>{4}</transactionID><accountRef xsi:nil="true"/><amount>{5}</amount><reasonCode>{6}</reasonCode><taxable>{7}</taxable></ChargedToBillRequest_1></chargeToBill></soapenv:Body></soapenv:Envelope> ]]></req_chargeToBill>
+			<req_chargeBySpecDebit><![CDATA[ <?xml version="1.0" encoding="UTF-8"?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><soapenv:Body><chargeBySpecialDebit xmlns="urn:lk.dialog.cg.ws.types"><ChargeBySpecialDebitRequest_1 xmlns=""><appID>{0}</appID><authKey>{1}</authKey><domainID>{2}</domainID><refAccount>{3}</refAccount><transactionID>{4}</transactionID><accountRef xsi:nil="true"/><amount>{5}</amount><billDesc>{6}</billDesc><reasonCode>{7}</reasonCode><taxable>{8}</taxable></ChargeBySpecialDebitRequest_1></chargeBySpecialDebit></soapenv:Body></soapenv:Envelope> ]]></req_chargeBySpecDebit>
+			<req_chargeByDirectDebit><![CDATA[ <?xml version="1.0" encoding="UTF-8"?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><soapenv:Body><payByDirectDebit xmlns="urn:lk.dialog.cg.ws.types"><PayByDirectDebitRequest_1 xmlns=""><appID>{0}</appID><authKey>{1}</authKey><domainID>{2}</domainID><refAccount>{3}</refAccount><transactionID>{4}</transactionID><accountRef xsi:nil="true" /><amount xmlns="">{5}</amount><reasonCode xmlns="">{6}</reasonCode></PayByDirectDebitRequest_1></payByDirectDebit></soapenv:Body></soapenv:Envelope> ]]></req_chargeByDirectDebit>
+		</requests>
+	</cgw>	
+</admin>
+
