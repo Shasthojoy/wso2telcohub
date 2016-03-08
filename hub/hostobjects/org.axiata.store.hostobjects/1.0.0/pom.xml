@@ -68,6 +68,8 @@
             <!--<artifactId>org.wso2.carbon.apimgt.keymgt.client</artifactId>-->
 			<!--<version>1.2.0</version>			-->
 	<!--</dependency>-->
+        
+
         <dependency>
             <groupId>commons-io.wso2</groupId>
             <artifactId>commons-io</artifactId>
@@ -85,9 +87,10 @@
         </dependency>-->
     </dependencies>
 
+    
     <properties>
         <carbon.governance.version>4.5.8</carbon.governance.version>
-    </properties>
+        <carbonlove>4.5</carbonlove>
 
     <build>
         <plugins>
