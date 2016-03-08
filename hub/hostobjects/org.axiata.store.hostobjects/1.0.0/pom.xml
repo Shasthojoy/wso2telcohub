@@ -90,7 +90,8 @@
     
     <properties>
         <carbon.governance.version>4.5.8</carbon.governance.version>
-        <carbonlove>4.5</carbonlove>
+        <carbonlove>4.5</carbonlove>carbonlove>
+    </properties>
 
     <build>
         <plugins>
